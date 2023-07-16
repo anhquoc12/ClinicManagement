@@ -1,0 +1,36 @@
+.signin
+{
+    min-width: 120px;
+    margin-right: 20px;
+}
+
+.carosel-img
+{
+    height: 500px;
+}
+
+.logo
+{
+    width: 40px;
+    height: 40px;
+}
+
+.introduce
+{
+    margin: 40px auto;
+    font-family: "Inter", Sans-serif;
+}
+
+ck-list li:before{
+/*    content:"\f00c";
+    font-family:arial;*/
+    margin-right:.5em;
+    color:#6abf4b;
+    margin-left:-1.5em;
+}
+ul.tick-list{
+    list-style:none;
+}
+ul.tick-list li{
+    margin-bottom:.5em;
+}

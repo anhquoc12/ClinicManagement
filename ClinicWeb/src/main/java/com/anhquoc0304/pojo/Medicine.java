@@ -52,14 +52,14 @@ public class Medicine implements Serializable {
     private BigDecimal unitPrice;
     @Column(name = "unit_in_stock")
     private Integer unitInStock;
+    @OneToMany(mappedBy = "medicineId")
+    private Set<Prescription> prescriptionSet;
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     @ManyToOne
     private Category categoryId;
     @JoinColumn(name = "unit_medicine_id", referencedColumnName = "id")
     @ManyToOne
     private UnitMedicine unitMedicineId;
-    @OneToMany(mappedBy = "medicineId")
-    private Set<Prescription> prescriptionSet;
 
     public Medicine() {
     }
@@ -100,6 +100,15 @@ public class Medicine implements Serializable {
         this.unitInStock = unitInStock;
     }
 
+    @XmlTransient
+    public Set<Prescription> getPrescriptionSet() {
+        return prescriptionSet;
+    }
+
+    public void setPrescriptionSet(Set<Prescription> prescriptionSet) {
+        this.prescriptionSet = prescriptionSet;
+    }
+
     public Category getCategoryId() {
         return categoryId;
     }
@@ -114,15 +123,6 @@ public class Medicine implements Serializable {
 
     public void setUnitMedicineId(UnitMedicine unitMedicineId) {
         this.unitMedicineId = unitMedicineId;
-    }
-
-    @XmlTransient
-    public Set<Prescription> getPrescriptionSet() {
-        return prescriptionSet;
-    }
-
-    public void setPrescriptionSet(Set<Prescription> prescriptionSet) {
-        this.prescriptionSet = prescriptionSet;
     }
 
     @Override

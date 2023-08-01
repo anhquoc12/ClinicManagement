@@ -13,12 +13,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -32,7 +34,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Appointment.findAll", query = "SELECT a FROM Appointment a"),
     @NamedQuery(name = "Appointment.findById", query = "SELECT a FROM Appointment a WHERE a.id = :id"),
     @NamedQuery(name = "Appointment.findByCreatedDate", query = "SELECT a FROM Appointment a WHERE a.createdDate = :createdDate"),
-    @NamedQuery(name = "Appointment.findByAppoinmentDate", query = "SELECT a FROM Appointment a WHERE a.appoinmentDate = :appoinmentDate")})
+    @NamedQuery(name = "Appointment.findByAppoinmentDate", query = "SELECT a FROM Appointment a WHERE a.appoinmentDate = :appoinmentDate"),
+    @NamedQuery(name = "Appointment.findByAppointmentStatus", query = "SELECT a FROM Appointment a WHERE a.appointmentStatus = :appointmentStatus")})
 public class Appointment implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -47,12 +50,19 @@ public class Appointment implements Serializable {
     @Column(name = "appoinment_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date appoinmentDate;
+    @Lob
+    @Size(max = 65535)
+    @Column(name = "description")
+    private String description;
+    @Size(max = 9)
+    @Column(name = "appointment_status")
+    private String appointmentStatus;
     @JoinColumn(name = "nurse_id", referencedColumnName = "id")
     @ManyToOne
-    private Nurse nurseId;
+    private User nurseId;
     @JoinColumn(name = "patient_id", referencedColumnName = "id")
     @ManyToOne
-    private Patient patientId;
+    private User patientId;
 
     public Appointment() {
     }
@@ -85,19 +95,35 @@ public class Appointment implements Serializable {
         this.appoinmentDate = appoinmentDate;
     }
 
-    public Nurse getNurseId() {
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getAppointmentStatus() {
+        return appointmentStatus;
+    }
+
+    public void setAppointmentStatus(String appointmentStatus) {
+        this.appointmentStatus = appointmentStatus;
+    }
+
+    public User getNurseId() {
         return nurseId;
     }
 
-    public void setNurseId(Nurse nurseId) {
+    public void setNurseId(User nurseId) {
         this.nurseId = nurseId;
     }
 
-    public Patient getPatientId() {
+    public User getPatientId() {
         return patientId;
     }
 
-    public void setPatientId(Patient patientId) {
+    public void setPatientId(User patientId) {
         this.patientId = patientId;
     }
 

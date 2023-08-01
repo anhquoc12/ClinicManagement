@@ -62,12 +62,12 @@ public class MedicalRecord implements Serializable {
     @Size(max = 65535)
     @Column(name = "note")
     private String note;
-    @JoinColumn(name = "doctor_id", referencedColumnName = "id")
-    @ManyToOne
-    private Doctor doctorId;
     @JoinColumn(name = "patient_id", referencedColumnName = "id")
     @ManyToOne
-    private Patient patientId;
+    private User patientId;
+    @JoinColumn(name = "doctor_id", referencedColumnName = "id")
+    @ManyToOne
+    private User doctorId;
     @OneToMany(mappedBy = "medicalRecordId")
     private Set<Prescription> prescriptionSet;
     @OneToMany(mappedBy = "medicalRecordId")
@@ -128,20 +128,20 @@ public class MedicalRecord implements Serializable {
         this.note = note;
     }
 
-    public Doctor getDoctorId() {
-        return doctorId;
-    }
-
-    public void setDoctorId(Doctor doctorId) {
-        this.doctorId = doctorId;
-    }
-
-    public Patient getPatientId() {
+    public User getPatientId() {
         return patientId;
     }
 
-    public void setPatientId(Patient patientId) {
+    public void setPatientId(User patientId) {
         this.patientId = patientId;
+    }
+
+    public User getDoctorId() {
+        return doctorId;
+    }
+
+    public void setDoctorId(User doctorId) {
+        this.doctorId = doctorId;
     }
 
     @XmlTransient

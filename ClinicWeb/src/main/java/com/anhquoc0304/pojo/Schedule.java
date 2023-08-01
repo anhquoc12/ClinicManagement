@@ -5,8 +5,8 @@
 package com.anhquoc0304.pojo;
 
 import java.io.Serializable;
+import java.sql.Time;
 import java.util.Date;
-import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,12 +17,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -54,13 +52,12 @@ public class Schedule implements Serializable {
     @Column(name = "shift_end")
     @Temporal(TemporalType.TIME)
     private Date shiftEnd;
-    @OneToMany(mappedBy = "scheduleId")
-    private Set<ScheduleDoctor> scheduleDoctorSet;
-    @OneToMany(mappedBy = "scheduleId")
-    private Set<ScheduleNurse> scheduleNurseSet;
     @JoinColumn(name = "room_id", referencedColumnName = "id")
     @ManyToOne
     private Room roomId;
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @ManyToOne
+    private User userId;
 
     public Schedule() {
     }
@@ -101,30 +98,20 @@ public class Schedule implements Serializable {
         this.shiftEnd = shiftEnd;
     }
 
-    @XmlTransient
-    public Set<ScheduleDoctor> getScheduleDoctorSet() {
-        return scheduleDoctorSet;
-    }
-
-    public void setScheduleDoctorSet(Set<ScheduleDoctor> scheduleDoctorSet) {
-        this.scheduleDoctorSet = scheduleDoctorSet;
-    }
-
-    @XmlTransient
-    public Set<ScheduleNurse> getScheduleNurseSet() {
-        return scheduleNurseSet;
-    }
-
-    public void setScheduleNurseSet(Set<ScheduleNurse> scheduleNurseSet) {
-        this.scheduleNurseSet = scheduleNurseSet;
-    }
-
     public Room getRoomId() {
         return roomId;
     }
 
     public void setRoomId(Room roomId) {
         this.roomId = roomId;
+    }
+
+    public User getUserId() {
+        return userId;
+    }
+
+    public void setUserId(User userId) {
+        this.userId = userId;
     }
 
     @Override

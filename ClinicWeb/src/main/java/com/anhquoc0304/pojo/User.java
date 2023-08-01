@@ -12,8 +12,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -32,9 +30,14 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u"),
     @NamedQuery(name = "User.findById", query = "SELECT u FROM User u WHERE u.id = :id"),
-    @NamedQuery(name = "User.findByUserName", query = "SELECT u FROM User u WHERE u.userName = :userName"),
+    @NamedQuery(name = "User.findByUsername", query = "SELECT u FROM User u WHERE u.username = :username"),
     @NamedQuery(name = "User.findByPassword", query = "SELECT u FROM User u WHERE u.password = :password"),
-    @NamedQuery(name = "User.findByAvatar", query = "SELECT u FROM User u WHERE u.avatar = :avatar")})
+    @NamedQuery(name = "User.findByUserRole", query = "SELECT u FROM User u WHERE u.userRole = :userRole"),
+    @NamedQuery(name = "User.findByAvatar", query = "SELECT u FROM User u WHERE u.avatar = :avatar"),
+    @NamedQuery(name = "User.findByFullName", query = "SELECT u FROM User u WHERE u.fullName = :fullName"),
+    @NamedQuery(name = "User.findByAddress", query = "SELECT u FROM User u WHERE u.address = :address"),
+    @NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email"),
+    @NamedQuery(name = "User.findByPhone", query = "SELECT u FROM User u WHERE u.phone = :phone")})
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -44,25 +47,45 @@ public class User implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Size(max = 100)
-    @Column(name = "user_name")
-    private String userName;
+    @Column(name = "username")
+    private String username;
     @Size(max = 100)
     @Column(name = "password")
     private String password;
+    @Size(max = 7)
+    @Column(name = "user_role")
+    private String userRole;
     @Size(max = 255)
     @Column(name = "avatar")
     private String avatar;
-    @OneToMany(mappedBy = "userId")
-    private Set<Admin> adminSet;
+    @Size(max = 200)
+    @Column(name = "full_name")
+    private String fullName;
+    @Size(max = 255)
+    @Column(name = "address")
+    private String address;
+    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
+    @Size(max = 50)
+    @Column(name = "email")
+    private String email;
+    // @Pattern(regexp="^\\(?(\\d{3})\\)?[- ]?(\\d{3})[- ]?(\\d{4})$", message="Invalid phone/fax format, should be as xxx-xxx-xxxx")//if the field contains phone or fax number consider using this annotation to enforce field validation
+    @Size(max = 15)
+    @Column(name = "phone")
+    private String phone;
     @OneToMany(mappedBy = "userId")
     private Set<Doctor> doctorSet;
     @OneToMany(mappedBy = "userId")
-    private Set<Patient> patientSet;
-    @OneToMany(mappedBy = "userId")
-    private Set<Nurse> nurseSet;
-    @JoinColumn(name = "user_role", referencedColumnName = "name")
-    @ManyToOne
-    private Role userRole;
+    private Set<Schedule> scheduleSet;
+    @OneToMany(mappedBy = "patientId")
+    private Set<MedicalRecord> medicalRecordSet;
+    @OneToMany(mappedBy = "doctorId")
+    private Set<MedicalRecord> medicalRecordSet1;
+    @OneToMany(mappedBy = "nurseId")
+    private Set<Appointment> appointmentSet;
+    @OneToMany(mappedBy = "patientId")
+    private Set<Appointment> appointmentSet1;
+    @OneToMany(mappedBy = "nurseId")
+    private Set<Invoice> invoiceSet;
 
     public User() {
     }
@@ -79,12 +102,12 @@ public class User implements Serializable {
         this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -95,6 +118,14 @@ public class User implements Serializable {
         this.password = password;
     }
 
+    public String getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(String userRole) {
+        this.userRole = userRole;
+    }
+
     public String getAvatar() {
         return avatar;
     }
@@ -103,13 +134,36 @@ public class User implements Serializable {
         this.avatar = avatar;
     }
 
-    @XmlTransient
-    public Set<Admin> getAdminSet() {
-        return adminSet;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setAdminSet(Set<Admin> adminSet) {
-        this.adminSet = adminSet;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     @XmlTransient
@@ -122,29 +176,57 @@ public class User implements Serializable {
     }
 
     @XmlTransient
-    public Set<Patient> getPatientSet() {
-        return patientSet;
+    public Set<Schedule> getScheduleSet() {
+        return scheduleSet;
     }
 
-    public void setPatientSet(Set<Patient> patientSet) {
-        this.patientSet = patientSet;
+    public void setScheduleSet(Set<Schedule> scheduleSet) {
+        this.scheduleSet = scheduleSet;
     }
 
     @XmlTransient
-    public Set<Nurse> getNurseSet() {
-        return nurseSet;
+    public Set<MedicalRecord> getMedicalRecordSet() {
+        return medicalRecordSet;
     }
 
-    public void setNurseSet(Set<Nurse> nurseSet) {
-        this.nurseSet = nurseSet;
+    public void setMedicalRecordSet(Set<MedicalRecord> medicalRecordSet) {
+        this.medicalRecordSet = medicalRecordSet;
     }
 
-    public Role getUserRole() {
-        return userRole;
+    @XmlTransient
+    public Set<MedicalRecord> getMedicalRecordSet1() {
+        return medicalRecordSet1;
     }
 
-    public void setUserRole(Role userRole) {
-        this.userRole = userRole;
+    public void setMedicalRecordSet1(Set<MedicalRecord> medicalRecordSet1) {
+        this.medicalRecordSet1 = medicalRecordSet1;
+    }
+
+    @XmlTransient
+    public Set<Appointment> getAppointmentSet() {
+        return appointmentSet;
+    }
+
+    public void setAppointmentSet(Set<Appointment> appointmentSet) {
+        this.appointmentSet = appointmentSet;
+    }
+
+    @XmlTransient
+    public Set<Appointment> getAppointmentSet1() {
+        return appointmentSet1;
+    }
+
+    public void setAppointmentSet1(Set<Appointment> appointmentSet1) {
+        this.appointmentSet1 = appointmentSet1;
+    }
+
+    @XmlTransient
+    public Set<Invoice> getInvoiceSet() {
+        return invoiceSet;
+    }
+
+    public void setInvoiceSet(Set<Invoice> invoiceSet) {
+        this.invoiceSet = invoiceSet;
     }
 
     @Override

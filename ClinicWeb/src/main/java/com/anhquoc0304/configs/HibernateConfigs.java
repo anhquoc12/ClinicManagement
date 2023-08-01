@@ -36,13 +36,17 @@ public class HibernateConfigs {
     }
 
     @Bean
-    private DataSource dataSource() {
-        DriverManagerDataSource driver = new DriverManagerDataSource();
-        driver.setDriverClassName(env.getProperty("hibernate.connection.driverClass"));
-        driver.setUrl(env.getProperty("hibernate.dialect"));
-        driver.setUsername(env.getProperty("hibernate.connection.username"));
-        driver.setPassword(env.getProperty("hibernate.connection.password"));
-        return driver;
+    public DataSource dataSource() {
+        DriverManagerDataSource dataSource
+                = new DriverManagerDataSource();
+        dataSource.setDriverClassName(
+                env.getProperty("hibernate.connection.driverClass"));
+        dataSource.setUrl(env.getProperty("hibernate.connection.url"));
+        dataSource.setUsername(
+                env.getProperty("hibernate.connection.username"));
+        dataSource.setPassword(
+                env.getProperty("hibernate.connection.password"));
+        return dataSource;
 // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
@@ -55,8 +59,10 @@ public class HibernateConfigs {
     
     @Bean
     public HibernateTransactionManager transactionManager() {
-        HibernateTransactionManager transaction = new HibernateTransactionManager();
-        transaction.setSessionFactory(getSessionFactory().getObject());
-        return transaction;
+        HibernateTransactionManager transactionManager
+                = new HibernateTransactionManager();
+        transactionManager.setSessionFactory(
+                getSessionFactory().getObject());
+        return transactionManager;
     }
 }

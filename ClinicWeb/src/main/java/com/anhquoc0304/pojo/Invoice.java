@@ -51,7 +51,7 @@ public class Invoice implements Serializable {
     private MedicalRecord medicalRecordId;
     @JoinColumn(name = "nurse_id", referencedColumnName = "id")
     @ManyToOne
-    private Nurse nurseId;
+    private User nurseId;
 
     public Invoice() {
     }
@@ -92,11 +92,11 @@ public class Invoice implements Serializable {
         this.medicalRecordId = medicalRecordId;
     }
 
-    public Nurse getNurseId() {
+    public User getNurseId() {
         return nurseId;
     }
 
-    public void setNurseId(Nurse nurseId) {
+    public void setNurseId(User nurseId) {
         this.nurseId = nurseId;
     }
 

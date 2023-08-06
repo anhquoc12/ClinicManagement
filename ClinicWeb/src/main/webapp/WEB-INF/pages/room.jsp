@@ -6,10 +6,10 @@
     <div class="d-flex flex-row mb-3">
         <div class="p-2">
         <c:url value="/admin/room" var="action" />
-        <form:form method="post" action="${action}" modelAttribute="room" class="input-group">
+        <form:form method="post" action="${action}" modelAttribute="room" class="input-group" enctype="multipart/form-data">
             <div class="form-outline">
-                <form:input path="name" name="name1" type="text" id="form1" class="form-control" />
-                <label class="form-label" for="form1">Tên Phòng</label>
+                <form:input path="name" name="name1" type="text" id="name" class="form-control" />
+                <label class="form-label" for="name">Tên Phòng</label>
             </div>
             <button type="submit" class="btn btn-primary">
                 Thêm Phòng

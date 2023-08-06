@@ -4,8 +4,7 @@
  */
 package com.anhquoc0304.service;
 
-import com.anhquoc0304.pojo.Schedule;
-import java.time.LocalDate;
+import com.anhquoc0304.pojo.Appointment;
 import java.util.Date;
 import java.util.List;
 
@@ -13,8 +12,8 @@ import java.util.List;
  *
  * @author Admin
  */
-public interface ScheduleService {
-    boolean addSchedule(Schedule schedule);
-    List<Object[]> getScheduleByDate(Date d);
-    int countScheduleByDate(Date d);
+public interface AppointmentService {
+    boolean addAppointment(Appointment a);
+    boolean countAppointment(Date d);
+    List<Appointment> getAppointmentByStatus(String status);
 }

@@ -9,19 +9,23 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <h1 class="text-center text-success">Thêm Thuốc</h1>
 <c:if test="${msg_err != null}"><div class="alert alert-success">${msg_err}</div></c:if>
-<form:form action="/ClinicWeb/admin/medicine" method="post" style="margin: 50px;" modelAttribute="medicine">
+<form:form action="/ClinicWeb/admin/medicine" method="post" style="margin: 50px;" modelAttribute="medicine" enctype="multipart/form-data">
+    <%--<form:errors path="*" element="h1" cssClass="alert alert-danger" />--%>
     <form:hidden path="id"/>
     <div class="form-floating mb-3 mt-3">
         <form:input path="name" type="text" class="form-control" id="name" placeholder="Tên thuốc" name="name" />
         <label for="name">Tên thuốc</label>
+        <form:errors path="name" element="h6" cssClass="text text-danger mt-2" />
     </div>
     <div class="form-floating mb-3 mt-3">
-        <form:input path="unitPrice" type="number" class="form-control" id="price" placeholder="Giá sản phẩm" name="price" />
+        <form:input width="50%" path="unitPrice" type="number" class="form-control" id="price" placeholder="Giá sản phẩm" name="price" />
         <label for="price">Giá Thuốc</label>
+        <form:errors path="unitPrice" element="h6" cssClass="text text-danger mt-2" />
     </div>
     <div class="form-floating mb-3 mt-3">
         <form:input path="unitInStock" type="number" class="form-control" id="unitInStock" placeholder="Giá sản phẩm" name="unitInStock" />
         <label for="unitInStock">Số Lượng</label>
+        <form:errors path="unitInStock" element="h6" cssClass="text text-danger mt-2" />
     </div>
     <div class="form-floating mb-3 mt-3">
         <form:select path="categoryId" class="form-select" id="cate" name="cate">

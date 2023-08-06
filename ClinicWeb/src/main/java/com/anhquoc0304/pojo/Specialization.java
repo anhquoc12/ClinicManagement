@@ -16,6 +16,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -41,9 +42,12 @@ public class Specialization implements Serializable {
     private Integer id;
     @Size(max = 255)
     @Column(name = "name")
+    @NotEmpty(message = "{specialization.name.notEmptyMsg}")
     private String name;
     @OneToMany(mappedBy = "specializationId")
     private Set<Doctor> doctorSet;
+    @OneToMany(mappedBy = "specializationId")
+    private Set<Appointment> appointmentSet;
 
     public Specialization() {
     }
@@ -75,6 +79,15 @@ public class Specialization implements Serializable {
 
     public void setDoctorSet(Set<Doctor> doctorSet) {
         this.doctorSet = doctorSet;
+    }
+
+    @XmlTransient
+    public Set<Appointment> getAppointmentSet() {
+        return appointmentSet;
+    }
+
+    public void setAppointmentSet(Set<Appointment> appointmentSet) {
+        this.appointmentSet = appointmentSet;
     }
 
     @Override

@@ -5,6 +5,9 @@
 package com.anhquoc0304.repository;
 
 import com.anhquoc0304.pojo.Schedule;
+import java.time.LocalDate;
+import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -12,4 +15,6 @@ import com.anhquoc0304.pojo.Schedule;
  */
 public interface ScheduleRepository {
     boolean addSchedule(Schedule schedule);
+    List<Object[]> getScheduleByDate(Date d);
+    int countScheduleByDate(Date d);
 }

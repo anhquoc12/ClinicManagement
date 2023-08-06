@@ -4,17 +4,12 @@
  */
 package com.anhquoc0304.repository;
 
-import com.anhquoc0304.pojo.Room;
-import java.util.List;
+import com.anhquoc0304.pojo.Doctor;
 
 /**
  *
  * @author Admin
  */
-public interface RoomRepository {
-    List<Room> getRooms();
-    Room getRoomById(int id);
-    boolean addRoom(Room r);
-    boolean deleteRoom(Room r);
-    int countRooms();
+public interface DoctorRepository {
+    boolean addDoctor(Doctor d);
 }

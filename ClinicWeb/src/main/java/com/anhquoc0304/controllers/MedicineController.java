@@ -11,10 +11,12 @@ import com.anhquoc0304.service.CategoryService;
 import com.anhquoc0304.service.MedicineService;
 import com.anhquoc0304.service.UnitMedicineService;
 import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -68,14 +70,18 @@ public class MedicineController {
     }
 
     @RequestMapping(value = "/admin/medicine", method = RequestMethod.POST)
-    public String addMedicine(Model model, @ModelAttribute(value = "medicine") Medicine medicine) {
-        model.addAttribute("msg_err", null);
-        if (this.medicineService.addOrUpdateMedicine(medicine)) {
-            return "redirect:/admin/medicineList";
-        } else {
-            model.addAttribute("msg_err", "Có lỗi xảy ra");
-            return "forward:/admin/medicine";
+    public String addMedicine(Model model,
+            @ModelAttribute(value = "medicine") @Valid Medicine medicine,
+            BindingResult br,
+            HttpServletRequest request) {
+        model.addAttribute("msgErr", null);
+        if (!br.hasErrors()) {
+            if (this.medicineService.addOrUpdateMedicine(medicine)) {
+                return "redirect:/admin/medicineList";
+            }
         }
+        model.addAttribute("msgErr", "Có lỗi xảy ra");
+        return "medicine";
     }
 
     @RequestMapping(value = "/admin/medicine/{id}")
@@ -97,29 +103,36 @@ public class MedicineController {
     }
 
     @RequestMapping(value = "/admin/medicine/unit-medicine", method = RequestMethod.POST)
-    public String addUnitMedicine(Model model, @ModelAttribute(value = "unitMedicine") UnitMedicine unit) {
+    public String addUnitMedicine(Model model,
+            @ModelAttribute(value = "unitMedicine") @Valid UnitMedicine unit,
+            BindingResult br, HttpServletRequest servlet) {
         model.addAttribute("msgErr", null);
-        if (this.unitService.addUnit(unit)) {
-            return "redirect:/admin/medicine/unit-medicine";
-        } else {
-            model.addAttribute("msgErr", "Có lỗi xảy ra");
-            return "forward:/admin/medicine/unit-medicine";
+        if (!br.hasErrors()) {
+            if (this.unitService.addUnit(unit)) {
+                return "redirect:/admin/medicine/unit-medicine";
+            }
         }
+        model.addAttribute("msgErr", "Có lỗi xảy ra");
+        return "unitMedicine";
     }
+
     @RequestMapping("/admin/medicine/category")
     public String category(Model model) {
         model.addAttribute("category", new Category());
         model.addAttribute("ccategories", this.categoryService.getCategories());
         return "category";
     }
+
     @RequestMapping(value = "/admin/medicine/category", method = RequestMethod.POST)
-    public String addCategory(Model model, @ModelAttribute(value = "category") Category c) {
+    public String addCategory(Model model, @ModelAttribute(value = "category") @Valid Category c,
+            BindingResult br, HttpServletRequest servlet) {
         model.addAttribute("msgErr", null);
-        if (this.categoryService.addCategory(c)) {
-            return "redirect:/admin/medicine/category";
-        } else {
-            model.addAttribute("msgErr", "Có lỗi xảy ra");
-            return "forward:/admin/medicine/category";
+        if (!br.hasErrors()) {
+            if (this.categoryService.addCategory(c)) {
+                return "redirect:/admin/medicine/category";
+            }
         }
+        model.addAttribute("msgErr", "Có lỗi xảy ra");
+        return "category";
     }
 }

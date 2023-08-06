@@ -19,6 +19,9 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -44,13 +47,18 @@ public class Medicine implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Size(max = 255)
+    @Size(max = 255, message = "{medicine.name.sizeMsg}")
     @Column(name = "name")
+    @NotEmpty(message = "{medicine.name.notEmptyMsg}")
     private String name;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "unit_price")
+    @NotNull(message = "{medicine.unitPrice.notNullMsg}")
+    @Min(value = 1, message = "{medicine.unitPrice.minMsg}")
     private BigDecimal unitPrice;
     @Column(name = "unit_in_stock")
+    @NotNull(message = "{medicine.unitInStock.notNullMsg}")
+    @Min(value = 1, message = "{medicine.unitInStock.minMsg}")
     private Integer unitInStock;
     @OneToMany(mappedBy = "medicineId")
     private Set<Prescription> prescriptionSet;

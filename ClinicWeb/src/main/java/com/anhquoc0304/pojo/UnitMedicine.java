@@ -16,6 +16,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -41,6 +42,7 @@ public class UnitMedicine implements Serializable {
     private Integer id;
     @Size(max = 255)
     @Column(name = "name")
+    @NotEmpty(message = "{unitMedicine.name.notEmptyMsg}")
     private String name;
     @OneToMany(mappedBy = "unitMedicineId")
     private Set<Medicine> medicineSet;

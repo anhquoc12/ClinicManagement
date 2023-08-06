@@ -8,6 +8,7 @@ import com.anhquoc0304.pojo.User;
 import com.anhquoc0304.repository.UserRepository;
 import java.util.List;
 import javax.persistence.Query;
+import javax.persistence.TemporalType;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -26,20 +27,19 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 @Transactional
 public class UserRepositoryImpl implements UserRepository {
+
     @Autowired
     private LocalSessionFactoryBean factory;
 
     @Override
     public List<User> getUsers(String username) {
         Session s = this.factory.getObject().getCurrentSession();
-        CriteriaBuilder builder = s.getCriteriaBuilder();
-        CriteriaQuery<User> query = builder.createQuery(User.class);
-        Root root = query.from(User.class);
-        query = query.select(root);
-        if(!username.isEmpty()) {
-            Predicate p = builder.equal(root.get("userName").as(String.class), 
-                    username.trim());
-            query = query.where(p);
+        String query = "FROM User u ";
+        if (!username.isEmpty()) {
+            query += "WHERE u.username =: user";
+            Query q = s.createQuery(query);
+            q.setParameter("user", username);
+            return q.getResultList();
         }
         Query q = s.createQuery(query);
         return q.getResultList();
@@ -63,5 +63,26 @@ public class UserRepositoryImpl implements UserRepository {
         Query q = s.createQuery("FROM User u WHERE u.userRole = 'DOCTOR' OR u.userRole = 'NURSE'");
         return q.getResultList();
     }
-    
+
+    @Override
+    public User getCurrentUser(String username) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createQuery("FROM User u WHERE u.username = :user");
+        q.setParameter("user", username);
+        return (User) q.getResultList().get(0);
+    }
+
+    @Override
+    public List<Object[]> getUserByUserRole(String userRole) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q;
+        if (userRole == User.ADMIN) {
+            q = s.createQuery("SELECT u.avatar, u.fullName, s.name, u.address, u.email, u.phone FROM Doctor d LEFT JOIN d.userId u LEFT JOIN d.specializationId s WHERE u.userRole = :role");
+        } else {
+            q = s.createQuery("SELECT u.avatar, u.fullName, u.address, u.phone FROM User u WHERE u.userRole = :role");
+        }
+        q.setParameter("role", userRole);
+        return q.getResultList();
+    }
+
 }

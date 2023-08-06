@@ -8,30 +8,38 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <h1 class="text-center text-danger">Lịch Trực</h1>
-<h1>${err}</h1>
+<c:if test="${msg_success != null}"><h6 class="alert alert-success">${msg_success}</h1></c:if>
+<c:if test="${msg_failed != null}">
+    <c:forEach items="${msg_failed}" var="msg">
+        <h6 class="alert alert-danger">${msg}</h1>
+    </c:forEach>
+</c:if>
 <c:url value="/admin/schedule" var="action" />
-<form:form method="post" action="${action}" modelAttribute="schedule">
+<form:form method="post" action="${action}" modelAttribute="schedule" enctype="multipart/form-data" >
     <div class="container">
         <div class="card">
             <div class="form-row border-bottom p-4 position-relative">
                 <label class="text-inverse font-12 text-uppercase">Chọn Ngày</label>
                 <div class="input-group date">
-                    <form:input path="scheduleDate" type="date" class="border-0 p-0 font-14 form-control" id="dp" placeholder="Select the Schedule Date" />
+                    <form:input path="scheduleDate" name="scheduleDate" type="date" class="border-0 p-0 font-14 form-control" id="dp" placeholder="Select the Schedule Date" />
                     <label class="mt-2" for="dp"><i class="icon-calendar mt-1"></i></label>
+                    <form:errors path="scheduleDate" element="h6" cssClass="text text-danger" />
                 </div>
             </div>
             <div class="form-row border-bottom p-4 position-relative">
                 <label class="text-inverse font-12 text-uppercase">Giờ Bắt Đầu</label>
                 <div class="input-group date">
-                    <form:input path="shiftStart" type="time" class="border-0 p-0 font-14 form-control" id="dp" placeholder="Select the Schedule Date" />
+                    <form:input path="shiftStart" name="shiftDate" type="time" class="border-0 p-0 font-14 form-control" id="dp" placeholder="Select the Schedule Date" />
                     <label class="mt-2" for="dp"><i class="icon-calendar mt-1"></i></label>
+                    <form:errors path="shiftStart" element="h6" cssClass="text text-danger" />
                 </div>
             </div>
             <div class="form-row border-bottom p-4 position-relative">
                 <label class="text-inverse font-12 text-uppercase">Giờ Kết Thúc</label>
                 <div class="input-group date">
-                    <form:input path="shiftEnd" type="time" class="border-0 p-0 font-14 form-control" id="dp" placeholder="Select the Schedule Date" />
+                    <form:input path="shiftEnd" value="${null}" name="shiftEnd" type="time" class="border-0 p-0 font-14 form-control" id="dp" placeholder="Select the Schedule Date" />
                     <label class="mt-2" for="dp"><i class="icon-calendar mt-1"></i></label>
+                    <form:errors path="shiftEnd" element="h6" cssClass="text text-danger" />
                 </div>
             </div>
             <div class="form-row border-bottom p-4">

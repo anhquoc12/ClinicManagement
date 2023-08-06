@@ -16,4 +16,6 @@ public interface UserService extends UserDetailsService {
     List<User> getUsers(String username);
     boolean addUser(User user);
     List<User> getEmployee();
+    User getCurrentUser(String username);
+    List<Object[]> getUserByUserRole(String userRole);
 }

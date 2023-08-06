@@ -56,7 +56,7 @@
             <tr>
                 <th scope="row">${medicine.id}</th>
                 <td>${medicine.name}</td>
-                <td><fmt:formatNumber value="${medicine.unitPrice}" pattern="#,##0.00"/> VNĐ</td>
+                <td><fmt:formatNumber value="${medicine.unitPrice}" pattern="#,###"/> VNĐ</td>
                 <td>${medicine.unitInStock}</td>
                 <td>${medicine.categoryId.name}</td>
                 <td>${medicine.unitMedicineId.name}</td>

@@ -28,6 +28,7 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepo;
+    @Autowired
     private BCryptPasswordEncoder passwordEncoder;
     @Override
     public List<User> getUsers(String username) {
@@ -49,16 +50,24 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean addUser(User user) {
-        return false;
-//        String pass = user.getPassword();
-//        user.setPassword(passwordEncoder.encode(pass));
-//        user.setUserRole(this.roleRepo.getRole("ADMIN"));
-//        return this.userRepo.addUser(user);
+        String pw = user.getPassword();
+        user.setPassword(this.passwordEncoder.encode(pw));
+        return this.userRepo.addUser(user);
     }
 
     @Override
     public List<User> getEmployee() {
         return this.userRepo.getEmployee();
+    }
+
+    @Override
+    public User getCurrentUser(String username) {
+        return this.userRepo.getCurrentUser(username);
+    }
+
+    @Override
+    public List<Object[]> getUserByUserRole(String userRole) {
+        return this.userRepo.getUserByUserRole(userRole);
     }
 
 }

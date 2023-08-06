@@ -8,14 +8,15 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <h1 class="text-center text-success" style="margin: 3px;">Quản Lý Thuốc</h1>
-<c:if test="${msgErr != null}"><div class="alert alert-success">${msgErr}</div></c:if>
+<c:if test="${msgErr != null}"><div class="alert alert-danger">${msgErr}</div></c:if>
     <div class="d-flex flex-row mb-3">
         <div class="p-2">
         <c:url value="/admin/medicine/category" var="action" />
-        <form:form method="post" action="${action}" modelAttribute="category" class="input-group">
+        <form:form method="post" action="${action}" modelAttribute="category" class="input-group" enctype="multipart/form-data">
             <div class="form-outline">
                 <form:input path="name" name="name1" type="text" id="form1" class="form-control" />
                 <label class="form-label" for="form1">Loại Thuốc</label>
+                <form:errors path="name" element="h6" cssClass="text text-danger mt-2" />
             </div>
             <button type="submit" class="btn btn-primary">
                 Thêm Loại

@@ -20,8 +20,12 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Future;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -34,11 +38,14 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Appointment.findAll", query = "SELECT a FROM Appointment a"),
     @NamedQuery(name = "Appointment.findById", query = "SELECT a FROM Appointment a WHERE a.id = :id"),
     @NamedQuery(name = "Appointment.findByCreatedDate", query = "SELECT a FROM Appointment a WHERE a.createdDate = :createdDate"),
-    @NamedQuery(name = "Appointment.findByAppoinmentDate", query = "SELECT a FROM Appointment a WHERE a.appoinmentDate = :appoinmentDate"),
+    @NamedQuery(name = "Appointment.findByAppointmentDate", query = "SELECT a FROM Appointment a WHERE a.appointmentDate = :appointmentDate"),
     @NamedQuery(name = "Appointment.findByAppointmentStatus", query = "SELECT a FROM Appointment a WHERE a.appointmentStatus = :appointmentStatus")})
 public class Appointment implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    public static final String WAITTING = "WAITTING";
+    public static final String CONFIRMED = "CONFIRMED";
+    public static final String CANCLED = "CANCLED";
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -47,16 +54,23 @@ public class Appointment implements Serializable {
     @Column(name = "created_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
-    @Column(name = "appoinment_date")
+    @Column(name = "appointment_date")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date appoinmentDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Future(message = "{appointment.appointmentDate.futureMsg}")
+    @NotNull(message = "{appointment.appointmentDate.notNullMsg}")
+    private Date appointmentDate;
     @Lob
-    @Size(max = 65535)
     @Column(name = "description")
+    @Size(max = 65535)
+    @NotEmpty(message = "{appointment.description.notEmptyMsg}")
     private String description;
     @Size(max = 9)
     @Column(name = "appointment_status")
     private String appointmentStatus;
+    @JoinColumn(name = "specialization_id", referencedColumnName = "id")
+    @ManyToOne
+    private Specialization specializationId;
     @JoinColumn(name = "nurse_id", referencedColumnName = "id")
     @ManyToOne
     private User nurseId;
@@ -87,12 +101,12 @@ public class Appointment implements Serializable {
         this.createdDate = createdDate;
     }
 
-    public Date getAppoinmentDate() {
-        return appoinmentDate;
+    public Date getAppointmentDate() {
+        return appointmentDate;
     }
 
-    public void setAppoinmentDate(Date appoinmentDate) {
-        this.appoinmentDate = appoinmentDate;
+    public void setAppointmentDate(Date appoinmentDate) {
+        this.appointmentDate = appoinmentDate;
     }
 
     public String getDescription() {
@@ -109,6 +123,14 @@ public class Appointment implements Serializable {
 
     public void setAppointmentStatus(String appointmentStatus) {
         this.appointmentStatus = appointmentStatus;
+    }
+
+    public Specialization getSpecializationId() {
+        return specializationId;
+    }
+
+    public void setSpecializationId(Specialization specializationId) {
+        this.specializationId = specializationId;
     }
 
     public User getNurseId() {

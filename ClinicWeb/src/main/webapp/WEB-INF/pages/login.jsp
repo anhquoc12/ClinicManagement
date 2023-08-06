@@ -12,6 +12,11 @@
         <strong>Failed!</strong> Tài khoản hoặc mật khẩu không chính xác. Vui Lòng Quay Lại Sau.
     </div>
 </c:if>
+<c:if test="${param.accessDenied != null}">
+    <div class="alert alert-danger">
+        <strong>Failed!</strong> Tài Khoản của bạn không được phép truy cập trang này
+    </div>
+</c:if>
 <section class="vh-100 bg-light">
     <form method="POST" action="${action}">
         <div class="container py-5 h-100">
@@ -22,12 +27,12 @@
 
                             <h3 class="mb-5">Đăng Nhập Hệ Thống</h3>
 
-                            <div class="form-outline mb-4">
+                            <div class="form-outline mb-4 form-floating mb-3 mt-3">
                                 <input required="Vui Lòng nhập username" name="username" type="text" id="typeText" class="form-control form-control-lg" />
                                 <label class="form-label" for="type">Username</label>
                             </div>
 
-                            <div class="form-outline mb-4">
+                            <div class="form-outline mb-4 form-floating mb-3 mt-3">
                                 <input required="Vui Lòng nhập password" name="password" type="password" id="typePassword" class="form-control form-control-lg" />
                                 <label class="form-label" for="typePasswordX-2">Password</label>
                             </div>

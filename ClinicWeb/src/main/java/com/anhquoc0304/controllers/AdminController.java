@@ -5,18 +5,16 @@
 package com.anhquoc0304.controllers;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  *
  * @author Admin
  */
 @Controller
-public class LoginController {
-    @RequestMapping(value = "/login")
-    public String login() {
-        return "login";
+public class AdminController {
+    @RequestMapping("/admin")
+    public String index() {
+        return "admin";
     }
 }

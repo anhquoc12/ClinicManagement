@@ -4,12 +4,12 @@
  */
 package com.anhquoc0304.configs;
 
+import com.anhquoc0304.pojo.User;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -17,9 +17,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.web.filter.DelegatingFilterProxy;
-import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 /**
@@ -72,10 +71,18 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         http.formLogin().loginPage("/login").usernameParameter("username").passwordParameter("password");
         
         http.formLogin().defaultSuccessUrl("/").failureUrl("/login?error");
-        
-        http.csrf().disable();
+
         
         http.logout().logoutSuccessUrl("/login");
+        
+        http.exceptionHandling().accessDeniedPage("/login?accessDenied");
+        
+        http.authorizeHttpRequests().requestMatchers(new AntPathRequestMatcher("/")).permitAll()
+                .requestMatchers(new AntPathRequestMatcher("/admin/**")).hasAuthority(User.ADMIN)
+                .requestMatchers(new AntPathRequestMatcher("/appointment/**")).hasAuthority(User.PATIENT);
+                
+        http.csrf().disable();
+        
     }
     
 }

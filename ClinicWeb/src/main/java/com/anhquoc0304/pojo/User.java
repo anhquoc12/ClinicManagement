@@ -16,9 +16,13 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -41,36 +45,49 @@ import javax.xml.bind.annotation.XmlTransient;
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    public static final String ADMIN = "ADMIN";
+    public static final String DOCTOR = "DOCTOR";
+    public static final String NURSE = "NURSE";
+    public static final String PATIENT = "PATIENT";
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Size(max = 100)
+    @Size(max = 100, message = "{user.name.MaxMsg}")
     @Column(name = "username")
+    @NotEmpty(message = "{user.name.notEmptyMsg}")
     private String username;
     @Size(max = 100)
     @Column(name = "password")
+    @NotEmpty(message = "user.password.notEmptyMsg")
     private String password;
     @Size(max = 7)
     @Column(name = "user_role")
     private String userRole;
     @Size(max = 255)
     @Column(name = "avatar")
+    @NotEmpty(message = "{user.avatar.notEmptyMsg}")
     private String avatar;
-    @Size(max = 200)
+    @Size(max = 200, message = "")
     @Column(name = "full_name")
+    @NotEmpty(message = "{user.fullName.notEmptyMsg}")
     private String fullName;
     @Size(max = 255)
     @Column(name = "address")
+    @NotEmpty(message = "{user.address.notEmptyMsg}")
     private String address;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Size(max = 50)
     @Column(name = "email")
+    @NotEmpty(message = "{user.email.notEmptyMsg}")
+    @Email(message = "{user.email.emailMsg}")
     private String email;
     // @Pattern(regexp="^\\(?(\\d{3})\\)?[- ]?(\\d{3})[- ]?(\\d{4})$", message="Invalid phone/fax format, should be as xxx-xxx-xxxx")//if the field contains phone or fax number consider using this annotation to enforce field validation
     @Size(max = 15)
     @Column(name = "phone")
+    @NotEmpty(message = "{user.phone.notEmptyMsg}")
     private String phone;
     @OneToMany(mappedBy = "userId")
     private Set<Doctor> doctorSet;
@@ -86,6 +103,9 @@ public class User implements Serializable {
     private Set<Appointment> appointmentSet1;
     @OneToMany(mappedBy = "nurseId")
     private Set<Invoice> invoiceSet;
+    
+    @Transient
+    private MultipartFile file;
 
     public User() {
     }
@@ -252,6 +272,20 @@ public class User implements Serializable {
     @Override
     public String toString() {
         return "com.anhquoc0304.pojo.User[ id=" + id + " ]";
+    }
+
+    /**
+     * @return the file
+     */
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    /**
+     * @param file the file to set
+     */
+    public void setFile(MultipartFile file) {
+        this.file = file;
     }
     
 }

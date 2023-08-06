@@ -6,7 +6,7 @@
     <div class="d-flex flex-row mb-3">
         <div class="p-2">
         <c:url value="/admin/specialization" var="action" />
-        <form:form method="post" action="${action}" modelAttribute="special" class="input-group">
+        <form:form method="post" action="${action}" modelAttribute="special" class="input-group" enctype="multipart/form-data">
             <div class="form-outline">
                 <form:input path="name" name="name1" type="text" id="form1" class="form-control" />
                 <label class="form-label" for="form1">Tên Khoa</label>

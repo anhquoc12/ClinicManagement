@@ -5,7 +5,6 @@
 package com.anhquoc0304.pojo;
 
 import java.io.Serializable;
-import java.sql.Time;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -20,7 +19,11 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Future;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -45,12 +48,19 @@ public class Schedule implements Serializable {
     private Integer id;
     @Column(name = "schedule_date")
     @Temporal(TemporalType.DATE)
+    @NotNull(message = "{schedule.scheduleDate.notNullMsg}")
+    @Future(message = "test future")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date scheduleDate;
     @Column(name = "shift_start")
     @Temporal(TemporalType.TIME)
+//    @NotNull(message = "{schedule.shiftStart.notNullMsg}")
+    @DateTimeFormat(pattern = "HH:mm")
     private Date shiftStart;
     @Column(name = "shift_end")
     @Temporal(TemporalType.TIME)
+//    @NotNull(message = "{schedule.shiftEnd.notNullMsg}")
+    @DateTimeFormat(pattern = "HH:mm")
     private Date shiftEnd;
     @JoinColumn(name = "room_id", referencedColumnName = "id")
     @ManyToOne

@@ -41,5 +41,10 @@ public class RoomServiceImpl implements RoomService{
     public boolean deleteRoom(Room r) {
         return this.roomRepo.deleteRoom(r);
     }
+
+    @Override
+    public int countRooms() {
+        return this.roomRepo.countRooms();
+    }
     
 }

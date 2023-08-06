@@ -4,14 +4,23 @@
  */
 package com.anhquoc0304.configs;
 
-
 import com.anhquoc0304.formatters.CategoryFormatters;
+import com.anhquoc0304.formatters.RoomFormatters;
+import com.anhquoc0304.formatters.SpecializationFormatters;
 import com.anhquoc0304.formatters.UnitMedicineFormatters;
+import com.anhquoc0304.formatters.UserFormatters;
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.validation.Validator;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 //import org.springframework.util.ObjectUtils;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -50,11 +59,14 @@ public class WebAppContextConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/js/**")
                 .addResourceLocations("/resources/scripts/");
     }
-    
+
     @Override
     public void addFormatters(FormatterRegistry registry) {
         registry.addFormatter(new CategoryFormatters());
         registry.addFormatter(new UnitMedicineFormatters());
+        registry.addFormatter(new UserFormatters());
+        registry.addFormatter(new RoomFormatters());
+        registry.addFormatter(new SpecializationFormatters());
     }
 
 //    @Bean
@@ -67,15 +79,41 @@ public class WebAppContextConfig implements WebMvcConfigurer {
 //        resolver.setSuffix(".jsp");
 //        return resolver;
 //    }
+    @Bean
+    public Cloudinary cloudinary() {
+        Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
+                "cloud_name", "dvevyvqyt",
+                "api_key", "595363456269972",
+                "api_secret", "qtQWMeNL6dcV1eM9ZLXEjJAMims",
+                "secure", true));
+        return cloudinary;
+    }
+    @Bean
+    public CommonsMultipartResolver multipartResolver() {
+        CommonsMultipartResolver resolver = new CommonsMultipartResolver();
+        resolver.setDefaultEncoding("utf-8");
+        return resolver;
+    }
 
-//    @Bean
-//    public Cloudinary cloudinary() {
-//        Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
-//                "cloud_name", "dvevyvqyt",
-//                "api_key", "595363456269972",
-//                "api_secret", "qtQWMeNL6dcV1eM9ZLXEjJAMims",
-//                "secure", true));
-//        return cloudinary;
-//    }
+    @Bean(name = "validator")
+    public LocalValidatorFactoryBean validator() {
+        LocalValidatorFactoryBean bean
+                = new LocalValidatorFactoryBean();
+        bean.setValidationMessageSource(messageSource());
+        return bean;
+    }
+
+    @Bean
+    public MessageSource messageSource() {
+        ResourceBundleMessageSource resource
+                = new ResourceBundleMessageSource();
+        resource.setBasename("validation");
+        return resource;
+    }
+
+    @Override
+    public Validator getValidator() {
+        return validator();
+    }
 
 }

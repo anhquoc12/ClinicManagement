@@ -18,7 +18,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -59,16 +62,17 @@ public class User implements Serializable {
     @Column(name = "username")
     @NotEmpty(message = "{user.name.notEmptyMsg}")
     private String username;
-    @Size(max = 100)
+    @Size(max = 100, min = 8, message = "{user.password.minMsg}")
     @Column(name = "password")
-    @NotEmpty(message = "user.password.notEmptyMsg")
+    @NotEmpty(message = "{user.password.notEmptyMsg}")
+//    @Pattern(regexp = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+{}\\[\\]:;<>,.?~\\/\\\\-]).*$/",
+//            message = "{user.password.patternMsg}")
     private String password;
-    @Size(max = 7)
+    @Size(max = 7, message = "lỗi userrole")
     @Column(name = "user_role")
     private String userRole;
     @Size(max = 255)
     @Column(name = "avatar")
-    @NotEmpty(message = "{user.avatar.notEmptyMsg}")
     private String avatar;
     @Size(max = 200, message = "")
     @Column(name = "full_name")

@@ -12,6 +12,11 @@
         <strong>Failed!</strong> Tài khoản hoặc mật khẩu không chính xác. Vui Lòng Quay Lại Sau.
     </div>
 </c:if>
+<c:if test="${avatar != null}">
+    <div class="alert alert-danger">
+        <strong>Failed!</strong> ${avatar}
+    </div>
+</c:if>
 <c:if test="${param.accessDenied != null}">
     <div class="alert alert-danger">
         <strong>Failed!</strong> Tài Khoản của bạn không được phép truy cập trang này

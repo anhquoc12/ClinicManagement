@@ -9,8 +9,12 @@ import com.anhquoc0304.formatters.RoomFormatters;
 import com.anhquoc0304.formatters.SpecializationFormatters;
 import com.anhquoc0304.formatters.UnitMedicineFormatters;
 import com.anhquoc0304.formatters.UserFormatters;
+import com.anhquoc0304.validation.UserUsernameValidation;
+import com.anhquoc0304.validation.WebAppValidator;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import java.util.HashSet;
+import java.util.Set;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -39,7 +43,8 @@ import org.springframework.web.servlet.view.JstlView;
 @ComponentScan(basePackages = {
     "com.anhquoc0304.controllers",
     "com.anhquoc0304.service",
-    "com.anhquoc0304.repository"
+    "com.anhquoc0304.repository",
+    "com.anhquoc0304.validation"
 })
 public class WebAppContextConfig implements WebMvcConfigurer {
 
@@ -102,11 +107,27 @@ public class WebAppContextConfig implements WebMvcConfigurer {
         bean.setValidationMessageSource(messageSource());
         return bean;
     }
+    
+//    @Bean
+//    public Validator userValidator() {
+//        return new UserUsernameValidation();
+//    }
+    
+    @Bean
+    public WebAppValidator userValidator() {
+        Set<Validator> springValidators = new HashSet<>();
+        springValidators.add(new UserUsernameValidation());
+        WebAppValidator v= new WebAppValidator();
+        v.setSpringValidator(springValidators);
+        
+        return v;
+    }
 
     @Bean
     public MessageSource messageSource() {
         ResourceBundleMessageSource resource
                 = new ResourceBundleMessageSource();
+//        resource.setBasename("validation");
         resource.setBasename("validation");
         return resource;
     }

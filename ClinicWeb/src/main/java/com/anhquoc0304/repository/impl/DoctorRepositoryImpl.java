@@ -6,6 +6,7 @@ package com.anhquoc0304.repository.impl;
 
 import com.anhquoc0304.pojo.Doctor;
 import com.anhquoc0304.repository.DoctorRepository;
+import javax.persistence.Query;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,15 +25,26 @@ public class DoctorRepositoryImpl implements DoctorRepository{
     private LocalSessionFactoryBean factory;
     
     @Override
-    public boolean addDoctor(Doctor d) {
+    public boolean addOrUpdateDoctor(Doctor d) {
         Session s = this.factory.getObject().getCurrentSession();
         try {
-            s.save(d);
+            if (d.getId() == null)
+                s.save(d);
+            else
+                s.update(d);
             return true;
         } catch (HibernateException ex) {
             ex.printStackTrace();
         }
         return false;
+    }
+
+    @Override
+    public Doctor getDoctorById(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createQuery("FROM Doctor d WHERE d.userId.id=:key");
+        q.setParameter("key", id);
+        return (Doctor) q.getResultList().get(0);
     }
     
 }

@@ -3,20 +3,6 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
-<%--<c:url value="/ClinicWeb/" var="web" />--%>
-<style>
-    #toggle_btn {
-        align-items: center;
-        color: #333;
-        display: inline-flex;
-        float: left;
-        font-size: 30px;
-        height: 60px;
-        justify-content: center;
-        margin-left: 15px;
-        padding: 0 15px;
-    }
-</style>
 <nav class="navbar navbar-expand-sm navbar-light bg-light">
     <div class="container-fluid">
         <a class="navbar-brand" href="javascript:void(0)">

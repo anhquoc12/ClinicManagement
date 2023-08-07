@@ -11,5 +11,6 @@ import com.anhquoc0304.pojo.Doctor;
  * @author Admin
  */
 public interface DoctorRepository {
-    boolean addDoctor(Doctor d);
+    boolean addOrUpdateDoctor(Doctor d);
+    Doctor getDoctorById(int id);
 }

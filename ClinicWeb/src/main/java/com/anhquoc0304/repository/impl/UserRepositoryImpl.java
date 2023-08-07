@@ -46,10 +46,13 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public boolean addUser(User user) {
+    public boolean addOrUpdateUser(User user) {
         Session s = this.factory.getObject().getCurrentSession();
         try {
-            s.save(user);
+            if (user.getId() == null)
+                s.save(user);
+            else
+                s.update(user);
             return true;
         } catch (HibernateException ex) {
             ex.printStackTrace();
@@ -76,13 +79,43 @@ public class UserRepositoryImpl implements UserRepository {
     public List<Object[]> getUserByUserRole(String userRole) {
         Session s = this.factory.getObject().getCurrentSession();
         Query q;
-        if (userRole == User.ADMIN) {
-            q = s.createQuery("SELECT u.avatar, u.fullName, s.name, u.address, u.email, u.phone FROM Doctor d LEFT JOIN d.userId u LEFT JOIN d.specializationId s WHERE u.userRole = :role");
+        if (userRole == User.DOCTOR) {
+            q = s.createQuery("SELECT u.id, u.avatar, u.fullName, u.address, u.email, u.phone, s.name FROM Doctor d LEFT JOIN d.userId u LEFT JOIN d.specializationId s WHERE u.userRole = :role");
         } else {
-            q = s.createQuery("SELECT u.avatar, u.fullName, u.address, u.phone FROM User u WHERE u.userRole = :role");
+            q = s.createQuery("SELECT u.id, u.avatar, u.fullName, u.address, u.email, u.phone FROM User u WHERE u.userRole = :role");
         }
         q.setParameter("role", userRole);
         return q.getResultList();
+    }
+
+    @Override
+    public boolean existUsername(String username) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createQuery("SELECT u.username FROM User u");
+        List<String> usernames = q.getResultList();
+        if (usernames.contains(username))
+            return true;
+        return false;
+    }
+
+    @Override
+    public User getUserById(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createQuery("FROM User u WHERE u.id=: key");
+        q.setParameter("key", id);
+        return (User) q.getSingleResult();
+    }
+
+    @Override
+    public boolean deleteUser(User user) {
+        Session s = this.factory.getObject().getCurrentSession();
+        try {
+            s.delete(user);
+            return true;
+        } catch (HibernateException ex) {
+            ex.printStackTrace();
+        }
+        return false;
     }
 
 }

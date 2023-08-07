@@ -20,8 +20,13 @@ public class DoctorServiceImpl implements DoctorService{
     private DoctorRepository doctorRepo;
     
     @Override
-    public boolean addDoctor(Doctor d) {
-        return this.doctorRepo.addDoctor(d);
+    public boolean addOrUpdateDoctor(Doctor d) {
+        return this.doctorRepo.addOrUpdateDoctor(d);
+    }
+
+    @Override
+    public Doctor getDoctorById(int id) {
+        return this.doctorRepo.getDoctorById(id);
     }
     
 }

@@ -25,13 +25,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
-//import org.springframework.util.ObjectUtils;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
-import org.springframework.web.servlet.view.JstlView;
 
 /**
  *
@@ -75,14 +72,21 @@ public class WebAppContextConfig implements WebMvcConfigurer {
     }
 
 //    @Bean
-//    public InternalResourceViewResolver
-//            getInternalResourceViewResolver() {
-//        InternalResourceViewResolver resolver
-//                = new InternalResourceViewResolver();
-//        resolver.setViewClass(JstlView.class);
-//        resolver.setPrefix("/WEB-INF/pages/");
-//        resolver.setSuffix(".jsp");
-//        return resolver;
+//    public JavaMailSender javaMailSender() {
+//        JavaMailSenderImpl mail = new JavaMailSenderImpl();
+//        
+//        mail.setHost(env.getProperty("mail.host"));
+//        mail.setPort(Integer.parseInt(env.getProperty("mail.port")));
+//        mail.setUsername(env.getProperty("mail.email"));
+//        mail.setPassword("mail.password");
+//        
+//        Properties prop = mail.getJavaMailProperties();
+//        prop.put("mail.transport.protocol", "smtp");
+//        prop.put("mail.smtp.auth", env.getProperty("mail.properties.smtp.auth"));
+//        prop.put("mail.smtp.starttls.enable", "mail.properties.smtp.starttls.enable");
+//        
+//        return mail;
+//        
 //    }
     @Bean
     public Cloudinary cloudinary() {
@@ -93,6 +97,7 @@ public class WebAppContextConfig implements WebMvcConfigurer {
                 "secure", true));
         return cloudinary;
     }
+
     @Bean
     public CommonsMultipartResolver multipartResolver() {
         CommonsMultipartResolver resolver = new CommonsMultipartResolver();
@@ -107,19 +112,18 @@ public class WebAppContextConfig implements WebMvcConfigurer {
         bean.setValidationMessageSource(messageSource());
         return bean;
     }
-    
+
 //    @Bean
 //    public Validator userValidator() {
 //        return new UserUsernameValidation();
 //    }
-    
     @Bean
     public WebAppValidator userValidator() {
         Set<Validator> springValidators = new HashSet<>();
         springValidators.add(new UserUsernameValidation());
-        WebAppValidator v= new WebAppValidator();
+        WebAppValidator v = new WebAppValidator();
         v.setSpringValidator(springValidators);
-        
+
         return v;
     }
 

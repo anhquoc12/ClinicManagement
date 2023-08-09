@@ -38,10 +38,10 @@
             <tr>
                 <th scope="row">${c.id}</th>
                 <td>${c.name}</td>
-                <c:url value="/admin/room/${c.id}/" var="api" />
+                <c:url value="/admin/medicine/category/${c.id}/" var="api" />
                 <td scope="col"><button onclick="deleteCategory('${api}')" class="btn btn-danger">Xoá</button></th>
             </tr>
         </c:forEach>
     </tbody>
 </table>
-<script src="<c:url value="/js/schedule.js" />"></script>
+<script src="<c:url value="/js/category.js" />"></script>

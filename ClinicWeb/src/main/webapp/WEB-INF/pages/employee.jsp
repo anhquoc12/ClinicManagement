@@ -83,12 +83,14 @@
                                         <label class="focus-label">Khoa Làm Việc</label>
                                     </div>
                                 </c:if>
-                                <div class="form-group form-focus mb-3 dis-none" id="file-avatar">
-                                    <form:input defaultValue="test" required="Please select a file" path="file" class="form-control form-control-lg" id="formFileLg" type="file" />
+                                <c:if test="${user.id == null}">
+                                    <div class="form-group form-focus mb-3 dis-none" id="file-avatar">
+                                        <form:input defaultValue="test" required="Please select a file" path="file" class="form-control form-control-lg" id="formFileLg" type="file" />
 
-                                    <div class="small text-muted mt-2">Upload Avatar của bạn</div>
+                                        <div class="small text-muted mt-2">Upload Avatar của bạn</div>
 
-                                </div>
+                                    </div>
+                                </c:if>
                                 <c:if test="${user.id != null}">
                                     <form:hidden path="avatar" />
                                 </c:if>
@@ -99,8 +101,8 @@
                                             <c:if test="${isDoctor}">Add Doctor</c:if>
                                         </c:when>
                                         <c:otherwise>
-                                            <c:if test="${!isDoctor}">Update Nurse</c:if>
-                                            <c:if test="${isDoctor}">Update Doctor</c:if>
+                                            <c:if test="${user.userRole == 'NURSE'}">Update Nurse</c:if>
+                                            <c:if test="${user.userRole == 'DOCTOR'}">Update Doctor</c:if>
                                         </c:otherwise>
                                     </c:choose>
                                 </button>

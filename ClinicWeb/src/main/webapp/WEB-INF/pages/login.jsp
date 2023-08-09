@@ -12,7 +12,7 @@
         <strong>Failed!</strong> Tài khoản hoặc mật khẩu không chính xác. Vui Lòng Quay Lại Sau.
     </div>
 </c:if>
-<c:if test="${avatar != null}">
+<c:if test="${id != null}">
     <div class="alert alert-danger">
         <strong>Failed!</strong> ${avatar}
     </div>

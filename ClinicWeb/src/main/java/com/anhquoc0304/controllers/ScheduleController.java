@@ -15,10 +15,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -46,15 +45,13 @@ public class ScheduleController {
     private SpecializationService specializationService;
 
     @ModelAttribute
-    public void roomAttr(Model model) {
+    public void commonAttr(Model model) {
+        model.addAttribute("rooms", this.roomService.getRooms());
+        model.addAttribute("users", this.userService.getEmployee());
+        model.addAttribute("specials", this.specializationService.getSpecials());
         model.addAttribute("rooms", this.roomService.getRooms());
     }
-
-    @ModelAttribute
-    public void userAttr(Model model) {
-        model.addAttribute("users", this.userService.getEmployee());
-    }
-
+    
     @RequestMapping("/admin/schedule")
     public String schedule(Model model) {
         model.addAttribute("schedule", new Schedule());
@@ -64,26 +61,13 @@ public class ScheduleController {
     }
 
     @RequestMapping(value = "/admin/schedule", method = RequestMethod.POST)
-    public String addSchedule(@ModelAttribute(value = "schedule") Schedule schedule,
-            Model model, BindingResult br, HttpServletRequest servlet) {
-        List<String> msgErr = new ArrayList<>();
-        if (schedule.getScheduleDate() == null) {
-            msgErr.add("Lỗi không để ngày trực trống");
-        }
-        if (schedule.getShiftStart() == null) {
-            msgErr.add("Lỗi không để giờ bắt đầu trống");
-        }
-        if (schedule.getShiftEnd() == null) {
-            msgErr.add("Lỗi không để giờ kết thúc trống");
-        }
-        if (msgErr.size() == 0) {
+    public String addSchedule(
+            Model model, @ModelAttribute(value = "schedule") @Valid Schedule schedule, BindingResult br, HttpServletRequest servlet) {
+        if (!br.hasErrors()) {
             if (this.scheduleService.addSchedule(schedule)) {
-                model.addAttribute("msg_success", "Thành Công");
+                model.addAttribute("msgSuccess", "Thành Công");
                 return "schedule";
             }
-        } else {
-            model.addAttribute("msg_failed", msgErr);
-
         }
         return "schedule";
     }
@@ -97,15 +81,18 @@ public class ScheduleController {
     }
 
     @RequestMapping(value = "/admin/room", method = RequestMethod.POST)
-    public String addRoom(Model model, @ModelAttribute(value = "room") Room room
-    ) {
+    public String addRoom(Model model, @ModelAttribute(value = "room") @Valid Room room,
+            BindingResult br, HttpServletRequest sevlet) {
         model.addAttribute("msgErr", null);
-        if (this.roomService.addRoom(room)) {
-            return "redirect:/admin/room";
-        } else {
-            model.addAttribute("msgErr", "Có lỗi xảy ra");
-            return "forward:/admin/room";
+        if (!br.hasErrors()) {
+            if (this.roomService.addRoom(room)) {
+                return "redirect:/admin/room";
+            } else {
+                model.addAttribute("msgErr", "Có lỗi xảy ra");
+                return "room";
+            }
         }
+        return "room";
     }
 
     @RequestMapping("/admin/specialization")
@@ -117,18 +104,23 @@ public class ScheduleController {
     }
 
     @RequestMapping(value = "/admin/specialization", method = RequestMethod.POST)
-    public String addSpecialization(Model model, @ModelAttribute(value = "special") Specialization s
+    public String addSpecialization(Model model,
+            @ModelAttribute(value = "special") @Valid Specialization s,
+            BindingResult br, HttpServletRequest servlet
     ) {
         model.addAttribute("msgErr", null);
-        if (this.specializationService.addSpecialization(s)) {
-            return "redirect:/admin/specialization";
-        } else {
-            model.addAttribute("msgErr", "Có lỗi xảy ra");
-            return "forward:/admin/specialization";
+        if (!br.hasErrors()) {
+            if (this.specializationService.addSpecialization(s)) {
+                return "redirect:/admin/specialization";
+            } else {
+                model.addAttribute("msgErr", "Có lỗi xảy ra");
+                return "forward:/admin/specialization";
+            }
         }
+        return "specialization";
     }
 
-    @RequestMapping("/viewSchedule")
+    @RequestMapping("/schedule/viewSchedule")
     public String viewSchedule(Model model
     ) {
         Date date = Date.from(LocalDate.now().atStartOfDay(java.time.ZoneId.systemDefault()).toInstant());
@@ -139,7 +131,7 @@ public class ScheduleController {
         return "viewSchedule";
     }
 
-    @RequestMapping("/viewSchedule/search")
+    @RequestMapping("/schedule/viewSchedule/search")
     public String searchSchedule(Model model, @RequestParam(value = "date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date dateS) throws ParseException {
         SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
         LocalDate local = dateS.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();

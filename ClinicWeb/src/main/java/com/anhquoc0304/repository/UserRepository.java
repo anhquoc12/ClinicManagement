@@ -20,4 +20,5 @@ public interface UserRepository {
     boolean existUsername(String username);
     User getUserById(int id);
     boolean deleteUser(User user);
+//    List<Object[]> getUserByUserRoleAndByName(String userRole);
 }

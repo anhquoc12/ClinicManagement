@@ -38,12 +38,8 @@ public class MedicineController {
     private UnitMedicineService unitService;
 
     @ModelAttribute
-    public void categories(Model model) {
+    public void commonAttr(Model model) {
         model.addAttribute("categories", categoryService.getCategories());
-    }
-
-    @ModelAttribute
-    public void unitMedicines(Model model) {
         model.addAttribute("units", this.unitService.getUnits());
     }
 
@@ -90,10 +86,10 @@ public class MedicineController {
         return "medicine";
     }
 
-    @RequestMapping("/admin/medicine/categories")
-    public String category() {
-        return "category";
-    }
+//    @RequestMapping("/admin/medicine/categories")
+//    public String category() {
+//        return "category";
+//    }
 
     @RequestMapping("/admin/medicine/unit-medicine")
     public String unitMedicine(Model model) {

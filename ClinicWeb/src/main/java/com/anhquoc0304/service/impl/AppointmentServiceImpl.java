@@ -5,6 +5,7 @@
 package com.anhquoc0304.service.impl;
 
 import com.anhquoc0304.pojo.Appointment;
+import com.anhquoc0304.pojo.User;
 import com.anhquoc0304.repository.AppointmentRepository;
 import com.anhquoc0304.service.AppointmentService;
 import java.util.Date;
@@ -36,6 +37,31 @@ public class AppointmentServiceImpl implements AppointmentService{
     @Override
     public List<Appointment> getAppointmentByStatus(String status) {
         return this.appointRepo.getAppointmentByStatus(status);
+    }
+
+    @Override
+    public int countAppointmentByStatus(String status) {
+       return this.appointRepo.countAppointmentByStatus(status);
+    }
+
+    @Override
+    public List<Appointment> getAppointmentByCurrentUser(User user) {
+        return this.appointRepo.getAppointmentByCurrentUser(user);
+    }
+
+    @Override
+    public boolean setAppointmentStatus(Appointment a, String status) {
+        return this.appointRepo.setAppointmentStatus(a, status);
+    }
+
+    @Override
+    public Appointment getAppointmentById(int id) {
+        return this.appointRepo.getAppointmentById(id);
+    }
+
+    @Override
+    public List<Appointment> getAppointmentToday() {
+        return this.appointRepo.getAppointmentToday();
     }
     
 }

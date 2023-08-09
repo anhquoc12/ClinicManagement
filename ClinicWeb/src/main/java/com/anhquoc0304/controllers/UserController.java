@@ -19,6 +19,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -43,7 +44,7 @@ public class UserController {
     private SpecializationService specialService;
     @Autowired
     private DoctorService doctorService;
-    
+
     @ModelAttribute
     public void specialList(Model model) {
         model.addAttribute("specials", this.specialService.getSpecials());
@@ -79,7 +80,6 @@ public class UserController {
 
             user.setUserRole(User.PATIENT);
             if (this.UserDetailsService.addOrUpdateUser(user)) {
-                model.addAttribute("avatar", user.getFile());
                 return "login";
             } else {
                 msgErr.add("Đã có Lỗi khi đăng ký! Vui Lòng thử lại");
@@ -99,7 +99,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/admin/doctor", method = RequestMethod.POST)
-    public String addOrUpdateDoctor(@RequestParam(value = "specialization") String special,
+    public String addOrUpdateDoctor(@RequestParam(value = "specialization") String specialId,
             Model model, @ModelAttribute(value = "user") @Valid User user,
             BindingResult br, HttpServletRequest servlet) {
         if (br.hasErrors()) {
@@ -115,32 +115,28 @@ public class UserController {
                         ObjectUtils.asMap("resource_type", "auto"));
                 user.setAvatar((String) m.get("secure_url"));
             } catch (IOException ex) {
-                msg = ex.getMessage();
-                return "register";
+                return doctor(model);
             }
         }
         user.setUserRole(User.DOCTOR);
         if (this.UserDetailsService.addOrUpdateUser(user)) {
             // Nếu Thành công
-            Doctor d;
-            if (user.getId() == null)
-                d = new Doctor();
-            else
-                d = this.doctorService.getDoctorById(user.getId());
+            Doctor d = this.doctorService.getDoctorById(this.UserDetailsService
+                        .getCurrentUser(user.getUsername()).getId());
             d.setUserId(user);
-            d.setSpecializationId(this.specialService.getSpecializationById(Integer.parseInt(special)));
+            d.setSpecializationId(this.specialService
+                    .getSpecializationById(Integer.parseInt(specialId)));
             if (this.doctorService.addOrUpdateDoctor(d)) {
-                return "redirect:/";
+                return "redirect:/admin/users/doctor";
             } else {
                 msg = "Có Lỗi Xảy ra Chuyên Ngành";
             }
         } else {
             msg = "Có lỗi xảy ra";
         }
-        model.addAttribute("msg", msg);
-        return "index";
+        return "redirect:/admin/users/doctor";
     }
-    
+
     @RequestMapping("/admin/doctor/{id}")
     public String updateDoctor(Model model, @PathVariable(value = "id") int id) {
         model.addAttribute("user", this.UserDetailsService.getUserById(id));
@@ -175,14 +171,14 @@ public class UserController {
         }
         user.setUserRole(User.NURSE);
         if (this.UserDetailsService.addOrUpdateUser(user)) {
-            return "redirect:/";
+            return "redirect:/admin/users/nurse";
         } else {
             msg = "Đã có Lỗi!Vui Lòng thử lại";
         }
         model.addAttribute("msg", msg);
         return "employee";
     }
-    
+
     @RequestMapping("/admin/nurse/{id}")
     public String updateNurse(Model model, @PathVariable(value = "id") int id) {
         model.addAttribute("user", this.UserDetailsService.getUserById(id));
@@ -190,23 +186,88 @@ public class UserController {
     }
 
     @RequestMapping("/admin/users/doctor")
-    public String doctors(Model model) {
+    public String doctors(Model model, @RequestParam Map<String, String> params) {
+        String name = params.get("name");
+        String special = params.get("special");
+
+        List<Object[]> users = this.UserDetailsService.getUserByUserRole(User.DOCTOR);
+        List<Object[]> filterUser = new ArrayList<>();
+
+        if (name != null && !name.isEmpty()) {
+            for (Object[] u : users) {
+                if (u[2].toString().contains(name)) {
+                    filterUser.add(u);
+                }
+            }
+            if (filterUser.size() > 0) {
+                model.addAttribute("userList", filterUser);
+            }
+        } else if (special != null && !special.isEmpty()) {
+            int id = Integer.parseInt(special);
+            filterUser.clear();
+            for (Object[] u : users) {
+                if (Integer.parseInt(u[7].toString()) == id) {
+                    filterUser.add(u);
+                }
+            }
+            if (filterUser.size() > 0) {
+                model.addAttribute("userList", filterUser);
+            }
+        } else {
+            model.addAttribute("userList", users);
+        }
         model.addAttribute("path", "Doctor");
-        model.addAttribute("userList", this.UserDetailsService.getUserByUserRole(User.DOCTOR));
+
         return "users";
     }
 
     @RequestMapping("/admin/users/patient")
-    public String patients(Model model) {
+    public String patients(Model model, @RequestParam Map<String, String> params) {
+        String name = params.get("name");
+        List<Object[]> users = this.UserDetailsService.getUserByUserRole(User.PATIENT);
+        List<Object[]> filterUsers = new ArrayList<>();
+        if (name != null && !name.isEmpty()) {
+            for (Object[] u : users) {
+                if (u[2].toString().contains(name))
+                    filterUsers.add(u);
+            }
+            if (filterUsers.size() > 0)
+                model.addAttribute("userList", filterUsers);
+        }
+        else
+            model.addAttribute("userList",users);
         model.addAttribute("path", "Patient");
-        model.addAttribute("userList", this.UserDetailsService.getUserByUserRole(User.PATIENT));
+        
         return "users";
     }
 
     @RequestMapping("/admin/users/nurse")
-    public String nurses(Model model) {
+    public String nurses(Model model, @RequestParam Map<String, String> params) {
+        String name = params.get("name");
+        List<Object[]> users = this.UserDetailsService.getUserByUserRole(User.NURSE);
+        List<Object[]> filterUsers = new ArrayList<>();
+        if (name != null && !name.isEmpty()) {
+            for (Object[] u : users) {
+                if (u[2].toString().contains(name))
+                    filterUsers.add(u);
+            }
+            if (filterUsers.size() > 0)
+                model.addAttribute("userList", filterUsers);
+        }
+        else
+            model.addAttribute("userList",users);
         model.addAttribute("path", "Nurse");
-        model.addAttribute("userList", this.UserDetailsService.getUserByUserRole(User.NURSE));
+        
         return "users";
+    }
+
+    @RequestMapping("/infoUser")
+    public String infoUser(Model model) {
+        User u = this.UserDetailsService.
+                getCurrentUser(
+                        SecurityContextHolder.getContext()
+                                .getAuthentication().getName());
+        model.addAttribute("user", u);
+        return "infoUser";
     }
 }

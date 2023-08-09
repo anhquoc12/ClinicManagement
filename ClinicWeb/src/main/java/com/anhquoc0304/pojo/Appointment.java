@@ -21,6 +21,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Future;
+import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -46,6 +47,7 @@ public class Appointment implements Serializable {
     public static final String WAITTING = "WAITTING";
     public static final String CONFIRMED = "CONFIRMED";
     public static final String CANCLED = "CANCLED";
+    public static final String PRESENT = "PRESENT";
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -57,7 +59,6 @@ public class Appointment implements Serializable {
     @Column(name = "appointment_date")
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Future(message = "{appointment.appointmentDate.futureMsg}")
     @NotNull(message = "{appointment.appointmentDate.notNullMsg}")
     private Date appointmentDate;
     @Lob

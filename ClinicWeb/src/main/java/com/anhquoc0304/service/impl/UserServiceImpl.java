@@ -5,6 +5,7 @@
 package com.anhquoc0304.service.impl;
 
 
+import com.anhquoc0304.pojo.Appointment;
 import com.anhquoc0304.pojo.User;
 import com.anhquoc0304.repository.UserRepository;
 import com.anhquoc0304.service.UserService;

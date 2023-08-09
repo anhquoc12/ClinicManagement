@@ -44,7 +44,7 @@ public class DoctorRepositoryImpl implements DoctorRepository{
         Session s = this.factory.getObject().getCurrentSession();
         Query q = s.createQuery("FROM Doctor d WHERE d.userId.id=:key");
         q.setParameter("key", id);
-        return (Doctor) q.getResultList().get(0);
+        return !q.getResultList().isEmpty() ? (Doctor) q.getResultList().get(0) : new Doctor();
     }
     
 }

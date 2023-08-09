@@ -17,6 +17,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.util.matcher.AndRequestMatcher;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
@@ -79,7 +80,14 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         
         http.authorizeHttpRequests().requestMatchers(new AntPathRequestMatcher("/")).permitAll()
                 .requestMatchers(new AntPathRequestMatcher("/admin/**")).hasAuthority(User.ADMIN)
-                .requestMatchers(new AntPathRequestMatcher("/appointment/**")).hasAuthority(User.PATIENT);
+                .requestMatchers(new AntPathRequestMatcher("/appointment/**")).hasAuthority(User.PATIENT)
+                .requestMatchers(new AntPathRequestMatcher("/infoUser/**")).hasAnyAuthority(
+                User.ADMIN, User.DOCTOR, User.NURSE, User.PATIENT)
+                .requestMatchers(new AntPathRequestMatcher("/listAppointment/**"))
+                .hasAnyAuthority(User.PATIENT)
+                .requestMatchers(new AntPathRequestMatcher("/nurse/**"))
+                .hasAuthority(User.NURSE);
+        
                 
         http.csrf().disable();
         

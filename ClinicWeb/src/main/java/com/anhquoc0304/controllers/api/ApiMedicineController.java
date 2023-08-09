@@ -4,6 +4,7 @@
  */
 package com.anhquoc0304.controllers.api;
 
+import com.anhquoc0304.service.AppointmentService;
 import com.anhquoc0304.service.CategoryService;
 import com.anhquoc0304.service.MedicineService;
 import com.anhquoc0304.service.UnitMedicineService;

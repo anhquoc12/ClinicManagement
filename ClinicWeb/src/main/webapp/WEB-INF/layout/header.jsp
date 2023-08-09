@@ -3,6 +3,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+
 <nav class="navbar navbar-expand-sm navbar-light bg-light">
     <div class="container-fluid">
         <a class="navbar-brand" href="javascript:void(0)">
@@ -19,7 +20,67 @@
                         <a class="nav-link" href="<c:url value="/appointment" />">Đăng Ký Lịch Khám</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/">Lịch Sử Đăng Ký</a>
+                        <a class="nav-link" href="<c:url value="/listAppointment" />">Lịch Sử Đăng Ký</a>
+                    </li>
+                </security:authorize>
+                <security:authorize access="hasAuthority('ADMIN')">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown">
+                            Users
+                            <i class="fa-solid fa-chevron-up fa-rotate-180 fa-lg" style="margin-left: 4px;"></i>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <c:url value="/admin/users" var="url" />
+                            <li><a class="dropdown-item" href="${url}/doctor">Bác Sỹ</a></li>
+                            <li><a class="dropdown-item" href="${url}/nurse">Y Tá</a></li>
+                            <li><a class="dropdown-item" href="${url}/patient">Bệnh Nhân</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown">
+                            Thuốc
+                            <i class="fa-solid fa-chevron-up fa-rotate-180 fa-lg" style="margin-left: 4px;"></i>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <c:url value="/admin/medicine" var="url" />
+                            <li><a class="dropdown-item" href="<c:url value="/admin/medicineList" />">Danh Sách Thuốc</a></li>
+                            <li><a class="dropdown-item" href="${url}/category">Đơn Vị Thuốc</a></li>
+                            <li><a class="dropdown-item" href="${url}/unit-medicine">Loại Thuốc</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown">
+                            Lịch Trực Phòng
+                            <i class="fa-solid fa-chevron-up fa-rotate-180 fa-lg" style="margin-left: 4px;"></i>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <c:url value="/admin" var="url" />
+                            <li><a class="dropdown-item" href="<c:url value="/schedule/viewSchedule" />">Lịch Trực</a></li>
+                            <li><a class="dropdown-item" href="${url}/room">Phòng Trực</a></li>
+                            <li><a class="dropdown-item" href="${url}/specialization">Chuyên Khoa</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="">Thống Kê - Báo cáo</a>
+                    </li>
+                </security:authorize>
+                <security:authorize access="hasAuthority('NURSE')">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown">
+                            lịch Khám bệnh
+                            <i class="fa-solid fa-chevron-up fa-rotate-180 fa-lg" style="margin-left: 4px;"></i>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <c:url value="/admin" var="url" />
+                            <li><a class="dropdown-item" href="<c:url value="/nurse/unConfirmed" />">Cần được xác nhận</a></li>
+                            <li><a class="dropdown-item" href="<c:url value="/nurse/todayAppointment" />">Lịch Khám Hôm Nay</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<c:url value="/schedule/viewSchedule" />">Lịch Trực</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="">Thanh Toán</a>
                     </li>
                 </security:authorize>
             </ul>
@@ -50,7 +111,7 @@
                                 <a class="dropdown-item" href="#">${pageContext.request.userPrincipal.name}</a>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="#">Account Info</a>
+                                <a class="dropdown-item" href="<c:url value="/infoUser" />">Account Info</a>
                             </li>
                             <li>
                                 <a class="dropdown-item" href="<c:url value="/logout" />">Logout</a>
@@ -62,30 +123,3 @@
         </div>
     </div>
 </nav>
-<script>
-    var Sidemenu = function () {
-        this.$menuItem = $('#sidebar-menu a');
-    };
-
-    function init() {
-        var $this = Sidemenu;
-        $('#sidebar-menu a').on('click', function (e) {
-            if ($(this).parent().hasClass('submenu')) {
-                e.preventDefault();
-            }
-            if (!$(this).hasClass('subdrop')) {
-                $('ul', $(this).parents('ul:first')).slideUp(350);
-                $('a', $(this).parents('ul:first')).removeClass('subdrop');
-                $(this).next('ul').slideDown(350);
-                $(this).addClass('subdrop');
-            } else if ($(this).hasClass('subdrop')) {
-                $(this).removeClass('subdrop');
-                $(this).next('ul').slideUp(350);
-            }
-        });
-        $('#sidebar-menu ul li.submenu a.active').parents('li:last').children('a:first').addClass('active').trigger('click');
-    }
-
-    // Sidebar Initiate
-    init();
-</script>

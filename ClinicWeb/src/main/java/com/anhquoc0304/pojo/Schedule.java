@@ -49,17 +49,17 @@ public class Schedule implements Serializable {
     @Column(name = "schedule_date")
     @Temporal(TemporalType.DATE)
     @NotNull(message = "{schedule.scheduleDate.notNullMsg}")
-    @Future(message = "test future")
+    @Future(message = "{schedule.scheduleDate.FutureMsg}")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date scheduleDate;
     @Column(name = "shift_start")
     @Temporal(TemporalType.TIME)
-//    @NotNull(message = "{schedule.shiftStart.notNullMsg}")
+    @NotNull(message = "{schedule.shiftStart.notNullMsg}")
     @DateTimeFormat(pattern = "HH:mm")
     private Date shiftStart;
     @Column(name = "shift_end")
     @Temporal(TemporalType.TIME)
-//    @NotNull(message = "{schedule.shiftEnd.notNullMsg}")
+    @NotNull(message = "{schedule.shiftEnd.notNullMsg}")
     @DateTimeFormat(pattern = "HH:mm")
     private Date shiftEnd;
     @JoinColumn(name = "room_id", referencedColumnName = "id")

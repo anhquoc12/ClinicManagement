@@ -8,10 +8,10 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="s" uri="http://www.springframework.org/security/tags" %>
 <div class="d-flex flex-row mb-3">
-    <div class="p-2">
+    <div class="p-2 mt-3">
         <form class="input-group">
             <div class="form-outline">
-                <input name="name" type="search" id="form1" class="form-control" />
+                <input name="name" type="search" id="form1" class="form-control"/>
                 <label class="form-label" for="form1">Search</label>
             </div>
             <button type="submit" class="btn btn-primary">
@@ -20,16 +20,16 @@
         </form>
     </div>
     <c:if test="${path == 'Doctor'}">
-        <form class="d-flex flex-row mb-3">
-            <div class="p-2">
+        <form class="d-flex flex-row mb-3 form-floating">
+            <div class="p-2 mt-3">
                 <select  class="form-select" name="special">
                     <c:forEach items="${specials}" var="s">
                         <option value="${s.id}">${s.name}</option>
                     </c:forEach>
                 </select>
             </div>
-            <div class="p-2">
-                <button type="submit" class="btn btn-primary">
+            <div class="p-2 mt-3">
+                <button type="submit" class="btn btn-info">
                     Tìm Kiếm theo chuyên khoa
                 </button>
             </div>
@@ -37,6 +37,16 @@
     </c:if>
 
 </div>
+<c:if test="${path == 'Doctor'}">
+<div style="margin-left: 24px;">
+    <a href="<c:url value="/admin/doctor" />" class="btn btn-primary">Thêm Bác Sỹ</a>
+</div>
+</c:if>
+<c:if test="${path == 'Nurse'}">
+<div style="margin-left: 24px;">
+    <a href="<c:url value="/admin/nurse" />" class="btn btn-primary">Thêm Y Tá</a>
+</div>
+</c:if>
 <div class="content container-fluid" style="margin-top:30px;">
 
     <!-- Page Header -->
@@ -93,10 +103,10 @@
                                                 <c:url value="/admin/nurse/${u[0]}" var="api" />
                                             </c:if>
                                             <c:if test="${path != 'Patient' }">
-                                            <td><a href="${api}" class="btn btn-warning">Cập Nhật</a></td>
-                                            <td><button onclick="deleteUser('${api}')" class="btn btn-danger">Xoá</button></td>
-                                        </c:if>
-                                            </tr>
+                                                <td><a href="${api}" class="btn btn-warning">Cập Nhật</a></td>
+                                                <td><button onclick="deleteUser('${api}')" class="btn btn-danger">Xoá</button></td>
+                                            </c:if>
+                                        </tr>
                                     </c:forEach>
                                 </tbody>
                             </table>

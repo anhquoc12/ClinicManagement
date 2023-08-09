@@ -11,6 +11,10 @@ import com.anhquoc0304.service.AppointmentService;
 import com.anhquoc0304.service.SpecializationService;
 import com.anhquoc0304.service.UserService;
 import java.security.Principal;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -39,7 +43,7 @@ public class AppointmentController {
     private UserService userDetailService;
 
     @ModelAttribute
-    public void specials(Model model) {
+    public void commonAttr(Model model) {
         List<Specialization> listSpecial = this.specialService.getSpecials();
         model.addAttribute("listSpecial", listSpecial);
     }
@@ -73,5 +77,41 @@ public class AppointmentController {
         }
         model.addAttribute("msgErr", "Có lỗi ngoài ý muốn xảy ra vui lòng thử lại");
         return "appointment";
+    }
+
+    @RequestMapping("/listAppointment")
+    public String listAppointment(Model model) {
+        try {
+            model.addAttribute("list",
+                    this.appoimentService.
+                            getAppointmentByCurrentUser(
+                                    this.userDetailService
+                                            .getCurrentUser(SecurityContextHolder.getContext().
+                                                    getAuthentication().getName())));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return "listAppointment";
+    }
+
+    @RequestMapping("/nurse/unConfirmed")
+    public String listUnConfirmed(Model model) {
+        try {
+            model.addAttribute("list",
+                    this.appoimentService.
+                            getAppointmentByStatus(Appointment.WAITTING));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        model.addAttribute("isNurse", true);
+        return "listAppointment";
+    }
+    
+    @RequestMapping("/nurse/todayAppointment")
+    public String listToday(Model model) {
+        model.addAttribute("date", this.appoimentService.getAppointmentById(33).getAppointmentDate());
+        model.addAttribute("today", true);
+        model.addAttribute("list", this.appoimentService.getAppointmentToday());
+        return "listAppointment";
     }
 }

@@ -63,16 +63,20 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
         <put-attribute name="content" value="/WEB-INF/pages/viewSchedule.jsp" />
     </definition>
     <definition name="employee" extends="base">
-        <put-attribute name="title" value="Thêm Bác Sỹ" />
+        <put-attribute name="title" value="Đăng Ký Nhân Viên" />
         <put-attribute name="content" value="/WEB-INF/pages/employee.jsp" />
     </definition>
     <definition name="users" extends="base">
-        <put-attribute name="title" value="Thêm Bác Sỹ" />
+        <put-attribute name="title" value="Nhân Viên" />
         <put-attribute name="content" value="/WEB-INF/pages/users.jsp" />
     </definition>
-    <definition name="admin" extends="base">
-        <put-attribute name="title" value="Quản trị admin" />
-        <put-attribute name="content" value="/WEB-INF/pages/admin.jsp" />
+    <definition name="infoUser" extends="base">
+        <put-attribute name="title" value="Thông tin tài khoản" />
+        <put-attribute name="content" value="/WEB-INF/pages/infoUser.jsp" />
+    </definition>
+    <definition name="listAppointment" extends="base">
+        <put-attribute name="title" value="Lịch Khám Bệnh" />
+        <put-attribute name="content" value="/WEB-INF/pages/listAppointment.jsp" />
     </definition>
 </tiles-definitions>
 

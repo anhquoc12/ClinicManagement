@@ -10,6 +10,7 @@
             <div class="form-outline">
                 <form:input path="name" name="name1" type="text" id="name" class="form-control" />
                 <label class="form-label" for="name">Tên Phòng</label>
+                <form:errors path="name" element="h6" cssClass="text-danger" />
             </div>
             <button type="submit" class="btn btn-primary">
                 Thêm Phòng

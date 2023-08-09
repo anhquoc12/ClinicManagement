@@ -8,11 +8,6 @@ import com.anhquoc0304.pojo.User;
 import com.anhquoc0304.repository.UserRepository;
 import java.util.List;
 import javax.persistence.Query;
-import javax.persistence.TemporalType;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,7 +75,7 @@ public class UserRepositoryImpl implements UserRepository {
         Session s = this.factory.getObject().getCurrentSession();
         Query q;
         if (userRole == User.DOCTOR) {
-            q = s.createQuery("SELECT u.id, u.avatar, u.fullName, u.address, u.email, u.phone, s.name FROM Doctor d LEFT JOIN d.userId u LEFT JOIN d.specializationId s WHERE u.userRole = :role");
+            q = s.createQuery("SELECT u.id, u.avatar, u.fullName, u.address, u.email, u.phone, s.name, s.id FROM Doctor d LEFT JOIN d.userId u LEFT JOIN d.specializationId s WHERE u.userRole = :role");
         } else {
             q = s.createQuery("SELECT u.id, u.avatar, u.fullName, u.address, u.email, u.phone FROM User u WHERE u.userRole = :role");
         }

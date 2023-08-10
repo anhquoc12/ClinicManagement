@@ -22,4 +22,5 @@ public interface AppointmentService {
     boolean setAppointmentStatus(Appointment a, String status);
     Appointment getAppointmentById(int id);
     List<Appointment> getAppointmentToday();
+    Appointment getAppointmentByPatientId(User patient);
 }

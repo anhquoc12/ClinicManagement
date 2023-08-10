@@ -7,7 +7,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<h1 class="text-center text-success" style="margin: 3px;">Quản Lý Thuốc</h1>
+<h1 class="text-center text-success" style="margin: 3px;">Toa Thuốc</h1>
+<div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-offset="0" class="scrollspy-example" tabindex="0">
 <div class="d-flex flex-row mb-3">
     <div class="p-2"><a href="<c:url value="/admin/medicine"></c:url>" class="btn btn-primary">Thêm thuốc</a></div>
         <div class="p-2">
@@ -67,4 +68,4 @@
         </c:forEach>
     </tbody>
 </table>
-<script src="<c:url value="/js/medicine.js" />"></script>
+</div>

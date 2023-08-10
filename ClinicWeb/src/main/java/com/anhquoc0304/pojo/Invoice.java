@@ -36,6 +36,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Invoice implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    public static final String NOPAY = "NO_PAY";
+    public static final String PAYED = "PAYED";
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -45,7 +48,7 @@ public class Invoice implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createDate;
     @Column(name = "payment_status")
-    private Boolean paymentStatus;
+    private String paymentStatus;
     @JoinColumn(name = "medical_record_id", referencedColumnName = "id")
     @ManyToOne
     private MedicalRecord medicalRecordId;
@@ -76,11 +79,11 @@ public class Invoice implements Serializable {
         this.createDate = createDate;
     }
 
-    public Boolean getPaymentStatus() {
+    public String getPaymentStatus() {
         return paymentStatus;
     }
 
-    public void setPaymentStatus(Boolean paymentStatus) {
+    public void setPaymentStatus(String paymentStatus) {
         this.paymentStatus = paymentStatus;
     }
 

@@ -22,4 +22,5 @@ public interface AppointmentRepository {
     public int countAppointmentByStatus(String status);
     public boolean setAppointmentStatus(Appointment a, String status);
     public List<Appointment> getAppointmentToday();
+    public Appointment getAppointmentByPatientId(User patient);
 }

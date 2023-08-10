@@ -78,5 +78,12 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
         <put-attribute name="title" value="Lịch Khám Bệnh" />
         <put-attribute name="content" value="/WEB-INF/pages/listAppointment.jsp" />
     </definition>
+    <definition name="medical" extends="base">
+        <put-attribute name="title" value="Khám Bệnh" />
+        <put-attribute name="content" value="/WEB-INF/pages/medical.jsp" />
+    </definition><definition name="prescription" extends="base">
+        <put-attribute name="title" value="Toa Thuốc" />
+        <put-attribute name="content" value="/WEB-INF/pages/prescription.jsp" />
+    </definition>
 </tiles-definitions>
 

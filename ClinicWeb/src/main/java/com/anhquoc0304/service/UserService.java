@@ -21,4 +21,5 @@ public interface UserService extends UserDetailsService {
     boolean existUsername(String username);
     User getUserById(int id);
     boolean deleteUser(User user);
+    List<User> getPatientByAppointmentToday();
 }

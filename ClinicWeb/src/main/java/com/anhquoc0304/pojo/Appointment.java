@@ -48,6 +48,7 @@ public class Appointment implements Serializable {
     public static final String CONFIRMED = "CONFIRMED";
     public static final String CANCLED = "CANCLED";
     public static final String PRESENT = "PRESENT";
+    public static final String FINISHED = "FINISHED";
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)

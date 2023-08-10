@@ -6,6 +6,7 @@ package com.anhquoc0304.pojo;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -20,6 +21,12 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -43,13 +50,18 @@ public class MedicalRecord implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    @Column(name = "created_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdDate;
     @Lob
     @Size(max = 65535)
     @Column(name = "symptom")
+    @NotEmpty(message = "{medicalRecord.symptom.notEmpty}")
     private String symptom;
     @Lob
     @Size(max = 65535)
     @Column(name = "conclusion")
+    @NotEmpty(message = "{medicalRecord.conclusion.notEmpty}")
     private String conclusion;
     @Lob
     @Size(max = 65535)
@@ -57,6 +69,9 @@ public class MedicalRecord implements Serializable {
     private String advice;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "examination_fee")
+    @Positive(message = "{medicalRecord.examinationFee.positive}")
+    @NotNull(message = "{medicalRecord.examinationFee.notNull}")
+    @Min(value = 20000, message = "{medicalRecord.examinationFee.minValue}")
     private BigDecimal examinationFee;
     @Lob
     @Size(max = 65535)
@@ -185,6 +200,20 @@ public class MedicalRecord implements Serializable {
     @Override
     public String toString() {
         return "com.anhquoc0304.pojo.MedicalRecord[ id=" + id + " ]";
+    }
+
+    /**
+     * @return the createdDate
+     */
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    /**
+     * @param createdDate the createdDate to set
+     */
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
     }
     
 }

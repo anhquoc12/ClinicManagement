@@ -4,6 +4,7 @@
  */
 package com.anhquoc0304.repository.impl;
 
+import com.anhquoc0304.pojo.Appointment;
 import com.anhquoc0304.pojo.User;
 import com.anhquoc0304.repository.UserRepository;
 import java.util.List;
@@ -111,6 +112,14 @@ public class UserRepositoryImpl implements UserRepository {
             ex.printStackTrace();
         }
         return false;
+    }
+
+    @Override
+    public List<User> getPatientByAppointmentToday() {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createQuery("SELECT a.patientId FROM Appointment a WHERE a.appointmentDate = CURRENT_DATE AND a.appointmentStatus =: status");
+        q.setParameter("status", Appointment.PRESENT);
+        return q.getResultList();
     }
 
 }

@@ -111,5 +111,14 @@ public class AppointmentRepositoryImpl implements AppointmentRepository{
         q.setParameter("status", Appointment.CONFIRMED);
         return q.getResultList();
     }
+
+    @Override
+    public Appointment getAppointmentByPatientId(User patient) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createQuery("FROM Appointment a WHERE a.patientId.id =: patientId AND a.appointmentDate = CURRENT_DATE AND a.appointmentStatus =: status");
+        q.setParameter("patientId", patient.getId());
+        q.setParameter("status", Appointment.PRESENT);
+        return (Appointment) q.getResultList().get(0);
+    }
     
 }

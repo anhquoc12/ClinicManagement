@@ -83,6 +83,22 @@
                         <a class="nav-link" href="">Thanh Toán</a>
                     </li>
                 </security:authorize>
+                <security:authorize access="hasAuthority('DOCTOR')">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown">
+                            Khám bệnh
+                            <i class="fa-solid fa-chevron-up fa-rotate-180 fa-lg" style="margin-left: 4px;"></i>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <c:url value="/admin" var="url" />
+                            <li><a class="dropdown-item" href="<c:url value="/doctor/medical" />">Phiếu Khám Bệnh</a></li>
+                            <li><a class="dropdown-item" href="<c:url value="/nurse/todayAppointment" />">Lịch Sử Khám Bệnh</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<c:url value="/schedule/viewSchedule" />">Lịch Trực</a>
+                    </li>
+                </security:authorize>
             </ul>
             <c:if test="${pageContext.request.userPrincipal.name == null}">
                 <div class="d-flex">

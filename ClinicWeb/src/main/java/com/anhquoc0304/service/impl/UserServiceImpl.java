@@ -88,4 +88,9 @@ public class UserServiceImpl implements UserService {
         return this.userRepo.deleteUser(user);
     }
 
+    @Override
+    public List<User> getPatientByAppointmentToday() {
+        return this.userRepo.getPatientByAppointmentToday();
+    }
+
 }

@@ -86,7 +86,9 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .requestMatchers(new AntPathRequestMatcher("/listAppointment/**"))
                 .hasAnyAuthority(User.PATIENT)
                 .requestMatchers(new AntPathRequestMatcher("/nurse/**"))
-                .hasAuthority(User.NURSE);
+                .hasAuthority(User.NURSE)
+                .requestMatchers(new AntPathRequestMatcher("/doctor/**"))
+                .hasAuthority(User.DOCTOR);
         
                 
         http.csrf().disable();

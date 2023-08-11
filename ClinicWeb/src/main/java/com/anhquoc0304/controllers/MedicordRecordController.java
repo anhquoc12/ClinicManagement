@@ -7,6 +7,7 @@ package com.anhquoc0304.controllers;
 import com.anhquoc0304.pojo.Appointment;
 import com.anhquoc0304.pojo.Invoice;
 import com.anhquoc0304.pojo.MedicalRecord;
+import com.anhquoc0304.pojo.Prescription;
 import com.anhquoc0304.pojo.User;
 import com.anhquoc0304.service.AppointmentService;
 import com.anhquoc0304.service.CategoryService;
@@ -24,6 +25,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -88,17 +90,14 @@ public class MedicordRecordController {
         return "medical";
     }
 
-    @RequestMapping("/doctor/prescription")
-    public String prescription(Model model, @RequestParam Map<String, String> params) {
-        String name = params.get("name");
-        String categoryName = params.get("cate");
-        if (categoryName != null && !categoryName.isEmpty()) {
-            int id = Integer.parseInt(categoryName);
-            model.addAttribute("medicines", this.medicineService.getMedicineByCategoryName(id));
-        } else {
-            model.addAttribute("medicines", this.medicineService.getMedicineByName(name));
-        }
-        model.addAttribute("categories", this.categoryService.getCategories());
+    @RequestMapping("/doctor/prescription/{id}")
+    public String prescription(Model model, @PathVariable(value = "id") int id) {
+        model.addAttribute("medicines", this.medicineService.getMedicineByName(null));
+//        MedicalRecord m = this.medicalService.getMedicalRecordById(id);
+//        model.addAttribute("medical", m);
+        Prescription p = new Prescription();
+//        p.setMedicalRecordId(m);
+        model.addAttribute("prescription", p);
         return "prescription";
     }
 }

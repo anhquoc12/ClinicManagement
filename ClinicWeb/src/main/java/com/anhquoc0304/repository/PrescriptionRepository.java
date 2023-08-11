@@ -4,13 +4,12 @@
  */
 package com.anhquoc0304.repository;
 
-import com.anhquoc0304.pojo.MedicalRecord;
+import com.anhquoc0304.pojo.Prescription;
 
 /**
  *
  * @author Admin
  */
-public interface MedicalRecordRepository {
-    boolean addMedicalRecord(MedicalRecord m);
-    MedicalRecord getMedicalRecordById(int id);
+public interface PrescriptionRepository {
+    boolean addPrescription(Prescription p);
 }

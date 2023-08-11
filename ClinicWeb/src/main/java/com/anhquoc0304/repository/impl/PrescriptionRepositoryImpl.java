@@ -4,9 +4,8 @@
  */
 package com.anhquoc0304.repository.impl;
 
-import com.anhquoc0304.pojo.MedicalRecord;
-import com.anhquoc0304.repository.MedicalRecordRepository;
-import javax.persistence.Query;
+import com.anhquoc0304.pojo.Prescription;
+import com.anhquoc0304.repository.PrescriptionRepository;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,28 +19,20 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository
 @Transactional
-public class MedicalRecordRepositoryImpl implements MedicalRecordRepository {
+public class PrescriptionRepositoryImpl implements PrescriptionRepository {
     @Autowired
     private LocalSessionFactoryBean factory;
 
     @Override
-    public boolean addMedicalRecord(MedicalRecord m) {
+    public boolean addPrescription(Prescription p) {
         Session s = this.factory.getObject().getCurrentSession();
         try {
-            s.save(m);
+            s.save(p);
             return true;
         } catch (HibernateException ex) {
             ex.printStackTrace();
         }
         return false;
-    }
-
-    @Override
-    public MedicalRecord getMedicalRecordById(int id) {
-        Session s = this.factory.getObject().getCurrentSession();
-        Query q = s.createQuery("FROM MedicalRecord m WHERE m.id =: key");
-        q.setParameter("key", id);
-        return (MedicalRecord) q.getResultList().get(0);
     }
     
 }

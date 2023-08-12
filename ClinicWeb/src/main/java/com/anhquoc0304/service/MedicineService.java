@@ -17,4 +17,5 @@ public interface MedicineService {
     boolean addOrUpdateMedicine(Medicine medicine);
     boolean deleteMedicine(Medicine medicine);
     Medicine getMedicineById(int id);
+    boolean updateUnitInStock(Medicine m, int count);
 }

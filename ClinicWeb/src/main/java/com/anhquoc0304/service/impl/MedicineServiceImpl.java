@@ -44,5 +44,10 @@ public class MedicineServiceImpl implements MedicineService{
     public Medicine getMedicineById(int id) {
         return this.medicineRepo.getMedicineById(id);
     }
+
+    @Override
+    public boolean updateUnitInStock(Medicine m, int count) {
+        return this.medicineRepo.updateUnitInStock(m, count);
+    }
     
 }

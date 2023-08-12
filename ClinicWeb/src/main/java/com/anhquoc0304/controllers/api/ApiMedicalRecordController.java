@@ -27,9 +27,9 @@ public class ApiMedicalRecordController {
     @Autowired
     private MedicalRecordService medicalService;
     
-    @RequestMapping(value = "/doctor/prescription/{id}", method = RequestMethod.POST)
-    @ResponseStatus(HttpStatus.CREATED)
-    public void addPrescription(@PathVariable(value = "id") int id) {
-        MedicalRecord m = this.medicalService.getMedicalRecordById(id);
-    }
+//    @RequestMapping(value = "/doctor/prescription/{id}", method = RequestMethod.POST)
+//    @ResponseStatus(HttpStatus.CREATED)
+//    public void addPrescription(@PathVariable(value = "id") int id) {
+//        MedicalRecord m = this.medicalService.getMedicalRecordById(id);
+//    }
 }

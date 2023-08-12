@@ -5,6 +5,7 @@
 package com.anhquoc0304.repository;
 
 import com.anhquoc0304.pojo.Prescription;
+import java.util.List;
 
 /**
  *
@@ -12,4 +13,5 @@ import com.anhquoc0304.pojo.Prescription;
  */
 public interface PrescriptionRepository {
     boolean addPrescription(Prescription p);
+    List<Prescription> getPrescriptionByMedicalRecord(int medicalRecordId);
 }

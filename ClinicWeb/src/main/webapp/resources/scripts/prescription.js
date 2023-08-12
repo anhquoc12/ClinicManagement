@@ -29,8 +29,7 @@ window.addEventListener("load", function () {
 
 function requestJson() {
     if (checkTable() === false) {
-        alert("Bạn cần nhập đầy đủ ô vào trong toa thuốc để lưu")
-        return
+        return null
     }
     var table = document.querySelector("#myTable")
     var rows = table.querySelectorAll("tr")
@@ -42,7 +41,7 @@ function requestJson() {
             dosage: cells[1].innerText,
             frequency: cells[2].innerText,
             duration: cells[3].innerText,
-            total: cells[4].querySelector("input").value
+            totalUnit: cells[4].querySelector("input").value
         }
         object.push(data)
     }
@@ -128,9 +127,26 @@ function filterTable() {
     }
 }
 
-function requestParam() {
-    var xhr = new XMLHttpRequest()
-    var url = "/doctor/prescription/5"
+function requestParam(path) {
     var data = requestJson()
-    xhr.open("POST", url, true)
+    if (data === null) {
+        alert("Vui Lòng Nhập đầy đủ thông tin trong toa thuốc")
+        return
+    }
+    var xhr = new XMLHttpRequest()
+    xhr.open("POST", path, true)
+    xhr.setRequestHeader("Content-Type", "application/json")
+
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                if (xhr.responseText === "success")
+                    window.location.href = "/ClinicWeb/doctor/medical"
+            }
+            else {
+                alert("CÓ LỖI XẢY RA! VUI LÒNG THỬ LAI")
+            }
+        }
+    }
+    xhr.send(data)
 }

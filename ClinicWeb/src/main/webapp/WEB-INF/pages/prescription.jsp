@@ -61,7 +61,8 @@
     </thead>
     <tbody>
 </table>
-<button class="btn btn-info mb-5 mt-5" id="export" style="margin-left: auto; display: block; margin-right: 30%;"><i class="fa-solid fa-file-export"></i>
+<c:url value="/doctor/prescription/${medical.symptom}" var="path" />
+<button onclick="requestParam('${path}')" class="btn btn-info mb-5 mt-5" id="export" onclick="requestJson()" style="margin-left: auto; display: block; margin-right: 30%;"><i class="fa-solid fa-file-export"></i>
     <span>Xuất Toa Thuốc</span>
 </button>
 <c:url value="/js/prescription.js" var="js" />

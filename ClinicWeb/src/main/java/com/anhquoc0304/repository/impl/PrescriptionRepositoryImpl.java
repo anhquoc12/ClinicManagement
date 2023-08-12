@@ -4,8 +4,13 @@
  */
 package com.anhquoc0304.repository.impl;
 
+import com.anhquoc0304.pojo.Medicine;
 import com.anhquoc0304.pojo.Prescription;
+import com.anhquoc0304.repository.MedicineRepository;
 import com.anhquoc0304.repository.PrescriptionRepository;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.Query;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +27,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class PrescriptionRepositoryImpl implements PrescriptionRepository {
     @Autowired
     private LocalSessionFactoryBean factory;
+    @Autowired
+    private MedicineRepository medicineRepo;
 
     @Override
     public boolean addPrescription(Prescription p) {
@@ -33,6 +40,14 @@ public class PrescriptionRepositoryImpl implements PrescriptionRepository {
             ex.printStackTrace();
         }
         return false;
+    }
+
+    @Override
+    public List<Prescription> getPrescriptionByMedicalRecord(int medicalRecordId) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createQuery("FROM Prescription p WHERE p.medicalRecordId.id =: id");
+        q.setParameter("id", medicalRecordId);
+        return q.getResultList();
     }
     
 }

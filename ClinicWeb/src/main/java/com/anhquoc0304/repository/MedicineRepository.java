@@ -17,5 +17,6 @@ public interface MedicineRepository {
     Medicine getMedicineById(int id);
     boolean addOrUpdateMedicine(Medicine medicine);
     boolean deleteMedicine(Medicine medicine);
+    boolean updateUnitInStock(Medicine m, int count);
     
 }

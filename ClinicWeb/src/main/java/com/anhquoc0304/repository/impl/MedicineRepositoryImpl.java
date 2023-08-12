@@ -81,5 +81,18 @@ public class MedicineRepositoryImpl implements MedicineRepository{
         q.setParameter("id", id);
         return (Medicine) q.getResultList().get(0);
     }
+
+    @Override
+    public boolean updateUnitInStock(Medicine m, int count) {
+        Session s = this.factory.getObject().getCurrentSession();
+        try {
+            m.setUnitInStock(m.getUnitInStock() - count);
+            s.update(m);
+            return true;
+        } catch (HibernateException ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
     
 }

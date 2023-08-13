@@ -20,9 +20,11 @@ import com.anhquoc0304.service.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.ArrayList;
 //import com.fasterxml.jackson.core.JsonParser;
 //import com.fasterxml.jackson.databind.JsonNode;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -121,10 +123,7 @@ public class MedicalRecordController {
 
     @PostMapping("/doctor/prescription/{id}")
     public ResponseEntity<String> success(@RequestBody String json) {
-        boolean flag = true;
-        if (medicalId == 0) {
-            return (ResponseEntity<String>) ResponseEntity.noContent();
-        }
+        List<Prescription> prescriptions = new ArrayList<>();
         try {
             JsonNode node = new ObjectMapper().readTree(json);
             for (int i = 0; i < node.size(); i++) {
@@ -132,24 +131,12 @@ public class MedicalRecordController {
                 p.setMedicalRecordId(this.medicalService.getMedicalRecordById(medicalId));
                 p.setDosage(node.get(i).get("dosage").asText());
                 p.setFrequency(node.get(i).get("frequency").asText());
-                Medicine m = this.medicineService.getMedicineById(node
-                        .get(i).get("medicineId").asInt());
-                p.setMedicineId(m);
-                int count = node.get(i).get("totalUnit").asInt();
-                p.setTotalUnit(count);
-                p.setDuration(node.get(i).get("duration").asText());
-                if (!this.prescriptionService.addPrescription(p)) {
-                    flag = false;
-                    break;
-                } else {
-                    if (!this.medicineService.updateUnitInStock(m, count)) {
-                        flag = false;
-                        break;
-                    }
-                }
+                p.setTotalUnit(node.get(i).get("totalUnit").asInt());
+                p.setMedicineId(this.medicineService.getMedicineById(node.get(i).get("medicineId").asInt()));
+                prescriptions.add(p);
+                System.out.println(p.getMedicineId().getUnitInStock());
             }
-            if (flag) {
-                medicalId = 0;
+            if (this.prescriptionService.saveToDatabasePrescription(prescriptions)) {
                 return ResponseEntity.ok("success");
             }
         } catch (JsonProcessingException ex) {

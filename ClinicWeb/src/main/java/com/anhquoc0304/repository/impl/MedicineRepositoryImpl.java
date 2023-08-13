@@ -85,6 +85,8 @@ public class MedicineRepositoryImpl implements MedicineRepository{
     @Override
     public boolean updateUnitInStock(Medicine m, int count) {
         Session s = this.factory.getObject().getCurrentSession();
+        if (m.getUnitInStock() - count < 0)
+            return false;
         try {
             m.setUnitInStock(m.getUnitInStock() - count);
             s.update(m);

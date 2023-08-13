@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Other/javascript.js to edit this template
  */
-
+// import pdf from "./pdf"
 document.addEventListener("click", function () {
     var table = document.querySelector("#myTable")
     var rows = table.querySelectorAll("tr")
@@ -149,4 +149,12 @@ function requestParam(path) {
         }
     }
     xhr.send(data)
+}
+
+function createPdfMakeDocument() {
+  var docDefinition = {
+    content: [
+      { text: 'Hello, this is a PDF generated using pdfmake!', fontSize: 14 }
+    ]
+  };;
 }

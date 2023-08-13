@@ -25,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 @Transactional
 public class PrescriptionRepositoryImpl implements PrescriptionRepository {
+
     @Autowired
     private LocalSessionFactoryBean factory;
     @Autowired
@@ -49,5 +50,32 @@ public class PrescriptionRepositoryImpl implements PrescriptionRepository {
         q.setParameter("id", medicalRecordId);
         return q.getResultList();
     }
-    
+
+    @Override
+    public boolean saveToDatabasePrescription(List<Prescription> listPrescriptions) {
+        Session s = this.factory.getObject().getCurrentSession();
+        boolean flag = true;
+        for (Prescription pre : listPrescriptions) {
+            System.out.println(String.format("%d - %d", pre.getMedicineId().getUnitInStock(), pre.getTotalUnit()));
+            if (pre.getMedicineId().getUnitInStock() - pre.getTotalUnit() < 0) {
+                System.out.print("false unit");
+                return false;
+            }
+        }
+        try {
+            for (Prescription pre : listPrescriptions) {
+                if (this.medicineRepo.updateUnitInStock(pre.getMedicineId(), pre.getTotalUnit()) && this.addPrescription(pre)) {
+                    flag = true;
+                }
+                else {
+                    flag = false;
+                }
+            }
+        } catch (HibernateException ex) {
+            flag = false;
+            ex.printStackTrace();
+        }
+        return flag;
+    }
+
 }

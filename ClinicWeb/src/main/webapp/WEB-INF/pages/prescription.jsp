@@ -7,8 +7,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
-
-<h1 class="text-center text-success" style="margin: 3px;">Quản Lý Thuốc</h1>
 <div class="form-floating mb-3 mt-3 search">
     <input type="text" class="form-control" placeholder="search" id="searchInput" name="search" onkeyup="filterTable()">
     <label for="search">Search</label>
@@ -35,7 +33,7 @@
                 <c:if test="${medicine.unitInStock == 0}">
                     <td class="text-danger">Hết hàng</td>
                 </c:if>
-                <td>${medicine.categoryId.name}</td>
+                    <td class="medicine--category">${medicine.categoryId.name}</td>
                 <td class="medicine--unit">${medicine.unitMedicineId.name}</td>
                 <c:if test="${medicine.unitInStock > 0}">
                     <c:url value="/admin/medicine/${medicine.id}" var="api" />
@@ -61,8 +59,12 @@
     </thead>
     <tbody>
 </table>
-<c:url value="/doctor/prescription/${medical.symptom}" var="path" />
-<button onclick="requestParam('${path}')" class="btn btn-info mb-5 mt-5" id="export" onclick="requestJson()" style="margin-left: auto; display: block; margin-right: 30%;"><i class="fa-solid fa-file-export"></i>
+<c:url value="/doctor/prescription/${medical.id}" var="path" />
+<button onclick="exportPrescription('${path}', {doctorName: '${dataServer.doctorName}',
+doctorAddress: '${dataServer.doctorAddress}',doctorPhone: '${dataServer.doctorPhone}',
+      patientName:  '${dataServer.patientName}', patientAddress:  '${dataServer.patientAddress}',
+patientPhone:  '${dataServer.patientPhone}', advice: '${dataServer.advice}',
+file: '${dataServer.file}'})" class="btn btn-info mb-5 mt-5" id="export" onclick="requestJson()" style="margin-left: auto; display: block; margin-right: 30%;"><i class="fa-solid fa-file-export"></i>
     <span>Xuất Toa Thuốc</span>
 </button>
 <c:url value="/js/prescription.js" var="js" />

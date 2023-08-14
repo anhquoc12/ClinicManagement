@@ -20,10 +20,14 @@ import com.anhquoc0304.service.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 //import com.fasterxml.jackson.core.JsonParser;
 //import com.fasterxml.jackson.databind.JsonNode;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -44,7 +48,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  *
@@ -115,13 +118,23 @@ public class MedicalRecordController {
         MedicalRecord m = this.medicalService.getMedicalRecordById(id);
         model.addAttribute("medical", m);
         medicalId = m.getId();
-        Prescription p = new Prescription();
-//        p.setMedicalRecordId(m);
-        model.addAttribute("prescription", p);
+        User doctor = this.UserService.getCurrentUser(SecurityContextHolder.getContext()
+        .getAuthentication().getName());
+        Map<String, String> jsonData = new HashMap<>();
+        jsonData.put("doctorName", doctor.getFullName());
+        jsonData.put("doctorAddress", doctor.getAddress());
+        jsonData.put("doctorPhone", doctor.getPhone());
+        User patient = m.getPatientId();
+        jsonData.put("patientName", patient.getFullName());
+        jsonData.put("patientAddress", patient.getAddress());
+        jsonData.put("patientPhone", patient.getPhone());
+        jsonData.put("advice", m.getAdvice() == null ? "none" : m.getAdvice());
+        jsonData.put("file", String.format("prescription-%d", patient.getId()));
+        model.addAttribute("dataServer", jsonData);
         return "prescription";
     }
 
-    @PostMapping("/doctor/prescription/{id}")
+    @RequestMapping(value = "/doctor/prescription/{id}", method = RequestMethod.POST)
     public ResponseEntity<String> success(@RequestBody String json) {
         List<Prescription> prescriptions = new ArrayList<>();
         try {
@@ -132,6 +145,7 @@ public class MedicalRecordController {
                 p.setDosage(node.get(i).get("dosage").asText());
                 p.setFrequency(node.get(i).get("frequency").asText());
                 p.setTotalUnit(node.get(i).get("totalUnit").asInt());
+                p.setDuration(node.get(i).get("duration").asText());
                 p.setMedicineId(this.medicineService.getMedicineById(node.get(i).get("medicineId").asInt()));
                 prescriptions.add(p);
                 System.out.println(p.getMedicineId().getUnitInStock());
@@ -143,5 +157,10 @@ public class MedicalRecordController {
             Logger.getLogger(MedicalRecordController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Xảy ra lỗi xui lòng thử lại");
+    }
+    
+    @RequestMapping("/doctor/history")
+    public String history(Model model) {
+        return "history";
     }
 }

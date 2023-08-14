@@ -30,6 +30,10 @@
                 <label for="floatingTextarea2">Kết luận</label>
             <form:errors path="conclusion" cssClass="text-danger mt-2 ml-12" />
         </div>
+        <div class="form-floating mb-3 mt-3">
+            <form:textarea path="advice" class="form-control" id="floatingTextarea"></form:textarea>
+                <label for="floatingTextarea2">lời khuyên</label>
+        </div>
         <div class="form-floating mb-3 mt-3 number">
             <form:input path="examinationFee" type="number" min="1000" step="1000" class="form-control" />
             <label for="floatingTextarea2">Tiền Khám</label>

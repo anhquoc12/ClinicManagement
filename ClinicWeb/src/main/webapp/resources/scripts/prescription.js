@@ -2,7 +2,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Other/javascript.js to edit this template
  */
-// import pdf from "./pdf"
 document.addEventListener("click", function () {
     var table = document.querySelector("#myTable")
     var rows = table.querySelectorAll("tr")
@@ -27,7 +26,7 @@ window.addEventListener("load", function () {
 
 })
 
-function requestJson() {
+function getRow() {
     if (checkTable() === false) {
         return null
     }
@@ -38,10 +37,12 @@ function requestJson() {
         var cells = rows[i].querySelectorAll("td")
         var data = {
             medicineId: cells[0].getAttribute('id'),
+            name: cells[0].innerText,
             dosage: cells[1].innerText,
             frequency: cells[2].innerText,
             duration: cells[3].innerText,
-            totalUnit: cells[4].querySelector("input").value
+            totalUnit: cells[4].querySelector("input").value,
+            unit: cells[5].innerText
         }
         object.push(data)
     }
@@ -64,12 +65,6 @@ function checkTable() {
     return true
 }
 
-function getRowCount() {
-    const tableBody = document.querySelector("#myTable tbody");
-    const rowCount = tableBody.rows.length;
-    return rowCount
-}
-
 function addRow(element) {
     var rowbtn = element.closest("tr")
     var row = rowbtn.querySelector("button")
@@ -78,7 +73,6 @@ function addRow(element) {
     var unit = rowbtn.querySelector("td.medicine--unit").innerText
     var stock = parseInt(rowbtn.querySelector("td.stock").innerText)
     var medicineId = rowbtn.querySelector(".id").innerText
-    var rowCount = getRowCount()
 
     const tableBody = document.querySelector("#myTable tbody");
     const newRow = document.createElement("tr");
@@ -90,11 +84,11 @@ function addRow(element) {
                 <td contenteditable="true"></td>
                 <td><input type="number" min="1" value="1" max="${stock}" class="count" /></td>
                 <td>${unit}</td>
-                <td><button class="btn btn-danger" onclick="toggle(this)">Xoá</button></td>`
+                <td><button class="btn btn-danger" onclick="hiddenBtnAdd(this)">Xoá</button></td>`
     tableBody.appendChild(newRow);
 }
 
-function toggle(element) {
+function hiddenBtnAdd(element) {
     var e = element.closest("tr")
     var listMedicine = document.querySelectorAll(".list")
     listMedicine.forEach(function (item) {
@@ -127,34 +121,202 @@ function filterTable() {
     }
 }
 
-function requestParam(path) {
-    var data = requestJson()
+function dateFormat(date) {
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
+    var seconds = date.getSeconds();
+    var ampm = hours >= 12 ? 'PM' : 'AM';
+
+    hours = hours % 12;
+    hours = hours ? hours : 12; // Đổi 0 thành 12 nếu là 12 giờ
+
+    var formattedDate = ('0' + date.getDate()).slice(-2) + '-' +
+        ('0' + (date.getMonth() + 1)).slice(-2) + '-' +
+        date.getFullYear() + ' ' +
+        ('0' + hours).slice(-2) + ':' +
+        ('0' + minutes).slice(-2) + ':' +
+        ('0' + seconds).slice(-2) + ' ' + ampm;
+
+    return formattedDate;
+}
+
+function formatDate(date) {
+    var formattedDate = ('0' + date.getDate()).slice(-2) +
+        ('0' + (date.getMonth() + 1)).slice(-2) +
+        date.getFullYear();
+
+    return formattedDate;
+}
+
+async function exportPrescription(path, object) {
+    var data = getRow()
     if (data === null) {
         alert("Vui Lòng Nhập đầy đủ thông tin trong toa thuốc")
         return
     }
-    var xhr = new XMLHttpRequest()
-    xhr.open("POST", path, true)
-    xhr.setRequestHeader("Content-Type", "application/json")
 
-    xhr.onreadystatechange = () => {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-            if (xhr.status === 200) {
-                if (xhr.responseText === "success")
-                    window.location.href = "/ClinicWeb/doctor/medical"
-            }
-            else {
-                alert("CÓ LỖI XẢY RA! VUI LÒNG THỬ LAI")
-            }
-        }
+    try {
+        
+        await exportPDF(object)
+        await sendDataByAjax(path, data)
+        window.location.href = '/ClinicWeb/doctor/medical'
+    } catch (ex) {
+        alert(ex.message)
     }
-    xhr.send(data)
 }
 
-function createPdfMakeDocument() {
-  var docDefinition = {
-    content: [
-      { text: 'Hello, this is a PDF generated using pdfmake!', fontSize: 14 }
-    ]
-  };;
+async function sendDataByAjax(path, data) {
+    return new Promise((resolve, reject) => {
+        var xhr = new XMLHttpRequest()
+        xhr.open('POST', path, true)
+        xhr.onreadystatechange = () => {
+            if (xhr.status === 200) {
+                if (xhr.responseText === "success") {
+                    resolve()
+                }
+            }
+            else {
+                reject(new Error("CÓ LỖI XẢY RA! VUI LÒNG THỬ LAI"))
+            }
+        }
+        xhr.send(data)
+    })
+}
+
+async function exportPDF(object) {
+    return new Promise((resolve, reject) => {
+        try {
+            var json = JSON.parse(getRow())
+            var tableBody = []
+            var advice = object.advice === 'none' ? "" : object.advice
+            tableBody.push([{ text: "Tên thuốc", bold: true },
+            { text: "Liều Lượng", bold: true },
+            { text: "Tần suất", bold: true },
+            { text: "Thời gian dùng thuốc", bold: true },
+            { text: "Số Lượng", bold: true }])
+            tableBody.push([{
+                canvas: [
+                    {
+                        type: 'line',
+                        x1: 0, y1: 0,
+                        x2: 450, y2: 0,
+                        lineWidth: 1, // Độ dày của đường
+                    }
+                ]
+            }, {}, {}, {}, {}])
+
+            json.forEach(data => {
+                tableBody.push([data.name, data.dosage, data.frequency, data.duration, data.totalUnit + ' ' + data.unit])
+            })
+            var a = "test"
+            var docDefinition = {
+                content: [
+                    {
+                        text: 'DR ' + object.doctorName,
+                        margin: [0, 0, 0, 8],
+                        color: '#64BACD',
+                        bold: true
+                    },
+                    {
+                        text: 'Address: ' + object.doctorAddress,
+                        margin: [0, 0, 0, 8],
+                        bold: true,
+                        fontSize: 16
+                    },
+                    {
+                        text: 'SDT: ' + object.doctorPhone,
+                        margin: [0, 0, 0, 8],
+                        bold: true,
+                        fontSize: 16
+                    },
+                    {
+                        canvas: [
+                            {
+                                type: 'line',
+                                x1: 0, y1: 0,
+                                x2: 450, y2: 0,
+                                lineWidth: 1 // Độ dày của đường
+                            }
+                        ]
+                    },
+                    {
+                        columns: [
+                            {
+                                text: 'Patient: ' + object.patientName,
+                                alignment: 'left'
+                            },
+                            {
+                                text: 'Date: ' + dateFormat(new Date()),
+                                alignment: 'right'
+                            }
+                        ],
+                        margin: [0, 16, 0, 0]
+                    },
+                    {
+                        text: 'Address: ' + object.patientAddress,
+                        margin: [0, 8, 0, 8],
+                        fontSize: 12
+                    },
+                    {
+                        text: 'SDT: ' + object.patientPhone,
+                        margin: [0, 0, 0, 8],
+                        fontSize: 12
+                    },
+                    {
+                        canvas: [
+                            {
+                                type: 'line',
+                                x1: 2, y1: 0,
+                                x2: 450, y2: 0,
+                                lineWidth: 1 // Độ dày của đường
+                            }
+                        ]
+                    },
+                    {
+                        table: {
+                            widths: [98, 66, 98, 80, 60],
+                            body: tableBody
+                        },
+                        width: 500,
+                        layout: {
+                            hLineWidth: (i, node) => {
+                                return 0; // Bỏ đường kẻ ngang
+                            },
+                            vLineWidth: (i, node) => {
+                                return 0; // Bỏ đường kẻ dọc
+                            }
+                        }
+                    },
+
+                    {
+                        canvas: [
+                            {
+                                type: 'line',
+                                x1: 0, y1: 0,
+                                x2: 450, y2: 0,
+                                lineWidth: 1 // Độ dày của đường
+                            }
+                        ]
+                    },
+                    {
+                        text: "*Advice: " + advice,
+                        fontSize: 16,
+                        bold: true,
+                        margin: [8, 16, 0, 0]
+                    },
+                    {
+                        text: "DR " + object.doctorName,
+                        fontSize: 16,
+                        bold: true,
+                        alignment: 'right',
+                        margin: [0, 200, 0, 0]
+                    }
+
+                ], padding: [16, 16, 16, 16], alignment: 'center', pageWidth: 500, autoSize: true
+            };
+
+            pdfMake.createPdf(docDefinition).download(`${object.file}-${formatDate(new Date())}.pdf`)
+            resolve()
+        } catch (ex) { reject(new Error(ex.message)) }
+    })
 }

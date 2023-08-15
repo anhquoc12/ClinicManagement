@@ -92,7 +92,7 @@
                         <ul class="dropdown-menu">
                             <c:url value="/admin" var="url" />
                             <li><a class="dropdown-item" href="<c:url value="/doctor/medical" />">Phiếu Khám Bệnh</a></li>
-                            <li><a class="dropdown-item" href="<c:url value="/nurse/todayAppointment" />">Lịch Sử Khám Bệnh</a></li>
+                            <li><a class="dropdown-item" href="<c:url value="/doctor/history" />">Lịch Sử Khám Bệnh</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">
@@ -114,15 +114,13 @@
             </c:if>
             <c:if test="${pageContext.request.userPrincipal.name != null}">
                 <ul class="navbar-nav">
-                    <!-- Avatar -->
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdownMenuLink"
-                           role="button" data-mdb-toggle="dropdown" aria-expanded="false">
-
+                        <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <img src="${name[0]}" alt="None" class="rounded-circle"
                                  height="22" alt="Avatar" loading="lazy" />
+                            <i class="fa-solid fa-chevron-up fa-rotate-180"></i>
                         </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" style="margin-left: -95px;">
+                        <ul class="dropdown-menu">
                             <li>
                                 <a class="dropdown-item" href="#">${pageContext.request.userPrincipal.name}</a>
                             </li>

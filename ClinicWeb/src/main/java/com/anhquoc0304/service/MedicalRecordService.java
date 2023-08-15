@@ -5,6 +5,9 @@
 package com.anhquoc0304.service;
 
 import com.anhquoc0304.pojo.MedicalRecord;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -13,4 +16,5 @@ import com.anhquoc0304.pojo.MedicalRecord;
 public interface MedicalRecordService {
     boolean addMedicalRecord(MedicalRecord m);
     MedicalRecord getMedicalRecordById(int id);
+    List<MedicalRecord> getMedicals(Date date);
 }

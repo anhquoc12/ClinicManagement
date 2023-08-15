@@ -58,7 +58,6 @@ public class PrescriptionRepositoryImpl implements PrescriptionRepository {
         for (Prescription pre : listPrescriptions) {
             System.out.println(String.format("%d - %d", pre.getMedicineId().getUnitInStock(), pre.getTotalUnit()));
             if (pre.getMedicineId().getUnitInStock() - pre.getTotalUnit() < 0) {
-                System.out.print("false unit");
                 return false;
             }
         }

@@ -29,4 +29,9 @@ public class PrescriptionServiceImpl implements PrescriptionService {
     public boolean saveToDatabasePrescription(List<Prescription> listPrescriptions) {
         return this.prescriptionRepository.saveToDatabasePrescription(listPrescriptions);
     }
+
+    @Override
+    public List<Prescription> getPrescriptionByMedicalRecord(int medicalRecordId) {
+        return this.prescriptionRepository.getPrescriptionByMedicalRecord(medicalRecordId);
+    }
 }

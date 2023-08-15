@@ -7,11 +7,9 @@ package com.anhquoc0304.controllers;
 import com.anhquoc0304.pojo.Appointment;
 import com.anhquoc0304.pojo.Invoice;
 import com.anhquoc0304.pojo.MedicalRecord;
-import com.anhquoc0304.pojo.Medicine;
 import com.anhquoc0304.pojo.Prescription;
 import com.anhquoc0304.pojo.User;
 import com.anhquoc0304.service.AppointmentService;
-import com.anhquoc0304.service.CategoryService;
 import com.anhquoc0304.service.InvoiceService;
 import com.anhquoc0304.service.MedicalRecordService;
 import com.anhquoc0304.service.MedicineService;
@@ -20,21 +18,22 @@ import com.anhquoc0304.service.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.time.ZoneId;
 import java.util.ArrayList;
-//import com.fasterxml.jackson.core.JsonParser;
-//import com.fasterxml.jackson.databind.JsonNode;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -43,7 +42,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -66,8 +64,6 @@ public class MedicalRecordController {
     private InvoiceService InvoiceService;
     @Autowired
     private MedicineService medicineService;
-    @Autowired
-    private CategoryService categoryService;
     @Autowired
     private PrescriptionService prescriptionService;
     private int medicalId;
@@ -148,7 +144,6 @@ public class MedicalRecordController {
                 p.setDuration(node.get(i).get("duration").asText());
                 p.setMedicineId(this.medicineService.getMedicineById(node.get(i).get("medicineId").asInt()));
                 prescriptions.add(p);
-                System.out.println(p.getMedicineId().getUnitInStock());
             }
             if (this.prescriptionService.saveToDatabasePrescription(prescriptions)) {
                 return ResponseEntity.ok("success");
@@ -161,6 +156,37 @@ public class MedicalRecordController {
     
     @RequestMapping("/doctor/history")
     public String history(Model model) {
+        List<MedicalRecord> medicals = this.medicalService.getMedicals(null);
+        Set<User> patientList = new HashSet<>();
+        for (MedicalRecord medical : medicals) {
+            patientList.add(medical.getPatientId());
+        }
+        model.addAttribute("medicals", medicals);
+        model.addAttribute("patients", patientList);
+        model.addAttribute("date", LocalDate.now());
         return "history";
+    }
+    
+    @RequestMapping("/doctor/history/search")
+    public String filterHistoryByDate(Model model, @RequestParam(name = "date1") @DateTimeFormat(pattern = "yyyy-MM-dd") Date date) {
+        LocalDate local = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        List<MedicalRecord> medicals = this.medicalService.getMedicals(date);
+        Set<User> patientList = new HashSet<>();
+        for (MedicalRecord medical : medicals) {
+            patientList.add(medical.getPatientId());
+        }
+        model.addAttribute("medicals", medicals);
+        model.addAttribute("patients", patientList);
+        model.addAttribute("date", local);
+        return "history";
+    }
+    
+    @RequestMapping("/doctor/history/{id}")
+    public String detailHistory(Model model, @PathVariable(value = "id") int id) {
+        MedicalRecord medical = this.medicalService.getMedicalRecordById(id);
+        List<Prescription> prescriptions = this.prescriptionService.getPrescriptionByMedicalRecord(id);
+        model.addAttribute("medical", medical);
+        model.addAttribute("prescriptions", prescriptions);
+        return "detailHistory";
     }
 }

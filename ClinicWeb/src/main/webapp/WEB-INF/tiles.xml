@@ -89,5 +89,9 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
         <put-attribute name="title" value="Lịch Sử Khám" />
         <put-attribute name="content" value="/WEB-INF/pages/history.jsp" />
     </definition>
+    <definition name="detailHistory" extends="base">
+        <put-attribute name="title" value="Biểu mẫu bệnh án" />
+        <put-attribute name="content" value="/WEB-INF/pages/detailHistory.jsp" />
+    </definition>
 </tiles-definitions>
 

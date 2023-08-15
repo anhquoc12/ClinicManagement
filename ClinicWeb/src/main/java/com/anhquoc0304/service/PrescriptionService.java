@@ -14,4 +14,5 @@ import java.util.List;
 public interface PrescriptionService {
     boolean addPrescription(Prescription p);
     boolean saveToDatabasePrescription(List<Prescription> listPrescriptions);
+    List<Prescription> getPrescriptionByMedicalRecord(int medicalRecordId);
 }

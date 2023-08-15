@@ -7,6 +7,9 @@ package com.anhquoc0304.service.impl;
 import com.anhquoc0304.pojo.MedicalRecord;
 import com.anhquoc0304.repository.MedicalRecordRepository;
 import com.anhquoc0304.service.MedicalRecordService;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +30,11 @@ public class MedicalRecordServiceImpl implements MedicalRecordService{
     @Override
     public MedicalRecord getMedicalRecordById(int id) {
         return this.medicalRepository.getMedicalRecordById(id);
+    }
+
+    @Override
+    public List<MedicalRecord> getMedicals(Date date) {
+        return this.medicalRepository.getMedicals(date);
     }
     
 }

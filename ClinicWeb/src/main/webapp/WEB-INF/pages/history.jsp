@@ -5,11 +5,57 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <h1 class="text-center text-info">LỊCH SỬ KHÁM</h1>
-<form>
-    <div class="form-floating mb-3 mt-3">
-        <input type="date" class="form-control" placeholder="Enter date" name="date">
-        <label for="date">Nhập Ngày</label>
-    </div>
-    <input type="submit" class="btn btn-primary" value="Search" />
-</form>
+<div class="container search__form">
+    <span class="badge bg-info badge-search">Seach</span>
+    <form action="<c:url value="/doctor/history/search" />" class="container-fluid">
+        <div class="row">
+            <input value="${date}" name="date1" type="date" class="col-md-2 col-sm-2 item">
+            <button class="btn btn-outline-primary col-md-2 item item-btn" type="submit">Seach</button>
+        </div>
+    </form>
+</div>
+<table class="table align-middle mb-0 bg-white" id="myTable">
+    <thead class="bg-light">
+        <tr>
+            <th>Tên Bệnh nhân</th>
+            <th>Ngày Khám Bệnh</th>
+            <th>Bác Sỹ Khám Bệnh</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <c:forEach items="${medicals}" var="medical">
+            <tr>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <img src="${medical.patientId.avatar}" alt="${medical.patientId.username}"
+                             style="width: 45px; height: 45px" class="rounded-circle" />
+                        <div class="ms-3">
+                            <p class="fw-bold mb-1">${medical.patientId.fullName}</p>
+                            <p class="text-muted mb-0">${medical.patientId.email}</p>
+                            <p class="text-muted mb-0">${medical.patientId.phone}</p>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <p class="fw-normal mb-1">${medical.createdDate}</p>
+                </td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <img src="${medical.doctorId.avatar}" alt="${medical.doctorId.username}"
+                             style="width: 45px; height: 45px" class="rounded-circle" />
+                        <div class="ms-3">
+                            <p class="fw-bold mb-1">${medical.doctorId.fullName}</p>
+                        </div>
+                </td>
+                <td>
+                    <a href="<c:url value="/doctor/history/${medical.id}" />" class="btn btn-link btn-sm btn-rounded text-danger">
+                        Xem Chi Tiết Bệnh Án
+                    </a>
+                </td>
+            </tr>
+        </c:forEach>
+    </tbody>
+</table>

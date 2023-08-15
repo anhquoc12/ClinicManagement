@@ -6,6 +6,8 @@ package com.anhquoc0304.repository.impl;
 
 import com.anhquoc0304.pojo.MedicalRecord;
 import com.anhquoc0304.repository.MedicalRecordRepository;
+import java.util.Date;
+import java.util.List;
 import javax.persistence.Query;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -42,6 +44,18 @@ public class MedicalRecordRepositoryImpl implements MedicalRecordRepository {
         Query q = s.createQuery("FROM MedicalRecord m WHERE m.id =: key");
         q.setParameter("key", id);
         return (MedicalRecord) q.getResultList().get(0);
+    }
+
+    @Override
+    public List<MedicalRecord> getMedicals(Date date) {
+        Session s = this.factory.getObject().getCurrentSession();
+        String sql = "FROM MedicalRecord m ";
+        if (date != null)
+            sql += "WHERE DATE(m.createdDate)=: date";
+        Query q = s.createQuery(sql);
+        if (date != null)
+            q.setParameter("date", date);
+        return q.getResultList();
     }
     
 }

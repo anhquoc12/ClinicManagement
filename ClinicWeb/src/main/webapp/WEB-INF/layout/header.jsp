@@ -80,7 +80,7 @@
                         <a class="nav-link" href="<c:url value="/schedule/viewSchedule" />">Lịch Trực</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="">Thanh Toán</a>
+                        <a class="nav-link" href="<c:url value="/nurse/invoices" />">Thanh Toán</a>
                     </li>
                 </security:authorize>
                 <security:authorize access="hasAuthority('DOCTOR')">

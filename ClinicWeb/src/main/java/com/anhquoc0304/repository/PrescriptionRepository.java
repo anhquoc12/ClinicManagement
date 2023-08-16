@@ -4,6 +4,7 @@
  */
 package com.anhquoc0304.repository;
 
+import com.anhquoc0304.pojo.MedicalRecord;
 import com.anhquoc0304.pojo.Prescription;
 import java.util.List;
 
@@ -15,4 +16,5 @@ public interface PrescriptionRepository {
     boolean addPrescription(Prescription p);
     List<Prescription> getPrescriptionByMedicalRecord(int medicalRecordId);
     boolean saveToDatabasePrescription(List<Prescription> listPrescriptions);
+    List<Object[]> getPrescirptionForDetailInvoice(MedicalRecord r);
 }

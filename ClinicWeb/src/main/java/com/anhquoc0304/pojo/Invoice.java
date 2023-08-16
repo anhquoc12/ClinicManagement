@@ -36,8 +36,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Invoice implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    public static final String NOPAY = "NO_PAY";
-    public static final String PAYED = "PAYED";
+    public static final String PENDING = "PENDING";
+    public static final String ACCEPTED = "ACCEPTED";
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

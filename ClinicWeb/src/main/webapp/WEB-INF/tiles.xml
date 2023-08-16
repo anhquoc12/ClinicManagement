@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <!DOCTYPE tiles-definitions PUBLIC "-//Apache
 Software Foundation//DTD Tiles Configuration 3.0//EN"
 "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
@@ -12,6 +11,7 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
         <put-attribute name="content" value="" />
         <put-attribute name="footer" 
                        value="/WEB-INF/layout/footer.jsp" />
+        <!--<put-attribute name="css" value="jjj" />-->
     </definition>
     <definition name="index" extends="base">
         <put-attribute name="title" value="Trang chủ" />
@@ -92,6 +92,14 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
     <definition name="detailHistory" extends="base">
         <put-attribute name="title" value="Biểu mẫu bệnh án" />
         <put-attribute name="content" value="/WEB-INF/pages/detailHistory.jsp" />
+    </definition>
+    <definition name="invoices" extends="base">
+        <put-attribute name="title" value="Thanh Toán" />
+        <put-attribute name="content" value="/WEB-INF/pages/invoices.jsp" />
+    </definition>
+    <definition name="payment" extends="base">
+        <put-attribute name="title" value="Thanh Toán" />
+        <put-attribute name="content" value="/WEB-INF/pages/payment.jsp" />
     </definition>
 </tiles-definitions>
 

@@ -7,6 +7,7 @@ package com.anhquoc0304.repository.impl;
 import com.anhquoc0304.pojo.Invoice;
 import com.anhquoc0304.repository.InvoiceRepository;
 import java.util.List;
+import javax.persistence.Query;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +26,10 @@ public class InvoiceRepositoryImpl implements InvoiceRepository {
     private LocalSessionFactoryBean factory;
 
     @Override
-    public List<Invoice> getInvoices() {
-        return null;
+    public List<Object[]> getInvoices() {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createQuery("SELECT i.id, r.patientId.fullName, i.createDate, i.paymentStatus, SUM(m.unitPrice * p.totalUnit) + r.examinationFee FROM Invoice i INNER JOIN i.medicalRecordId r INNER JOIN r.prescriptionSet p INNER JOIN p.medicineId m GROUP BY i.id, r.patientId.fullName, i.createDate, i.paymentStatus ORDER BY i.createDate DESC");
+        return q.getResultList();
     }
 
     @Override
@@ -40,6 +43,14 @@ public class InvoiceRepositoryImpl implements InvoiceRepository {
         }
         return false;
         
+    }
+
+    @Override
+    public Invoice getInvoiceById(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createQuery("FROM Invoice i WHERE i.id =: key");
+        q.setParameter("key", id);
+        return (Invoice) q.getResultList().get(0);
     }
     
 }

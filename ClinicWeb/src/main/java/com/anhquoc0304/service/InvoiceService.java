@@ -5,11 +5,15 @@
 package com.anhquoc0304.service;
 
 import com.anhquoc0304.pojo.Invoice;
+import com.anhquoc0304.pojo.MedicalRecord;
+import java.util.List;
 
 /**
  *
  * @author Admin
  */
 public interface InvoiceService {
+    List<Object[]> getInvoices();
     boolean createInvoiceBeforePay(Invoice i);
+    Invoice getInvoiceById(int id);
 }

@@ -12,6 +12,7 @@ import java.util.List;
  * @author Admin
  */
 public interface InvoiceRepository {
-    List<Invoice> getInvoices();
+    List<Object[]> getInvoices();
+    Invoice getInvoiceById(int id);
     boolean createInvoiceBeforePay(Invoice i);
 }

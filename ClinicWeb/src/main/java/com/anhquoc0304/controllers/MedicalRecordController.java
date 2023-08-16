@@ -91,7 +91,7 @@ public class MedicalRecordController {
                     Invoice i = new Invoice();
                     i.setCreateDate(new Date());
                     i.setMedicalRecordId(m);
-                    i.setPaymentStatus(Invoice.NOPAY);
+                    i.setPaymentStatus(Invoice.PENDING);
                     if (this.InvoiceService.createInvoiceBeforePay(i)) {
                         return String.format("redirect:/doctor/prescription/%d", m.getId());
                     } else {

@@ -4,6 +4,7 @@
  */
 package com.anhquoc0304.service.impl;
 
+import com.anhquoc0304.pojo.MedicalRecord;
 import com.anhquoc0304.pojo.Prescription;
 import com.anhquoc0304.repository.PrescriptionRepository;
 import com.anhquoc0304.service.PrescriptionService;
@@ -33,5 +34,10 @@ public class PrescriptionServiceImpl implements PrescriptionService {
     @Override
     public List<Prescription> getPrescriptionByMedicalRecord(int medicalRecordId) {
         return this.prescriptionRepository.getPrescriptionByMedicalRecord(medicalRecordId);
+    }
+
+    @Override
+    public List<Object[]> getPrescirptionForDetailInvoice(MedicalRecord r) {
+        return this.prescriptionRepository.getPrescirptionForDetailInvoice(r);
     }
 }

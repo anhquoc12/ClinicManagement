@@ -7,6 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<link type="text/css" href="<c:url value="/css/medical.css"/>" rel="stylesheet" />
 <c:if test="${patients.size() > 0}">
     <h1  class="text-center text-success mt-5 mb-5">Phiếu Khám Bệnh</h1>
     <c:if test="${msg != null}"><div class="alert alert-danger">${msg}</div></c:if>

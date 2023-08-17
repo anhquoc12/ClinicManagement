@@ -61,7 +61,7 @@
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="">Thống Kê - Báo cáo</a>
+                        <a class="nav-link" href="<c:url value="/admin/stat" />">Thống Kê - Báo cáo</a>
                     </li>
                 </security:authorize>
                 <security:authorize access="hasAuthority('NURSE')">

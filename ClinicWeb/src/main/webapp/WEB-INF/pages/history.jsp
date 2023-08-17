@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<link type="text/css" href="<c:url value="/css/history.css"/>" rel="stylesheet" />
 <h1 class="text-center text-info">LỊCH SỬ KHÁM</h1>
 <div class="container search__form">
     <span class="badge bg-info badge-search">Seach</span>

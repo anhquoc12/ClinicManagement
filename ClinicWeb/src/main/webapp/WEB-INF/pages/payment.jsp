@@ -7,18 +7,15 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="format" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<style>
-    
-    
-</style>
+<link type="text/css" href="<c:url value="/css/payment.css"/>" rel="stylesheet" />
 <section class="content--payment">
     <h1 class="title" style="margin-top: 16px !important;">Invoice</h1>
-<div>
-    <p>${invoice.medicalRecordId.patientId.fullName}</p>
-    <p>${invoice.medicalRecordId.patientId.address}</p>
-    <p>${invoice.medicalRecordId.patientId.phone}</p>
-    <p>${invoice.medicalRecordId.patientId.email}</p>
-</div>
+    <div>
+        <p>${invoice.medicalRecordId.patientId.fullName}</p>
+        <p>${invoice.medicalRecordId.patientId.address}</p>
+        <p>${invoice.medicalRecordId.patientId.phone}</p>
+        <p>${invoice.medicalRecordId.patientId.email}</p>
+    </div>
 </header>
 <article>
     <h1>Recipient</h1>
@@ -31,10 +28,12 @@
             <th><span>Ngày Thực Hiện</span></th>
             <td><span><format:formatDate pattern="MMM d, yyyy" value="${invoice.createDate}" /></span></td>
         </tr>
-        <tr>
-            <th><span>Nhân Viên Thanh Toán</span></th>
-            <td>${nurse.fullName}</td>
-        </tr>
+        <c:if test="${invoice.nurseId != null}">
+            <tr>
+                <th><span>Y Tá Thanh Toán</span></th>
+                <td>${nurse.fullName}</td>
+            </tr>
+        </c:if>
     </table>
     <table class="inventory">
         <thead>
@@ -49,31 +48,35 @@
         </thead>
         <tbody>
             <c:forEach items="${medicines}" var="m">
-            <tr>
-                <td><a class="cut">-</a><span>${m[0]}</span></td>
-                <td><span>${m[1]}</span></td>
-                <td><span>${m[2]}</span></td>
-                <td><span>${m[3]}</span></td>
-                <td><span>${m[4]}</span></td>
-                <td><span>${m[5]}</span></td>
-            </tr>
+                <tr>
+                    <td><a class="cut">-</a><span>${m[0]}</span></td>
+                    <td><span>${m[1]}</span></td>
+                    <td><span>${m[2]}</span></td>
+                    <td><span>${m[3]}</span></td>
+                    <td><span>${m[4]}</span></td>
+                    <td><span><format:formatNumber pattern="#,###" value="${m[5]}" /></span></td>
+                </tr>
             </c:forEach>
         </tbody>
     </table>
     <table class="balance">
         <tr>
             <th><span>Tổng tiền thuốc</span></th>
-            <td><span>600.00</span></td>
+            <td><span><format:formatNumber pattern="#,###" value="${feePrescription}" /></span> VNĐ</td>
         </tr>
         <tr>
             <th><span>Tiền Khám Bệnh</span></th>
-            <td><span>0.00</span></td>
+            <td><span><format:formatNumber pattern="#,###" value="${feeMedical}" /></span> VNĐ</td>
         </tr>
         <tr>
             <th><span>Tiền Phải Trả</span></th>
-            <td><span>600.00</span></td>
+            <td><span><format:formatNumber pattern="#,###" value="${feePrescription + feeMedical}" /></span> VNĐ</td>
         </tr>
     </table>
 </article>
-<button class="btn btn-success">Thanh Toán</button>
+<c:if test="${invoice.nurseId == null}">
+    <c:url value="/nurse/invoices/${invoice.id}" var="url" />
+    <button class="btn btn-success" onclick="pay('${url}')">Thanh Toán</button>
+</c:if>
 </section>
+<script src="<c:url value="/js/payment.js" />"></script>

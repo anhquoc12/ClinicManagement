@@ -6,6 +6,7 @@ package com.anhquoc0304.repository;
 
 import com.anhquoc0304.pojo.MedicalRecord;
 import com.anhquoc0304.pojo.Prescription;
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -17,4 +18,5 @@ public interface PrescriptionRepository {
     List<Prescription> getPrescriptionByMedicalRecord(int medicalRecordId);
     boolean saveToDatabasePrescription(List<Prescription> listPrescriptions);
     List<Object[]> getPrescirptionForDetailInvoice(MedicalRecord r);
+    BigDecimal totalMedicine(MedicalRecord r);
 }

@@ -8,6 +8,7 @@ import com.anhquoc0304.pojo.MedicalRecord;
 import com.anhquoc0304.pojo.Prescription;
 import com.anhquoc0304.repository.PrescriptionRepository;
 import com.anhquoc0304.service.PrescriptionService;
+import java.math.BigDecimal;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,5 +40,10 @@ public class PrescriptionServiceImpl implements PrescriptionService {
     @Override
     public List<Object[]> getPrescirptionForDetailInvoice(MedicalRecord r) {
         return this.prescriptionRepository.getPrescirptionForDetailInvoice(r);
+    }
+
+    @Override
+    public BigDecimal totalMedicine(MedicalRecord r) {
+        return this.prescriptionRepository.totalMedicine(r);
     }
 }

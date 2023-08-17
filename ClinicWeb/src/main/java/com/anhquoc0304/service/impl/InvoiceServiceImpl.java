@@ -35,5 +35,10 @@ public class InvoiceServiceImpl implements InvoiceService {
     public Invoice getInvoiceById(int id) {
         return this.invoiceRepository.getInvoiceById(id);
     }
+
+    @Override
+    public boolean payment(Invoice i) {
+        return this.invoiceRepository.payment(i);
+    }
     
 }

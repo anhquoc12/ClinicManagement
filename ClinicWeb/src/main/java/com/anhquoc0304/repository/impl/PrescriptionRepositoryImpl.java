@@ -9,6 +9,7 @@ import com.anhquoc0304.pojo.Medicine;
 import com.anhquoc0304.pojo.Prescription;
 import com.anhquoc0304.repository.MedicineRepository;
 import com.anhquoc0304.repository.PrescriptionRepository;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Query;
@@ -84,6 +85,14 @@ public class PrescriptionRepositoryImpl implements PrescriptionRepository {
         Query q = s.createQuery("SELECT p.medicineId.name, p.dosage, p.frequency, p.duration, CONCAT(p.totalUnit, ' ', p.medicineId.unitMedicineId.name), SUM(p.totalUnit * p.medicineId.unitPrice) FROM Prescription p WHERE p.medicalRecordId.id =:key GROUP BY p.medicineId.name, p.dosage, p.frequency, p.duration, CONCAT(p.totalUnit, ' ', p.medicineId.unitMedicineId.name)");
         q.setParameter("key", r.getId());
         return q.getResultList();
+    }
+
+    @Override
+    public BigDecimal totalMedicine(MedicalRecord r) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createQuery("SELECT SUM(p.totalUnit * p.medicineId.unitPrice) FROM Prescription p WHERE p.medicalRecordId.id =:key");
+        q.setParameter("key", r.getId());
+        return  (BigDecimal) q.getSingleResult();
     }
 
 }

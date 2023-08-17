@@ -2,7 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
-
+<link type="text/css" href="<c:url value="/css/viewSchedule.css"/>" rel="stylesheet" />
 <security:authorize access="hasAuthority('ADMIN')">
     <a href="<c:url value="/admin/schedule" />" class="btn btn-success" style="margin-left: 16px; margin-top: 24px;">Thêm Lịch Trực</a>
 </security:authorize>

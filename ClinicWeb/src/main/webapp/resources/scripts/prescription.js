@@ -156,7 +156,6 @@ async function exportPrescription(path, object) {
     }
 
     try {
-        
         await exportPDF(object)
         await sendDataByAjax(path, data)
         window.location.href = '/ClinicWeb/doctor/medical'

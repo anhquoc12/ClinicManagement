@@ -12,18 +12,9 @@
     <security:authorize access="!hasAuthority('ADMIN')">
         <title><tiles:insertAttribute name="title" /></title>
     </security:authorize>
-    <link type="text/css" href="<c:url value="/css/index.css"/>" rel="stylesheet" />
-    <link type="text/css" href="<c:url value="/css/register.css"/>" rel="stylesheet" />
-    <link type="text/css" href="<c:url value="/css/appointment.css"/>" rel="stylesheet" />
-    <link type="text/css" href="<c:url value="/css/viewSchedule.css"/>" rel="stylesheet" />
     <link type="text/css" href="<c:url value="/css/doctor.css"/>" rel="stylesheet" />
     <link type="text/css" href="<c:url value="/css/users.css"/>" rel="stylesheet" />
-    <link type="text/css" href="<c:url value="/css/infoUser.css"/>" rel="stylesheet" />
-    <link type="text/css" href="<c:url value="/css/medical.css"/>" rel="stylesheet" />
-    <link type="text/css" href="<c:url value="/css/prescription.css"/>" rel="stylesheet" />
-    <link type="text/css" href="<c:url value="/css/history.css"/>" rel="stylesheet" />
-    <link type="text/css" href="<c:url value="/css/detailHistory.css"/>" rel="stylesheet" />
-    <link type="text/css" href="<c:url value="/css/payment.css"/>" rel="stylesheet" />
+    <link type="text/css" href="<c:url value="/css/index.css"/>" rel="stylesheet" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,400i,700&display=swap">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" >
@@ -34,6 +25,12 @@
     <link
         href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css" rel="stylesheet" />
+    <!-- Option 1: Include in HTML -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css"><!-- comment -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.1.0/css/boxicons.min.css" integrity="sha512-pVCM5+SN2+qwj36KonHToF2p1oIvoU3bsqxphdOIWMYmgr4ZqD3t5DjKvvetKhXGc/ZG5REYTT6ltKfExEei/Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="//cdn.quilljs.com/1.3.6/quill.bubble.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/react-quill/0.4.1/quill.snow.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js" integrity="sha512-0QbL0ph8Tc8g5bLhfVzSqxe9GERORsKhIn1IrpxDAgUsbBGz/V7iSav2zzW325XGd1OMLdL4UiqRJj702IeqnQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/pdfmake.min.js"></script>

@@ -16,4 +16,5 @@ public interface InvoiceService {
     List<Object[]> getInvoices();
     boolean createInvoiceBeforePay(Invoice i);
     Invoice getInvoiceById(int id);
+    boolean payment(Invoice i);
 }

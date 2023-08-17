@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="f" uri="http://www.springframework.org/tags/form" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<link type="text/css" href="<c:url value="/css/register.css"/>" rel="stylesheet" />
 <c:forEach items="${msgErr}" var="msg"><h1 class="alert alert-danger">${msg}</h1></c:forEach>
     <section class="vh-100 bg-image"
              style="background-image: url('https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp'); height: 1000px!important">

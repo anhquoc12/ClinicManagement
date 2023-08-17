@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<link type="text/css" href="<c:url value="/css/infoUser.css"/>" rel="stylesheet" />
 <section class="py-5 my-5">
     <div class="container">
         <h1 class="mb-5">Account Settings</h1>

@@ -15,6 +15,7 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+
 /**
  *
  * @author Admin
@@ -51,6 +52,18 @@ public class InvoiceRepositoryImpl implements InvoiceRepository {
         Query q = s.createQuery("FROM Invoice i WHERE i.id =: key");
         q.setParameter("key", id);
         return (Invoice) q.getResultList().get(0);
+    }
+
+    @Override
+    public boolean payment(Invoice i) {
+        Session s = this.factory.getObject().getCurrentSession();
+        try {
+            s.update(i);
+            return true;
+        } catch (HibernateException ex) {
+            ex.printStackTrace();
+        }
+        return false;
     }
     
 }

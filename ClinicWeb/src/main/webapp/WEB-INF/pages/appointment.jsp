@@ -2,6 +2,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<link type="text/css" href="<c:url value="/css/appointment.css"/>" rel="stylesheet" />
 <h1>${msg}</h1>
 
 

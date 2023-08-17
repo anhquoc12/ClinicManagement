@@ -4,16 +4,16 @@
  */
 package com.anhquoc0304.repository;
 
-import com.anhquoc0304.pojo.Invoice;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
  * @author Admin
  */
-public interface InvoiceRepository {
-    List<Object[]> getInvoices();
-    Invoice getInvoiceById(int id);
-    boolean createInvoiceBeforePay(Invoice i);
-    boolean payment(Invoice i);
+public interface StatRepository {
+    int countPatients();
+    int totalRevenue();
+    int countMedical();
+    List<Object[]> statRevenue(Map<String, String> params, int typeStat);
 }

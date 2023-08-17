@@ -7,6 +7,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+<link type="text/css" href="<c:url value="/css/index.css"/>" rel="stylesheet" />
 <section id="carosel">
     <!-- Carousel -->
     <div id="demo" class="carousel slide" data-bs-ride="carousel">

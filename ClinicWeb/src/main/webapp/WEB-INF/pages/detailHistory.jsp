@@ -7,6 +7,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="format" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<link type="text/css" href="<c:url value="/css/detailHistory.css"/>" rel="stylesheet" />
 <section class="content">
     <h1 class="text-secondary mt-2 text-uppercase">Biểu Mẫu Lịch Sử Khám Bệnh</h1>
     <div class="line"></div>

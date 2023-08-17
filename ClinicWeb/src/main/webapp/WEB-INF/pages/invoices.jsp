@@ -41,7 +41,7 @@
                         <td style="border: none !important;">${i[1]}</td>
                         <td style="border: none !important;">${i[2]}</td>
                         <td style="border: none !important;"><format:formatNumber pattern="#,##0" value="${i[4]}" /> VNĐ</td>
-                        <td style="border: none !important;"><span class="badge bg-warning">${i[3]}</span></td>
+                        <td style="border: none !important;"><span class="badge bg-warning">Chưa Thanh Toán</span></td>
                         <td style="border: none !important;"><a href="${url}" class="text-danger">view details</a></td>
                     </tr>
                 </c:if>
@@ -50,8 +50,8 @@
                         <td style="border: none !important;">#INV-${i[0]}-<span><format:formatDate pattern="dd-MM-yyyy" value="${i[2]}"/></span></td>
                         <td style="border: none !important;">${i[1]}</td>
                         <td style="border: none !important;">${i[2]}</td>
-                        <td style="border: none !important;">${i[5]}</td>
-                        <td style="border: none !important;"><span class="badge bg-success">${i[4]}</span></td>
+                        <td style="border: none !important;"><format:formatNumber pattern="#,##0" value="${i[4]}" /> VNĐ</td>
+                        <td style="border: none !important;"><span class="badge bg-success">Đã Thanh Toán</span></td>
                         <td style="border: none !important; border-bottom: none !important"><a href="${url}" class="text-danger">view details</a></td>
                     </tr>
                 </c:if>

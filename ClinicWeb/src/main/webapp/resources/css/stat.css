@@ -1236,3 +1236,19 @@ h6 {
   font-size: 13px;
   color: #012970;
 }
+
+.input-group-append {
+  cursor: pointer;
+}
+
+.filed-group {
+    margin-bottom: 16px !important;
+}
+
+.rd-stat {
+    margin-right: 20px;
+}
+
+.filter-btn {
+    width: 40%;
+}

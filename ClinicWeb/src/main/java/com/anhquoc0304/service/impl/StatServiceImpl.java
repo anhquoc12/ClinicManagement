@@ -6,6 +6,7 @@ package com.anhquoc0304.service.impl;
 
 import com.anhquoc0304.repository.StatRepository;
 import com.anhquoc0304.service.StatService;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,8 +36,18 @@ public class StatServiceImpl implements StatService{
     }
 
     @Override
-    public List<Object[]> statRevenue(Map<String, String> params, int typeStat) {
-        return this.statRepository.statRevenue(params, typeStat);
+    public List<Object[]> statRevenue(LocalDate date, int typeStat) {
+        return this.statRepository.statRevenue(date, typeStat);
+    }
+
+    @Override
+    public List<Object[]> top5MedicineStat(boolean type) {
+        return this.statRepository.top5MedicineStat(type);
+    }
+
+    @Override
+    public List<Object[]> statAmountPatient(LocalDate date, int typeStat) {
+        return this.statRepository.statAmountPatient(date, typeStat);
     }
     
 }

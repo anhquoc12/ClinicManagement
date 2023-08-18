@@ -4,6 +4,7 @@
  */
 package com.anhquoc0304.repository;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -15,5 +16,7 @@ public interface StatRepository {
     int countPatients();
     int totalRevenue();
     int countMedical();
-    List<Object[]> statRevenue(Map<String, String> params, int typeStat);
+    List<Object[]> statRevenue(LocalDate date, int typeStat);
+    List<Object[]> top5MedicineStat(boolean type);
+    List<Object[]> statAmountPatient(LocalDate date, int typeStat);
 }

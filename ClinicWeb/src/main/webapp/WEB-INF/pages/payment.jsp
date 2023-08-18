@@ -54,7 +54,7 @@
                     <td><span>${m[2]}</span></td>
                     <td><span>${m[3]}</span></td>
                     <td><span>${m[4]}</span></td>
-                    <td><span><format:formatNumber pattern="#,###" value="${m[5]}" /></span></td>
+                    <td><span><format:formatNumber pattern="#,###" value="${m[5]}" /></span> VNĐ</td>
                 </tr>
             </c:forEach>
         </tbody>

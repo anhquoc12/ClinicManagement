@@ -116,7 +116,7 @@
                 <ul class="navbar-nav">
                     <li class="nav-item dropdown">
                         <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="${name[0]}" alt="None" class="rounded-circle"
+                            <img src="${pageContext.session.getAttribute("current").avatar}" alt="None" class="rounded-circle"
                                  height="22" alt="Avatar" loading="lazy" />
                             <i class="fa-solid fa-chevron-up fa-rotate-180"></i>
                         </a>

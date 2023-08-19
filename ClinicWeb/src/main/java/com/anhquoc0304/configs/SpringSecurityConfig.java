@@ -4,6 +4,8 @@
  */
 package com.anhquoc0304.configs;
 
+import com.anhquoc0304.handlers.LoginHandler;
+import com.anhquoc0304.handlers.LogoutHandler;
 import com.anhquoc0304.pojo.User;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
@@ -31,12 +33,18 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 @EnableTransactionManagement
 @ComponentScan(basePackages = {
     "com.anhquoc0304.service",
-    "com.anhquoc0304.repository"
+    "com.anhquoc0304.repository",
+    "com.anhquoc0304.handlers",
+    "com.anhquoc0304.controllers"
 })
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     
     @Autowired
     private UserDetailsService userDetailsService;
+    @Autowired
+    private LoginHandler loginHandler;
+    @Autowired
+    private LogoutHandler logoutHandler;
     
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -71,10 +79,10 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.formLogin().loginPage("/login").usernameParameter("username").passwordParameter("password");
         
-        http.formLogin().defaultSuccessUrl("/").failureUrl("/login?error");
+        http.formLogin().successHandler(loginHandler).failureUrl("/login?error");
 
         
-        http.logout().logoutSuccessUrl("/login");
+        http.logout().logoutSuccessHandler(logoutHandler);
         
         http.exceptionHandling().accessDeniedPage("/login?accessDenied");
         

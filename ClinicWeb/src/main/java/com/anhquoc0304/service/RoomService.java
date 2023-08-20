@@ -17,4 +17,5 @@ public interface RoomService {
     boolean addRoom(Room r);
     boolean deleteRoom(Room r);
     int countRooms();
+    boolean existName(String name);
 }

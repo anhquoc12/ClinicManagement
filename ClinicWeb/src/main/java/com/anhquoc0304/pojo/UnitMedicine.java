@@ -4,6 +4,7 @@
  */
 package com.anhquoc0304.pojo;
 
+import com.anhquoc0304.validations.UnitMedicineName;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Basic;
@@ -43,6 +44,7 @@ public class UnitMedicine implements Serializable {
     @Size(max = 255)
     @Column(name = "name")
     @NotEmpty(message = "{unitMedicine.name.notEmptyMsg}")
+    @UnitMedicineName(message = "{unitMedicine.name.uniqueMsg}")
     private String name;
     @OneToMany(mappedBy = "unitMedicineId")
     private Set<Medicine> medicineSet;

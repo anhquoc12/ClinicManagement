@@ -38,5 +38,10 @@ public class SpecializationServiceImpl implements SpecializationService {
     public boolean deleteSpecialization(Specialization spec) {
         return this.specRepo.deleteSpecialization(spec);
     }
+
+    @Override
+    public boolean existName(String name) {
+        return this.specRepo.existName(name);
+    }
     
 }

@@ -87,10 +87,12 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public boolean existUsername(String username) {
         Session s = this.factory.getObject().getCurrentSession();
-        Query q = s.createQuery("SELECT u.username FROM User u");
-        List<String> usernames = q.getResultList();
-        if (usernames.contains(username))
-            return true;
+        Query q = s.createQuery("FROM User u");
+        List<User> users = q.getResultList();
+        for (User user : users) {
+            if (user.getUsername().equals(username))
+                return true;
+        }
         return false;
     }
 

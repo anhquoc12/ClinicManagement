@@ -9,8 +9,6 @@ import com.anhquoc0304.formatters.RoomFormatters;
 import com.anhquoc0304.formatters.SpecializationFormatters;
 import com.anhquoc0304.formatters.UnitMedicineFormatters;
 import com.anhquoc0304.formatters.UserFormatters;
-import com.anhquoc0304.validation.UserUsernameValidation;
-import com.anhquoc0304.validation.WebAppValidator;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import java.util.HashSet;
@@ -40,8 +38,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @ComponentScan(basePackages = {
     "com.anhquoc0304.controllers",
     "com.anhquoc0304.service",
-    "com.anhquoc0304.repository",
-    "com.anhquoc0304.validation"
+    "com.anhquoc0304.validations",
+    "com.anhquoc0304.repository"
 })
 public class WebAppContextConfig implements WebMvcConfigurer {
 
@@ -70,24 +68,7 @@ public class WebAppContextConfig implements WebMvcConfigurer {
         registry.addFormatter(new RoomFormatters());
         registry.addFormatter(new SpecializationFormatters());
     }
-
-//    @Bean
-//    public JavaMailSender javaMailSender() {
-//        JavaMailSenderImpl mail = new JavaMailSenderImpl();
-//        
-//        mail.setHost(env.getProperty("mail.host"));
-//        mail.setPort(Integer.parseInt(env.getProperty("mail.port")));
-//        mail.setUsername(env.getProperty("mail.email"));
-//        mail.setPassword("mail.password");
-//        
-//        Properties prop = mail.getJavaMailProperties();
-//        prop.put("mail.transport.protocol", "smtp");
-//        prop.put("mail.smtp.auth", env.getProperty("mail.properties.smtp.auth"));
-//        prop.put("mail.smtp.starttls.enable", "mail.properties.smtp.starttls.enable");
-//        
-//        return mail;
-//        
-//    }
+    
     @Bean
     public Cloudinary cloudinary() {
         Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
@@ -111,20 +92,6 @@ public class WebAppContextConfig implements WebMvcConfigurer {
                 = new LocalValidatorFactoryBean();
         bean.setValidationMessageSource(messageSource());
         return bean;
-    }
-
-//    @Bean
-//    public Validator userValidator() {
-//        return new UserUsernameValidation();
-//    }
-    @Bean
-    public WebAppValidator userValidator() {
-        Set<Validator> springValidators = new HashSet<>();
-        springValidators.add(new UserUsernameValidation());
-        WebAppValidator v = new WebAppValidator();
-        v.setSpringValidator(springValidators);
-
-        return v;
     }
 
     @Bean

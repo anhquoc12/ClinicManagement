@@ -96,5 +96,16 @@ public class MedicineRepositoryImpl implements MedicineRepository{
         }
         return false;
     }
+
+    @Override
+    public boolean existName(String name) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createQuery("FROM Medicine m");
+        List<Medicine> medicines = q.getResultList();
+        for (Medicine m : medicines)
+            if (m.getName().equals(name))
+                return true;
+        return false;
+    }
     
 }

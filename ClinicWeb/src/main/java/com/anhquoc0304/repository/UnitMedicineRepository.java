@@ -16,4 +16,5 @@ public interface UnitMedicineRepository {
     UnitMedicine getUnitById(int id);
     boolean addUnitMedicine(UnitMedicine unit);
     boolean deleteUnitMedicine(UnitMedicine unit);
+    boolean existName(String name);
 }

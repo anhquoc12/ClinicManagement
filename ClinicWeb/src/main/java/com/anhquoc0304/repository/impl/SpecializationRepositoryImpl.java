@@ -65,4 +65,15 @@ public class SpecializationRepositoryImpl implements SpecializationRepository {
         return false;
     }
 
+    @Override
+    public boolean existName(String name) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createQuery("FROM Specialization s");
+        List<Specialization> specs = q.getResultList();
+        for (Specialization sp : specs)
+            if (sp.getName().equals(name))
+                return true;
+        return false;
+    }
+
 }

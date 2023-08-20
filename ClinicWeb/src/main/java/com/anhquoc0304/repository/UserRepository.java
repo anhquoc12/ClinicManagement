@@ -21,5 +21,4 @@ public interface UserRepository {
     User getUserById(int id);
     boolean deleteUser(User user);
     List<User> getPatientByAppointmentToday();
-//    List<Object[]> getUserByUserRoleAndByName(String userRole);
 }

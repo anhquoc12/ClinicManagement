@@ -4,6 +4,7 @@
  */
 package com.anhquoc0304.pojo;
 
+import com.anhquoc0304.validations.CategoryName;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Basic;
@@ -43,6 +44,7 @@ public class Category implements Serializable {
     @Size(max = 255)
     @Column(name = "name")
     @NotEmpty(message = "{category.name.notEmptyMsg}")
+    @CategoryName(message = "{category.name.uniqueMsg}")
     private String name;
     @OneToMany(mappedBy = "categoryId")
     private Set<Medicine> medicineSet;

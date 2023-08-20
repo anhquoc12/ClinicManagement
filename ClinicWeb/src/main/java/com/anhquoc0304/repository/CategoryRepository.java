@@ -16,4 +16,5 @@ public interface CategoryRepository {
     Category getCategoryByid(int id);
     boolean addCategory(Category c);
     boolean deleteCategory(Category c);
+    boolean existName(String name);
 }

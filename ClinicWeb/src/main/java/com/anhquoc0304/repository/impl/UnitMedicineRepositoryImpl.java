@@ -63,4 +63,15 @@ public class UnitMedicineRepositoryImpl implements UnitMedicineRepository{
         q.setParameter("key", id);
         return (UnitMedicine) q.getResultList().get(0);
     }
+
+    @Override
+    public boolean existName(String name) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createQuery("FROM UnitMedicine u");
+        List<UnitMedicine> units = q.getResultList();
+        for (UnitMedicine u : units)
+            if (u.getName().equals(name))
+                return true;
+        return false;
+    }
 }

@@ -39,5 +39,10 @@ public class CategoryServiceImpl implements CategoryService{
     public boolean deleteCategory(Category c) {
         return this.categoryRepo.deleteCategory(c);
     }
+
+    @Override
+    public boolean existName(String name) {
+        return this.categoryRepo.existName(name);
+    }
     
 }

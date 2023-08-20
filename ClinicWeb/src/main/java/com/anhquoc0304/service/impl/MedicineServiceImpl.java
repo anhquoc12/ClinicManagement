@@ -49,5 +49,10 @@ public class MedicineServiceImpl implements MedicineService{
     public boolean updateUnitInStock(Medicine m, int count) {
         return this.medicineRepo.updateUnitInStock(m, count);
     }
+
+    @Override
+    public boolean existName(String name) {
+        return this.medicineRepo.existName(name);
+    }
     
 }

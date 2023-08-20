@@ -4,6 +4,7 @@
  */
 package com.anhquoc0304.pojo;
 
+import com.anhquoc0304.validations.RoomName;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Basic;
@@ -43,6 +44,7 @@ public class Room implements Serializable {
     @Size(max = 255)
     @Column(name = "name")
     @NotEmpty(message = "{room.name.notEmptyMsg}")
+    @RoomName(message = "{room.name.notEmptyMsg}")
     private String name;
     @OneToMany(mappedBy = "roomId")
     private Set<Schedule> scheduleSet;

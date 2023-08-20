@@ -4,6 +4,7 @@
  */
 package com.anhquoc0304.pojo;
 
+import com.anhquoc0304.validations.MedicineName;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Set;
@@ -48,6 +49,7 @@ public class Medicine implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Size(max = 255, message = "{medicine.name.sizeMsg}")
+    @MedicineName(message = "{medicine.name.uniqueMsg}")
     @Column(name = "name")
     @NotEmpty(message = "{medicine.name.notEmptyMsg}")
     private String name;

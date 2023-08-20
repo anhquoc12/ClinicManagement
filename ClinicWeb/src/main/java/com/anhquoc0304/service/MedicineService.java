@@ -18,4 +18,5 @@ public interface MedicineService {
     boolean deleteMedicine(Medicine medicine);
     Medicine getMedicineById(int id);
     boolean updateUnitInStock(Medicine m, int count);
+    boolean existName(String name);
 }

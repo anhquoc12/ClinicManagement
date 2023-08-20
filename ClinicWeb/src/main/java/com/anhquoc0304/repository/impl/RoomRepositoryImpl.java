@@ -69,5 +69,16 @@ public class RoomRepositoryImpl implements RoomRepository{
         Query q = s.createQuery("SELECT COUNT(*) FROM Room r");
         return Integer.parseInt(q.getSingleResult().toString());
     }
+
+    @Override
+    public boolean existName(String name) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createQuery("FROM Room r");
+        List<Room> rooms = q.getResultList();
+        for (Room r :rooms)
+            if (r.getName().equals(name))
+                return true;
+        return false;
+    }
     
 }

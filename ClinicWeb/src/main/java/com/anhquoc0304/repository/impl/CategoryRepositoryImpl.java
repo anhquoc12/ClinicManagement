@@ -62,5 +62,17 @@ public class CategoryRepositoryImpl implements CategoryRepository{
         }
         return false;
     }
+
+    @Override
+    public boolean existName(String name) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createQuery("FROM Category c");
+        List<Category> categories = q.getResultList();
+        for (Category c : categories) {
+            if (c.getName().equals(name))
+                return true;
+        }
+        return false;
+    }
     
 }

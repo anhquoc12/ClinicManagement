@@ -18,5 +18,5 @@ public interface MedicineRepository {
     boolean addOrUpdateMedicine(Medicine medicine);
     boolean deleteMedicine(Medicine medicine);
     boolean updateUnitInStock(Medicine m, int count);
-    
+    boolean existName(String name);
 }

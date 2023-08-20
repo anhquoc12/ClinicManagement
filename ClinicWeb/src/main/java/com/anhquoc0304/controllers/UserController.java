@@ -4,6 +4,7 @@
  */
 package com.anhquoc0304.controllers;
 
+
 import com.anhquoc0304.pojo.Doctor;
 import com.anhquoc0304.pojo.Specialization;
 import com.anhquoc0304.pojo.User;
@@ -19,10 +20,13 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,15 +39,16 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 @Controller
 public class UserController {
-
     @Autowired
-    private UserService UserDetailsService;
+    private UserService userDetailsService;
     @Autowired
     private Cloudinary cloud;
     @Autowired
     private SpecializationService specialService;
     @Autowired
     private DoctorService doctorService;
+//    
+    
 
     @ModelAttribute
     public void specialList(Model model) {
@@ -79,7 +84,7 @@ public class UserController {
             }
 
             user.setUserRole(User.PATIENT);
-            if (this.UserDetailsService.addOrUpdateUser(user)) {
+            if (this.userDetailsService.addOrUpdateUser(user)) {
                 return "login";
             } else {
                 msgErr.add("Đã có Lỗi khi đăng ký! Vui Lòng thử lại");
@@ -105,6 +110,7 @@ public class UserController {
         if (br.hasErrors()) {
             model.addAttribute("specials", this.specialService.getSpecials());
             model.addAttribute("isDoctor", true);
+            model.addAttribute("userR", user);
             return "employee";
         }
         String msg = null;
@@ -119,9 +125,9 @@ public class UserController {
             }
         }
         user.setUserRole(User.DOCTOR);
-        if (this.UserDetailsService.addOrUpdateUser(user)) {
+        if (this.userDetailsService.addOrUpdateUser(user)) {
             // Nếu Thành công
-            Doctor d = this.doctorService.getDoctorById(this.UserDetailsService
+            Doctor d = this.doctorService.getDoctorById(this.userDetailsService
                         .getCurrentUser(user.getUsername()).getId());
             d.setUserId(user);
             d.setSpecializationId(this.specialService
@@ -139,8 +145,8 @@ public class UserController {
 
     @RequestMapping("/admin/doctor/{id}")
     public String updateDoctor(Model model, @PathVariable(value = "id") int id) {
-        model.addAttribute("user", this.UserDetailsService.getUserById(id));
-//        model.addAttribute("doctor", this.doctorService.getDoctorById(id));
+        model.addAttribute("user", this.userDetailsService.getUserById(id));
+        model.addAttribute("doctor", this.doctorService.getDoctorById(id));
         return "employee";
     }
 
@@ -170,7 +176,7 @@ public class UserController {
             }
         }
         user.setUserRole(User.NURSE);
-        if (this.UserDetailsService.addOrUpdateUser(user)) {
+        if (this.userDetailsService.addOrUpdateUser(user)) {
             return "redirect:/admin/users/nurse";
         } else {
             msg = "Đã có Lỗi!Vui Lòng thử lại";
@@ -181,7 +187,7 @@ public class UserController {
 
     @RequestMapping("/admin/nurse/{id}")
     public String updateNurse(Model model, @PathVariable(value = "id") int id) {
-        model.addAttribute("user", this.UserDetailsService.getUserById(id));
+        model.addAttribute("user", this.userDetailsService.getUserById(id));
         return "employee";
     }
 
@@ -190,7 +196,7 @@ public class UserController {
         String name = params.get("name");
         String special = params.get("special");
 
-        List<Object[]> users = this.UserDetailsService.getUserByUserRole(User.DOCTOR);
+        List<Object[]> users = this.userDetailsService.getUserByUserRole(User.DOCTOR);
         List<Object[]> filterUser = new ArrayList<>();
 
         if (name != null && !name.isEmpty()) {
@@ -224,7 +230,7 @@ public class UserController {
     @RequestMapping("/admin/users/patient")
     public String patients(Model model, @RequestParam Map<String, String> params) {
         String name = params.get("name");
-        List<Object[]> users = this.UserDetailsService.getUserByUserRole(User.PATIENT);
+        List<Object[]> users = this.userDetailsService.getUserByUserRole(User.PATIENT);
         List<Object[]> filterUsers = new ArrayList<>();
         if (name != null && !name.isEmpty()) {
             for (Object[] u : users) {
@@ -244,7 +250,7 @@ public class UserController {
     @RequestMapping("/admin/users/nurse")
     public String nurses(Model model, @RequestParam Map<String, String> params) {
         String name = params.get("name");
-        List<Object[]> users = this.UserDetailsService.getUserByUserRole(User.NURSE);
+        List<Object[]> users = this.userDetailsService.getUserByUserRole(User.NURSE);
         List<Object[]> filterUsers = new ArrayList<>();
         if (name != null && !name.isEmpty()) {
             for (Object[] u : users) {
@@ -263,7 +269,7 @@ public class UserController {
 
     @RequestMapping("/infoUser")
     public String infoUser(Model model) {
-        User u = this.UserDetailsService.
+        User u = this.userDetailsService.
                 getCurrentUser(
                         SecurityContextHolder.getContext()
                                 .getAuthentication().getName());

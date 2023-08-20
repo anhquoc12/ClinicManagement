@@ -16,4 +16,5 @@ public interface SpecializationRepository {
     Specialization getSpecializationById(int id);
     boolean addSpecialization(Specialization spec);
     boolean deleteSpecialization(Specialization spec);
+    boolean existName(String name);
 }

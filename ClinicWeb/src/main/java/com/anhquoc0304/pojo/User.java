@@ -4,6 +4,7 @@
  */
 package com.anhquoc0304.pojo;
 
+import com.anhquoc0304.validations.Username;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Basic;
@@ -45,6 +46,8 @@ import org.springframework.web.multipart.MultipartFile;
     @NamedQuery(name = "User.findByAddress", query = "SELECT u FROM User u WHERE u.address = :address"),
     @NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email"),
     @NamedQuery(name = "User.findByPhone", query = "SELECT u FROM User u WHERE u.phone = :phone")})
+
+@Username(message = "{user.username.uniqueMsg}")
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -52,7 +55,7 @@ public class User implements Serializable {
     public static final String DOCTOR = "DOCTOR";
     public static final String NURSE = "NURSE";
     public static final String PATIENT = "PATIENT";
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -107,7 +110,7 @@ public class User implements Serializable {
     private Set<Appointment> appointmentSet1;
     @OneToMany(mappedBy = "nurseId")
     private Set<Invoice> invoiceSet;
-    
+
     @Transient
     private MultipartFile file;
 
@@ -291,5 +294,5 @@ public class User implements Serializable {
     public void setFile(MultipartFile file) {
         this.file = file;
     }
-    
+
 }

@@ -16,6 +16,7 @@
     </c:if>--%>
     <c:url value="/admin/schedule" var="action" />
     <form:form method="post" action="${action}" modelAttribute="schedule" enctype="multipart/form-data" >
+        <form:errors path="*" cssClass="alert alert-danger" element="div" />
     <div class="container">
         <div class="card">
             <div class="form-row border-bottom p-4 position-relative">

@@ -46,5 +46,10 @@ public class RoomServiceImpl implements RoomService{
     public int countRooms() {
         return this.roomRepo.countRooms();
     }
+
+    @Override
+    public boolean existName(String name) {
+        return this.roomRepo.existName(name);
+    }
     
 }

@@ -16,4 +16,5 @@ public interface UnitMedicineService {
     boolean addUnit(UnitMedicine unit);
     boolean deleteUnit(UnitMedicine unit);
     UnitMedicine getUnitById(int id);
+    boolean existName(String name);
 }

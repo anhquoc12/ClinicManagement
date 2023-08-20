@@ -17,4 +17,5 @@ public interface RoomRepository {
     boolean addRoom(Room r);
     boolean deleteRoom(Room r);
     int countRooms();
+    boolean existName(String name);
 }

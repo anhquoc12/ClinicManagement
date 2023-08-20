@@ -4,11 +4,13 @@
  */
 package com.anhquoc0304.pojo;
 
+import com.anhquoc0304.validations.SpecializationName;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -43,8 +45,9 @@ public class Specialization implements Serializable {
     @Size(max = 255)
     @Column(name = "name")
     @NotEmpty(message = "{specialization.name.notEmptyMsg}")
+    @SpecializationName(message = "{specialization.name.uniqueMsg}")
     private String name;
-    @OneToMany(mappedBy = "specializationId")
+    @OneToMany(mappedBy = "specializationId", fetch = FetchType.EAGER)
     private Set<Doctor> doctorSet;
     @OneToMany(mappedBy = "specializationId")
     private Set<Appointment> appointmentSet;

@@ -40,5 +40,10 @@ public class UnitMedicineServiceImpl implements UnitMedicineService{
     public UnitMedicine getUnitById(int id) {
         return this.unitRepo.getUnitById(id);
     }
+
+    @Override
+    public boolean existName(String name) {
+        return this.unitRepo.existName(name);
+    }
     
 }

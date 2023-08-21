@@ -88,6 +88,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         
         http.authorizeHttpRequests().requestMatchers(new AntPathRequestMatcher("/")).permitAll()
                 .requestMatchers(new AntPathRequestMatcher("/admin/**")).hasAuthority(User.ADMIN)
+                .requestMatchers(new AntPathRequestMatcher("/api/admin/**")).permitAll()
                 .requestMatchers(new AntPathRequestMatcher("/appointment/**")).hasAuthority(User.PATIENT)
                 .requestMatchers(new AntPathRequestMatcher("/infoUser/**")).hasAnyAuthority(
                 User.ADMIN, User.DOCTOR, User.NURSE, User.PATIENT)

@@ -93,4 +93,9 @@ public class UserServiceImpl implements UserService {
         return this.userRepo.getPatientByAppointmentToday();
     }
 
+    @Override
+    public boolean authUser(String username, String password) {
+        return this.userRepo.authUser(username, password);
+    }
+
 }

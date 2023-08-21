@@ -5,12 +5,14 @@
 package com.anhquoc0304.pojo;
 
 import com.anhquoc0304.validations.MedicineName;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -63,12 +65,15 @@ public class Medicine implements Serializable {
     @Min(value = 1, message = "{medicine.unitInStock.minMsg}")
     private Integer unitInStock;
     @OneToMany(mappedBy = "medicineId")
+    @JsonIgnore
     private Set<Prescription> prescriptionSet;
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     @ManyToOne
+//    @JsonIgnore
     private Category categoryId;
     @JoinColumn(name = "unit_medicine_id", referencedColumnName = "id")
     @ManyToOne
+//    @JsonIgnore
     private UnitMedicine unitMedicineId;
 
     public Medicine() {

@@ -5,11 +5,13 @@
 package com.anhquoc0304.pojo;
 
 import com.anhquoc0304.validations.UnitMedicineName;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -47,6 +49,7 @@ public class UnitMedicine implements Serializable {
     @UnitMedicineName(message = "{unitMedicine.name.uniqueMsg}")
     private String name;
     @OneToMany(mappedBy = "unitMedicineId")
+    @JsonIgnore
     private Set<Medicine> medicineSet;
 
     public UnitMedicine() {

@@ -13,6 +13,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +27,8 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Autowired
     private LocalSessionFactoryBean factory;
+    @Autowired
+    private BCryptPasswordEncoder passwordEncode;
 
     @Override
     public List<User> getUsers(String username) {
@@ -122,6 +125,12 @@ public class UserRepositoryImpl implements UserRepository {
         Query q = s.createQuery("SELECT a.patientId FROM Appointment a WHERE a.appointmentDate = CURRENT_DATE AND a.appointmentStatus =: status");
         q.setParameter("status", Appointment.PRESENT);
         return q.getResultList();
+    }
+
+    @Override
+    public boolean authUser(String username, String password) {
+        User user = this.getCurrentUser(username);
+        return this.passwordEncode.matches(password, user.getPassword());
     }
 
 }

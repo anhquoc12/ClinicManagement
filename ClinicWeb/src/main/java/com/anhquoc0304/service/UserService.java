@@ -22,4 +22,5 @@ public interface UserService extends UserDetailsService {
     User getUserById(int id);
     boolean deleteUser(User user);
     List<User> getPatientByAppointmentToday();
+    boolean authUser(String username, String password);
 }

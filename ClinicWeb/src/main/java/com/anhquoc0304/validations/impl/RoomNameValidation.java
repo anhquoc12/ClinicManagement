@@ -25,6 +25,8 @@ public class RoomNameValidation implements ConstraintValidator<RoomName, String>
 
     @Override
     public boolean isValid(String t, ConstraintValidatorContext cvc) {
+        if (this.roomService == null)
+            return true;
         return !this.roomService.existName(t);
     }
     

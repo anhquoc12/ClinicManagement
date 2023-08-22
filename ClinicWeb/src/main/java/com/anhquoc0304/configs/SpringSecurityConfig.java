@@ -86,17 +86,16 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         
         http.exceptionHandling().accessDeniedPage("/login?accessDenied");
         
-        http.authorizeHttpRequests().requestMatchers(new AntPathRequestMatcher("/")).permitAll()
-                .requestMatchers(new AntPathRequestMatcher("/admin/**")).hasAuthority(User.ADMIN)
-                .requestMatchers(new AntPathRequestMatcher("/api/admin/**")).permitAll()
-                .requestMatchers(new AntPathRequestMatcher("/appointment/**")).hasAuthority(User.PATIENT)
-                .requestMatchers(new AntPathRequestMatcher("/infoUser/**")).hasAnyAuthority(
+        http.authorizeHttpRequests().antMatchers("/").permitAll()
+                .antMatchers("/admin/**").hasAuthority(User.ADMIN)
+                .antMatchers("/appointment/**").hasAuthority(User.PATIENT)
+                .antMatchers("/infoUser/**").hasAnyAuthority(
                 User.ADMIN, User.DOCTOR, User.NURSE, User.PATIENT)
-                .requestMatchers(new AntPathRequestMatcher("/listAppointment/**"))
+                .antMatchers("/listAppointment/**")
                 .hasAnyAuthority(User.PATIENT)
-                .requestMatchers(new AntPathRequestMatcher("/nurse/**"))
+                .antMatchers("/nurse/**")
                 .hasAuthority(User.NURSE)
-                .requestMatchers(new AntPathRequestMatcher("/doctor/**"))
+                .antMatchers("/doctor/**")
                 .hasAuthority(User.DOCTOR);
         
                 

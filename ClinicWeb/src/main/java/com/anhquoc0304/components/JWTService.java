@@ -16,13 +16,12 @@ import com.nimbusds.jwt.SignedJWT;
 import java.text.ParseException;
 import java.util.Date;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 /**
  *
  * @author Admin
  */
-@Service
+@Component
 public class JWTService {
     public static final String SECRET_KEY = "UE*^**(*bbb556ff%%&(*@!%&**(*NNN&&&&";
     public static final byte[] SHARED_SECRET_KEY = SECRET_KEY.getBytes();
@@ -79,6 +78,6 @@ public class JWTService {
         if (token == null || token.trim().length() == 0)
             return false;
         String username = getUsernameFromToken(token);
-        return username != null || !username.isEmpty() || isTokenExpired(token);
+        return !(username == null || username.isEmpty() || isTokenExpired(token));
     }
 }

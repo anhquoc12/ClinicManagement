@@ -5,11 +5,13 @@
 package com.anhquoc0304.pojo;
 
 import com.anhquoc0304.validations.Username;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,6 +20,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.persistence.criteria.Fetch;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
@@ -97,18 +100,25 @@ public class User implements Serializable {
     @NotEmpty(message = "{user.phone.notEmptyMsg}")
     private String phone;
     @OneToMany(mappedBy = "userId")
+    @JsonIgnore
     private Set<Doctor> doctorSet;
     @OneToMany(mappedBy = "userId")
+    @JsonIgnore
     private Set<Schedule> scheduleSet;
     @OneToMany(mappedBy = "patientId")
+    @JsonIgnore
     private Set<MedicalRecord> medicalRecordSet;
     @OneToMany(mappedBy = "doctorId")
+    @JsonIgnore
     private Set<MedicalRecord> medicalRecordSet1;
     @OneToMany(mappedBy = "nurseId")
+    @JsonIgnore
     private Set<Appointment> appointmentSet;
     @OneToMany(mappedBy = "patientId")
+    @JsonIgnore
     private Set<Appointment> appointmentSet1;
     @OneToMany(mappedBy = "nurseId")
+    @JsonIgnore
     private Set<Invoice> invoiceSet;
 
     @Transient

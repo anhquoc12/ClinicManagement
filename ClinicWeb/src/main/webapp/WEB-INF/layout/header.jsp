@@ -44,8 +44,8 @@
                         <ul class="dropdown-menu">
                             <c:url value="/admin/medicine" var="url" />
                             <li><a class="dropdown-item" href="<c:url value="/admin/medicineList" />">Danh Sách Thuốc</a></li>
-                            <li><a class="dropdown-item" href="${url}/category">Đơn Vị Thuốc</a></li>
-                            <li><a class="dropdown-item" href="${url}/unit-medicine">Loại Thuốc</a></li>
+                            <li><a class="dropdown-item" href="${url}/unit-medicine">Đơn Vị Thuốc</a></li>
+                            <li><a class="dropdown-item" href="${url}/category">Loại Thuốc</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">

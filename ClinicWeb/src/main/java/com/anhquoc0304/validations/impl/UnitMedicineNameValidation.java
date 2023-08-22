@@ -25,6 +25,8 @@ public class UnitMedicineNameValidation implements ConstraintValidator<UnitMedic
 
     @Override
     public boolean isValid(String t, ConstraintValidatorContext cvc) {
+        if (this.unitService == null)
+            return true;
         return !this.unitService.existName(t);
     }
     

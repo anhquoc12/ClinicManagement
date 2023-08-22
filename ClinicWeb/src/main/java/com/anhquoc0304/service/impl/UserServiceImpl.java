@@ -52,8 +52,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean addOrUpdateUser(User user) {
         String pw = user.getPassword();
-        if (user.getId() == null)
-            pw = this.passwordEncoder.encode(pw);
+        pw = this.passwordEncoder.encode(pw);
         user.setPassword(pw);
         return this.userRepo.addOrUpdateUser(user);
     }

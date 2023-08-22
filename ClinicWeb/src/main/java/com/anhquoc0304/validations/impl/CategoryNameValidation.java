@@ -25,6 +25,8 @@ public class CategoryNameValidation implements ConstraintValidator<CategoryName,
 
     @Override
     public boolean isValid(String t, ConstraintValidatorContext cvc) {
+        if (this.categoryService == null)
+            return true;
         return !this.categoryService.existName(t);
     }
     

@@ -25,6 +25,7 @@ public class MedicineNameValidation implements ConstraintValidator<MedicineName,
 
     @Override
     public boolean isValid(String t, ConstraintValidatorContext cvc) {
+//        Medi
         return !this.medicineService.existName(t);
     }
     

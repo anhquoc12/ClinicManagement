@@ -6,7 +6,6 @@ package com.anhquoc0304.service;
 
 import com.anhquoc0304.pojo.Specialization;
 import java.util.List;
-import org.springframework.stereotype.Service;
 
 /**
  *

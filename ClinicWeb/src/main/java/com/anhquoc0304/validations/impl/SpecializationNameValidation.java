@@ -25,6 +25,8 @@ public class SpecializationNameValidation implements ConstraintValidator<Special
 
     @Override
     public boolean isValid(String t, ConstraintValidatorContext cvc) {
+        if (this.specialService == null)
+            return true;
         return !this.specialService.existName(t);
     }
     

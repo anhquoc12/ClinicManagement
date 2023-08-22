@@ -38,7 +38,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @ComponentScan(basePackages = {
     "com.anhquoc0304.controllers",
     "com.anhquoc0304.service",
-    "com.anhquoc0304.repository"
+    "com.anhquoc0304.repository",
+    "com.anhquoc0304.components"
 })
 public class WebAppContextConfig implements WebMvcConfigurer {
 

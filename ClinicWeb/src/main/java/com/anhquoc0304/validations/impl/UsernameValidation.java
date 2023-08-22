@@ -30,8 +30,11 @@ public class UsernameValidation implements ConstraintValidator<Username, User> {
 
     @Override
     public boolean isValid(User t, ConstraintValidatorContext cvc) {
-        if (t.getId() == null)
+        if (t.getId() == null) {
+            if (this.userService == null)
+                return true;
             return !this.userService.existUsername(t.getUsername());
+        }
         return true;
     }
 

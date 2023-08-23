@@ -66,8 +66,9 @@ public class ApiUserController {
         this.userService.deleteUser(this.userService.getUserById(id));
     }
 
+    
     @RequestMapping(value = "/api/login/", method = RequestMethod.POST)
-    @CrossOrigin
+    @CrossOrigin(origins = {"http://localhost:3000/"})
     public ResponseEntity<String> login(@RequestBody User user) {
         if (this.userService.authUser(user.getUsername(), user.getPassword())) {
             String token = this.jWTService.genarateTokenLogin(user.getUsername());
@@ -76,11 +77,11 @@ public class ApiUserController {
         return new ResponseEntity<>("error", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    @CrossOrigin(origins = {"http://localhost:3000/"})
     @RequestMapping(value = "/api/users/patient/", 
             method = RequestMethod.POST,
             consumes = {MediaType.MULTIPART_FORM_DATA_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE})
-    @CrossOrigin
     public ResponseEntity<Object> addPatient(@RequestParam Map<String, String> patient,
             @RequestPart MultipartFile file) {
         User u = new User();
@@ -102,7 +103,7 @@ public class ApiUserController {
         }
         if (this.userService.addOrUpdateUser(u))
             return new ResponseEntity<>(u, HttpStatus.CREATED);
-        return new ResponseEntity<>("ADD USER FAILED!!!", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>("ADD USER FAILED!!!", HttpStatus.UNAUTHORIZED);
     }
     
     @RequestMapping(value = "/api/admin/users/nurse/", 

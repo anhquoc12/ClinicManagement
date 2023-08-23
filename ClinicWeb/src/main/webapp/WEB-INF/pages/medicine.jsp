@@ -10,6 +10,7 @@
 <h1 class="text-center text-success">Thêm Thuốc</h1>
 <c:if test="${msg_err != null}"><div class="alert alert-success">${msg_err}</div></c:if>
 <form:form action="/ClinicWeb/admin/medicine" method="post" style="margin: 50px;" modelAttribute="medicine" enctype="multipart/form-data">
+    <form:errors path="*" cssClass="alert alert-danger" element="div" />
     <form:hidden path="id"/>
     <div class="form-floating mb-3 mt-3">
         <form:input path="name" type="text" class="form-control" id="name" placeholder="Tên thuốc" name="name" />

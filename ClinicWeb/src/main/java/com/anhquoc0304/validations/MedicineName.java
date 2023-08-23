@@ -17,7 +17,7 @@ import javax.validation.Payload;
  *
  * @author Admin
  */
-@Target({ElementType.METHOD, ElementType.FIELD})
+@Target({ElementType.TYPE, ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Constraint(validatedBy = MedicineNameValidation.class)

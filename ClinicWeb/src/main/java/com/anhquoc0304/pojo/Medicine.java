@@ -42,6 +42,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Medicine.findByName", query = "SELECT m FROM Medicine m WHERE m.name = :name"),
     @NamedQuery(name = "Medicine.findByUnitPrice", query = "SELECT m FROM Medicine m WHERE m.unitPrice = :unitPrice"),
     @NamedQuery(name = "Medicine.findByUnitInStock", query = "SELECT m FROM Medicine m WHERE m.unitInStock = :unitInStock")})
+@MedicineName(message = "{medicine.name.uniqueMsg}")
 public class Medicine implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -51,7 +52,6 @@ public class Medicine implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Size(max = 255, message = "{medicine.name.sizeMsg}")
-    @MedicineName(message = "{medicine.name.uniqueMsg}")
     @Column(name = "name")
     @NotEmpty(message = "{medicine.name.notEmptyMsg}")
     private String name;

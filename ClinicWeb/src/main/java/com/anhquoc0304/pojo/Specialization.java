@@ -5,6 +5,7 @@
 package com.anhquoc0304.pojo;
 
 import com.anhquoc0304.validations.SpecializationName;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Basic;
@@ -48,8 +49,10 @@ public class Specialization implements Serializable {
     @SpecializationName(message = "{specialization.name.uniqueMsg}")
     private String name;
     @OneToMany(mappedBy = "specializationId", fetch = FetchType.EAGER)
+    @JsonIgnore
     private Set<Doctor> doctorSet;
     @OneToMany(mappedBy = "specializationId")
+    @JsonIgnore
     private Set<Appointment> appointmentSet;
 
     public Specialization() {

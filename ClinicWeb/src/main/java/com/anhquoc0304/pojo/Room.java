@@ -5,6 +5,7 @@
 package com.anhquoc0304.pojo;
 
 import com.anhquoc0304.validations.RoomName;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Basic;
@@ -47,6 +48,7 @@ public class Room implements Serializable {
     @RoomName(message = "{room.name.notEmptyMsg}")
     private String name;
     @OneToMany(mappedBy = "roomId")
+    @JsonIgnore
     private Set<Schedule> scheduleSet;
 
     public Room() {

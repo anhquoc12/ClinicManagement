@@ -9,6 +9,7 @@ import com.anhquoc0304.pojo.User;
 import com.anhquoc0304.service.AppointmentService;
 import com.anhquoc0304.service.EmailService;
 import com.anhquoc0304.service.UserService;
+import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,7 +17,10 @@ import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -82,5 +86,13 @@ public class ApiAppointmentController {
     public void presentAppointment(@PathVariable(value = "id") int id) {
         Appointment a = this.appointSevice.getAppointmentById(id);
         this.appointSevice.setAppointmentStatus(a, Appointment.PRESENT);
+    }
+    
+    @RequestMapping(value = "/api/list-appointment/", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @CrossOrigin(origins = {"http://localhost:3000/"})
+    public ResponseEntity<List<Appointment>> listAppointment(Principal user) {
+        return new ResponseEntity<>(this.appointSevice.getAppointmentByCurrentUser(
+        this.userDetailService.getCurrentUser(user.getName())),
+        HttpStatus.OK);
     }
 }

@@ -1,16 +1,16 @@
 
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
-import apis, { endpoints } from '../configs/Apis';
-import { Cookies, useCookies } from 'react-cookie';
-// import { Cookies } from 'react-cookie';
+import apis, { authAPI, endpoints } from '../configs/Apis';
+import Cookies from 'js-cookie';
+import { MyUserContext } from '../App';
+import { Navigate } from 'react-router-dom';
 
 const Login = () => {
     const [username, setUsername] = useState()
     const [password, setPassword] = useState()
-    const [cookie, setCookie] = useCookies()
-    
+    const [currentUser, state] = useContext(MyUserContext)
     const login = (evt) => {
         evt.preventDefault()
         const process = async () => { 
@@ -19,7 +19,14 @@ const Login = () => {
                     "username": username,
                     "password": password
                 })
-                setCookie('toke', res.data)
+                Cookies.set('token', res.data)
+                let user = await authAPI().get(endpoints['current-user'])
+                Cookies.set('user', user)
+                state({
+                    'Type': 'login',
+                    'payload': user
+                })
+
             } catch (ex) {
                 console.log(ex)
             }
@@ -28,6 +35,8 @@ const Login = () => {
         process()
     }
 
+    if (currentUser !== null)
+        return (<Navigate to="/" />)
 
     return (
         <>

@@ -14,6 +14,7 @@ import com.anhquoc0304.service.UserService;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import java.io.IOException;
+import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,12 +57,14 @@ public class ApiUserController {
 
     @RequestMapping(value = "/admin/nurse/{id}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @CrossOrigin(origins = {"http://localhost:3000/"})
     public void deleteNurse(@PathVariable(value = "id") int id) {
         this.userService.deleteUser(this.userService.getUserById(id));
     }
 
     @RequestMapping(value = "/admin/doctor/{id}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @CrossOrigin(origins = {"http://localhost:3000/"})
     public void deleteDoctor(@PathVariable(value = "id") int id) {
         this.userService.deleteUser(this.userService.getUserById(id));
     }
@@ -110,7 +113,7 @@ public class ApiUserController {
             method = RequestMethod.POST,
             consumes = {MediaType.MULTIPART_FORM_DATA_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE})
-    @CrossOrigin
+    @CrossOrigin(origins = {"http://localhost:3000/"})
     public ResponseEntity<Object> addNurse(@RequestParam Map<String, String> nurse,
             @RequestPart MultipartFile file) {
         User u = new User();
@@ -139,7 +142,7 @@ public class ApiUserController {
             method = RequestMethod.POST,
             consumes = {MediaType.MULTIPART_FORM_DATA_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE})
-    @CrossOrigin
+    @CrossOrigin(origins = {"http://localhost:3000/"})
     public ResponseEntity<Object> updateNurse(@RequestParam Map<String, String> nurse,
             @PathVariable(value = "id") int id,
             @RequestPart(value = "file") MultipartFile file) {
@@ -168,7 +171,7 @@ public class ApiUserController {
             method = RequestMethod.POST,
             consumes = {MediaType.MULTIPART_FORM_DATA_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE})
-    @CrossOrigin
+    @CrossOrigin(origins = {"http://localhost:3000/"})
     public ResponseEntity<Object> addDoctor(@RequestParam Map<String, String> doctor,
             @RequestPart MultipartFile file) {
         User u = new User();
@@ -204,7 +207,7 @@ public class ApiUserController {
             method = RequestMethod.POST,
             consumes = {MediaType.MULTIPART_FORM_DATA_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE})
-    @CrossOrigin
+    @CrossOrigin(origins = {"http://localhost:3000/"})
     public ResponseEntity<Object> updateDoctor(@RequestParam Map<String, String> doctor,
             @PathVariable(value = "id") int id,
             @RequestPart MultipartFile file) {
@@ -236,24 +239,32 @@ public class ApiUserController {
         return new ResponseEntity<>("UPDATE USER FAILED!!!", HttpStatus.BAD_REQUEST);
     }
     
-    @RequestMapping(value = "/api/admin/users/patients/", produces = {MediaType.APPLICATION_JSON_VALUE})
-    @CrossOrigin
+    @CrossOrigin(origins = {"http://localhost:3000/"})
+    @RequestMapping(value = "/api/users/patients/", produces = {MediaType.APPLICATION_JSON_VALUE}) 
     public ResponseEntity<List<Object[]>> getPatients() {
         return new ResponseEntity<>(this.userService.getUserByUserRole(User.PATIENT),
         HttpStatus.OK);
     }
     
     @RequestMapping(value = "/api/admin/users/nurses/", produces = {MediaType.APPLICATION_JSON_VALUE})
-    @CrossOrigin
+    @CrossOrigin(origins = {"http://localhost:3000/"})
     public ResponseEntity<List<Object[]>> getNurses() {
         return new ResponseEntity<>(this.userService.getUserByUserRole(User.NURSE),
         HttpStatus.OK);
     }
     
     @RequestMapping(value = "/api/admin/users/doctors/", produces = {MediaType.APPLICATION_JSON_VALUE})
-    @CrossOrigin
+    @CrossOrigin(origins = {"http://localhost:3000/"})
     public ResponseEntity<List<Object[]>> getDoctors() {
         return new ResponseEntity<>(this.userService.getUserByUserRole(User.DOCTOR),
         HttpStatus.OK);
+    }
+    
+    @CrossOrigin(origins = {"http://localhost:3000/"})
+    @RequestMapping(value = "/api/current-user/", produces = {MediaType.APPLICATION_JSON_VALUE})
+    
+    public ResponseEntity<User> currentUser(Principal user) {
+        User u = this.userService.getCurrentUser(user.getName());
+        return new ResponseEntity<>(u, HttpStatus.OK);
     }
 }

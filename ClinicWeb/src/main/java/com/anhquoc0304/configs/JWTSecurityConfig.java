@@ -66,7 +66,8 @@ public class JWTSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/login/").permitAll()
                 .antMatchers("/api/register/").permitAll()
                 .antMatchers("/api/users/patient/").permitAll()
-                .antMatchers("/api/admin/**").hasAuthority(User.ADMIN);
+                .antMatchers("/api/admin/**").hasAuthority(User.ADMIN)
+                .antMatchers("/api/list-appointment/").hasAuthority(User.PATIENT);
         
         http.antMatcher("/api/**").httpBasic()
                 .authenticationEntryPoint(restAuthenticationEntryPoint())
@@ -74,6 +75,7 @@ public class JWTSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().authorizeHttpRequests()
                 .antMatchers("/api/admin/**").hasAuthority(User.ADMIN)
+                .antMatchers("/api/list-appointment/").hasAuthority(User.PATIENT)
                 .antMatchers("/api/users/patient/").permitAll()
                 .and()
                 .addFilterBefore(jWTAuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class)

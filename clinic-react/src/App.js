@@ -8,18 +8,15 @@ import Home from './component/Home'
 import Registers from './component/Registers';
 import Login from './component/Login';
 import { createContext, useReducer } from 'react';
-import Cookies from 'js-cookie';
 import MyUserReduce from './reducers/MyUserReduce';
 import Patients from './component/Patients';
-// import Register from './component/Register';
+import cookie from "react-cookies";
 
 export const MyUserContext = createContext();
 
 function App() {
-  const [user, state] = useReducer(MyUserReduce, Cookies.get('user') || null)
+  const [user, state] = useReducer(MyUserReduce, cookie.load('user')  || null)
 
-  // Cookies.remove("user")
-  // Cookies.remove("token")
 
   return (
     <>

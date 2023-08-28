@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authorization.AuthenticatedAuthorizationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -36,23 +37,24 @@ import org.springframework.util.AntPathMatcher;
 })
 @Order(1)
 public class JWTSecurityConfig extends WebSecurityConfigurerAdapter {
+
     @Bean
     public JWTAuthenticationTokenFilter jWTAuthenticationTokenFilter() throws Exception {
         JWTAuthenticationTokenFilter jWTAuthenticationTokenFilter = new JWTAuthenticationTokenFilter();
         jWTAuthenticationTokenFilter.setAuthenticationManager(authenticationManager());
         return jWTAuthenticationTokenFilter;
     }
-    
+
     @Bean
     public RestAuthenticationEntryPoint restAuthenticationEntryPoint() {
         return new RestAuthenticationEntryPoint();
     }
-    
+
     @Bean
     public CustomAccessDeniedHandlers customAccessDeniedHandlers() {
         return new CustomAccessDeniedHandlers();
     }
-    
+
     @Bean
     @Override
     protected AuthenticationManager authenticationManager() throws Exception {
@@ -61,7 +63,8 @@ public class JWTSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().ignoringRequestMatchers(new AntPathRequestMatcher("/api/**"));
+//        http.csrf().ignoringRequestMatchers(new AntPathRequestMatcher("/api/**"));
+        http.cors();
         http.authorizeHttpRequests()
                 .antMatchers("/api/login/").permitAll()
                 .antMatchers("/api/register/").permitAll()
@@ -72,7 +75,7 @@ public class JWTSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/schedule/**").hasAnyAuthority(User.ADMIN, User.DOCTOR, User.NURSE)
                 .antMatchers("/api/list-appointment/").hasAuthority(User.PATIENT)
                 .antMatchers("/api/appointment/").hasAuthority(User.PATIENT);
-        
+
         http.antMatcher("/api/**").httpBasic()
                 .authenticationEntryPoint(restAuthenticationEntryPoint())
                 .and()
@@ -87,7 +90,5 @@ public class JWTSecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilterBefore(jWTAuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling().accessDeniedHandler(customAccessDeniedHandlers());
     }
-    
-    
-    
+
 }

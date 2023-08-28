@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom';
 import MyUserReduce from '../reducers/MyUserReduce';
 import { Button, NavDropdown } from 'react-bootstrap';
 import { MyUserContext } from '../App';
-import Cookies from 'js-cookie';
 
 const Header = () => {
     const [user, state] = useContext(MyUserContext)
@@ -23,13 +22,14 @@ const Header = () => {
                 <Nav className="me-auto">
                     {/* <Nav.Link href="#home">Trang Chủ</Nav.Link> */}
                     <Link to='/' className='nav-item nav-link'>Trang chủ</Link>
+                    {user !== null && user.userRole === 'ADMIN'?
                     <NavDropdown title="User" id="basic-nav-dropdown">
                         <Link className='dropdown-item' to='/admin/users/patients' >Bệnh Nhân</Link>
                         <NavDropdown.Item href="#action/3.2">
                             Bác Sỹ
                         </NavDropdown.Item>
                         <NavDropdown.Item href="#action/3.3">Y tá</NavDropdown.Item>
-                    </NavDropdown>
+                    </NavDropdown>:<span></span>}
                 </Nav>
                 <Navbar.Toggle />
                 <Navbar.Collapse className="justify-content-end">
@@ -39,7 +39,7 @@ const Header = () => {
                         <Link to="/register" className='btn btn-danger'>Đăng Ký</Link>
                         <Link to="/login" className='btn btn-success'>Đăng Nhập</Link>
                     </> : <>
-                        <Link className="nav-link" to="/">Chào {user.data.fullName}</Link>
+                        <Link className="nav-link" to="/">Chào {user.fullName}</Link>
                         <Button onClick={logout} variant="secondary">Đăng xuất</Button>
                     </>
                     }

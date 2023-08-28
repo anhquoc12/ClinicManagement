@@ -41,3 +41,8 @@
   width: 50%;
   margin: auto;
 }
+
+table {
+  width: 85% !important;
+  margin:auto !important;
+}

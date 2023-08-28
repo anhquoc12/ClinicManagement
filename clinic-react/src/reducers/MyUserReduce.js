@@ -1,16 +1,14 @@
-// import { Cookies } from "react-cookie"
-
-import Cookies from "js-cookie"
+import cookie from "react-cookies";
 
 const MyUserReduce = (currentState, action) => {
     switch (action.Type) {
         case "login":
             return action.payload
         case "logout":
-            Cookies.remove('token')
-            Cookies.remove('user')
+            cookie.remove('token')
+            cookie.remove('user')
             return null
-        // default:
+        default:
     }
 
     return currentState

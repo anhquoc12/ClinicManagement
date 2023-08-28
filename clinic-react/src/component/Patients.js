@@ -1,39 +1,60 @@
 import { useEffect, useState } from "react"
-import { Alert, Table } from "react-bootstrap"
+import { Alert, Button, Col, Form, Image, Row, Table } from "react-bootstrap"
 import Apis, { authAPI, endpoints } from "../configs/Apis"
 import Loading from "../layout/Loading"
-import Cookies from "js-cookie"
+import cookie from "react-cookies"
+import { useNavigate, useSearchParams } from "react-router-dom"
 
 const Patients = () => {
     const [patients, setPatients] = useState(null)
-    const a = 10
+    const[q] = useSearchParams()
+    const [keyword, setKeyword] = useState("")
+    const nav = useNavigate()
 
     useEffect(() => {
         const loadPatients = async () => {
             try {
-                let res =  await authAPI().get(endpoints['patients'])
-                setPatients(res.data)
+                let response = await authAPI().get(endpoints['patients'])
+                setPatients(response.data)
+                console.log(response.data)
             } catch (ex) {
                 console.log(ex)
             }
         }
 
         loadPatients()
-        
-    }, [a])
+
+    }, [])
+
+    const search = (evt) => {
+        evt.preventDefault()
+        nav(`/admin/users/patients/?keyword=${keyword}`)
+    }
 
     if (patients === null) {
-        console.log('test')
-        console.log(Cookies.get('token'))
         return (<Loading />)
     }
-       
-    
+
+
 
     return (
         <>
-        <Alert variant="success">Danh Sách bệnh nhân</Alert>
-            <Table responsive>
+            <Form onSubmit={search} className="mt-5">
+                <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
+                    <Col sm="1"></Col>
+                    <Form.Label column sm="2">
+                        Tìm Kiếm
+                    </Form.Label>
+                    <Col sm="2">
+                        <Form.Control type="text" placeholder="Search..." value={keyword} onChange={e => setKeyword(e.target.value)} />
+                    </Col>
+                    <Col sm="1">
+                        <Button type="submit" variant="info">Tìm kiếm</Button>
+                    </Col>
+                </Form.Group>
+            </Form>
+            <Alert variant="success">Danh Sách bệnh nhân</Alert>
+            <Table responsive className="ml-20">
                 <thead>
                     <tr>
                         <th>Họ Tên</th>
@@ -46,11 +67,14 @@ const Patients = () => {
                     {
                         patients.map((p, index) => (
                             <tr>
-                                    <td>{p[0]}</td>
-                                    <td>{p[1]}</td>
-                                    <td>{p[2]}</td>
-                                    <td>{p[3]}</td>
-                                </tr>
+                                <td>
+                                    <Image src={p[1]} alt={p[0]} roundedCircle width='5%' />
+                                    <span>{p[2]}</span>
+                                </td>
+                                <td>{p[3]}</td>
+                                <td>{p[4]}</td>
+                                <td>{p[5]}</td>
+                            </tr>
                         ))
                     }
                 </tbody>

@@ -240,8 +240,8 @@ public class ApiUserController {
     }
     
     @CrossOrigin(origins = {"http://localhost:3000/"})
-    @RequestMapping(value = "/api/users/patients/", produces = {MediaType.APPLICATION_JSON_VALUE}) 
-    public ResponseEntity<List<Object[]>> getPatients() {
+    @RequestMapping(value = "/api/admin/users/patients/", produces = {MediaType.APPLICATION_JSON_VALUE}) 
+    public ResponseEntity<List<Object[]>> getPatients(@RequestParam Map<String, String> params) {
         return new ResponseEntity<>(this.userService.getUserByUserRole(User.PATIENT),
         HttpStatus.OK);
     }

@@ -9,13 +9,16 @@ export const endpoints = {
     'login': `${SERVER_CONTEXT}/api/login/`,
     'current-user': `${SERVER_CONTEXT}/api/current-user/`,
     'patients': `${SERVER_CONTEXT}/api/admin/users/patients/`,
-    'nurses': `${SERVER_CONTEXT}/api/admin/users/nurses/`
+    'nurses': `${SERVER_CONTEXT}/api/admin/users/nurses/`,
+    'deleteUser': (userId) => `${SERVER_CONTEXT}/api/admin/nurse/${userId}/`,
+    'AddNurse': `${SERVER_CONTEXT}/api/admin/users/nurse/`,
 }
 export const authAPI = () => {
     return axios.create({
         baseURL: SERVER,
         headers: {
-            'Authorization': cookie.load('token')
+            'Authorization': cookie.load('token'),
+            'Content-Type': 'multipart/form-data'
         }
     })
 }

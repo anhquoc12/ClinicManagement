@@ -24,11 +24,11 @@ const Header = () => {
                     <Link to='/' className='nav-item nav-link'>Trang chủ</Link>
                     {user !== null && user.userRole === 'ADMIN'?
                     <NavDropdown title="User" id="basic-nav-dropdown">
-                        <Link className='dropdown-item' to='/admin/users/patients' >Bệnh Nhân</Link>
+                        <Link className='dropdown-item' to='/admin/users/patients'>Bệnh Nhân</Link>
                         <NavDropdown.Item href="#action/3.2">
                             Bác Sỹ
                         </NavDropdown.Item>
-                        <NavDropdown.Item href="#action/3.3">Y tá</NavDropdown.Item>
+                        <Link className='dropdown-item' to='/admin/users/nurses'>Y Tá</Link>
                     </NavDropdown>:<span></span>}
                 </Nav>
                 <Navbar.Toggle />

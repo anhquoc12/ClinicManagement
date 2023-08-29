@@ -15,7 +15,6 @@ const Registers = () => {
     const [avatar, setAvatar] = useState()
     const [loading, setLoading] =useState(false)
     const[complete, setComplete] = useState(false)
-    // const histor = useHistor
 
     const addPatient = (evn) => {
         evn.preventDefault()

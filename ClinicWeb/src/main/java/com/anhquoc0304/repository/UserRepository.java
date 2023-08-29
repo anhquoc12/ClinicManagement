@@ -6,6 +6,7 @@ package com.anhquoc0304.repository;
 
 import com.anhquoc0304.pojo.User;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -22,4 +23,5 @@ public interface UserRepository {
     boolean deleteUser(User user);
     List<User> getPatientByAppointmentToday();
     boolean authUser(String username, String password);
+    List<Object[]> getUserByUserRoleAndName(String userRole, String name);
 }

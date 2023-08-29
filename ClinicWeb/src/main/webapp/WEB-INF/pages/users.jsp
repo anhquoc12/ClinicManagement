@@ -19,22 +19,6 @@
             </button>
         </form>
     </div>
-    <c:if test="${path == 'Doctor'}">
-        <form class="d-flex flex-row mb-3 form-floating">
-            <div class="p-2 mt-3">
-                <select  class="form-select" name="special">
-                    <c:forEach items="${specials}" var="s">
-                        <option value="${s.id}">${s.name}</option>
-                    </c:forEach>
-                </select>
-            </div>
-            <div class="p-2 mt-3">
-                <button type="submit" class="btn btn-info">
-                    Tìm Kiếm theo chuyên khoa
-                </button>
-            </div>
-        </form>
-    </c:if>
 
 </div>
 <c:if test="${path == 'Doctor'}">

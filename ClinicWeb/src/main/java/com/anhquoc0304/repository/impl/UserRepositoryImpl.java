@@ -8,6 +8,7 @@ import com.anhquoc0304.pojo.Appointment;
 import com.anhquoc0304.pojo.User;
 import com.anhquoc0304.repository.UserRepository;
 import java.util.List;
+import java.util.Map;
 import javax.persistence.Query;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -131,6 +132,21 @@ public class UserRepositoryImpl implements UserRepository {
     public boolean authUser(String username, String password) {
         User user = this.getCurrentUser(username);
         return this.passwordEncode.matches(password, user.getPassword());
+    }
+
+    @Override
+    public List<Object[]> getUserByUserRoleAndName(String userRole, String name) {
+        Session s = this.factory.getObject().getCurrentSession();
+        String sql;
+        if (userRole == User.DOCTOR) {
+            sql ="SELECT u.id, u.avatar, u.fullName, u.address, u.email, u.phone, s.name, s.id FROM Doctor d LEFT JOIN d.userId u LEFT JOIN d.specializationId s WHERE u.userRole = :role AND u.fullName LIKE :key";
+        } else {
+            sql = "SELECT u.id, u.avatar, u.fullName, u.address, u.email, u.phone FROM User u WHERE u.userRole = :role AND u.fullName LIKE :key";
+        }
+        Query q = s.createQuery(sql);
+        q.setParameter("key", '%' + name + '%');
+        q.setParameter("role", userRole);
+        return q.getResultList();
     }
 
 }

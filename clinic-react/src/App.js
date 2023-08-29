@@ -11,6 +11,8 @@ import { createContext, useReducer } from 'react';
 import MyUserReduce from './reducers/MyUserReduce';
 import Patients from './component/Patients';
 import cookie from "react-cookies";
+import Nurses from './component/Nurses';
+import AddNurse from './component/AddNurse';
 
 export const MyUserContext = createContext();
 
@@ -28,6 +30,8 @@ function App() {
             <Route path='/register' element={<Registers />} />
             <Route path='/login' element={<Login />} />
             <Route path='/admin/users/patients' element={<Patients />} />
+            <Route path='/admin/users/nurses' element={<Nurses />} />
+            <Route path='/admin/users/nurse' element={<AddNurse />} />
           </Routes>
         </BrowserRouter>
       </MyUserContext.Provider>

@@ -15,6 +15,7 @@ import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
@@ -194,32 +195,17 @@ public class UserController {
     @RequestMapping("/admin/users/doctor")
     public String doctors(Model model, @RequestParam Map<String, String> params) {
         String name = params.get("name");
-        String special = params.get("special");
-
         List<Object[]> users = this.userDetailsService.getUserByUserRole(User.DOCTOR);
         List<Object[]> filterUser = new ArrayList<>();
-
+        
         if (name != null && !name.isEmpty()) {
-            for (Object[] u : users) {
-                if (u[2].toString().contains(name)) {
-                    filterUser.add(u);
-                }
-            }
+            filterUser = this.userDetailsService
+                    .getUserByUserRoleAndName(User.DOCTOR, name);
             if (filterUser.size() > 0) {
                 model.addAttribute("userList", filterUser);
             }
-        } else if (special != null && !special.isEmpty()) {
-            int id = Integer.parseInt(special);
-            filterUser.clear();
-            for (Object[] u : users) {
-                if (Integer.parseInt(u[7].toString()) == id) {
-                    filterUser.add(u);
-                }
-            }
-            if (filterUser.size() > 0) {
-                model.addAttribute("userList", filterUser);
-            }
-        } else {
+        } 
+        else {
             model.addAttribute("userList", users);
         }
         model.addAttribute("path", "Doctor");
@@ -233,10 +219,8 @@ public class UserController {
         List<Object[]> users = this.userDetailsService.getUserByUserRole(User.PATIENT);
         List<Object[]> filterUsers = new ArrayList<>();
         if (name != null && !name.isEmpty()) {
-            for (Object[] u : users) {
-                if (u[2].toString().contains(name))
-                    filterUsers.add(u);
-            }
+            filterUsers = this.userDetailsService
+                    .getUserByUserRoleAndName(User.PATIENT, name);
             if (filterUsers.size() > 0)
                 model.addAttribute("userList", filterUsers);
         }
@@ -253,10 +237,8 @@ public class UserController {
         List<Object[]> users = this.userDetailsService.getUserByUserRole(User.NURSE);
         List<Object[]> filterUsers = new ArrayList<>();
         if (name != null && !name.isEmpty()) {
-            for (Object[] u : users) {
-                if (u[2].toString().contains(name))
-                    filterUsers.add(u);
-            }
+            filterUsers = this.userDetailsService
+                    .getUserByUserRoleAndName(User.NURSE, name);
             if (filterUsers.size() > 0)
                 model.addAttribute("userList", filterUsers);
         }

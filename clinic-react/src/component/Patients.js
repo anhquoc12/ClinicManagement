@@ -7,7 +7,7 @@ import { useNavigate, useSearchParams } from "react-router-dom"
 
 const Patients = () => {
     const [patients, setPatients] = useState(null)
-    const[q] = useSearchParams()
+    const [q] = useSearchParams()
     const [keyword, setKeyword] = useState("")
     const nav = useNavigate()
 
@@ -15,6 +15,9 @@ const Patients = () => {
         const loadPatients = async () => {
             try {
                 let response = await authAPI().get(endpoints['patients'])
+                let name = q.get('keyword')
+                if (name != null)
+                    response = await authAPI().get(`${endpoints['patients']}?name=${name}`)
                 setPatients(response.data)
                 console.log(response.data)
             } catch (ex) {
@@ -24,7 +27,7 @@ const Patients = () => {
 
         loadPatients()
 
-    }, [])
+    }, [q])
 
     const search = (evt) => {
         evt.preventDefault()

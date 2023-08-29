@@ -6,6 +6,7 @@ package com.anhquoc0304.service;
 
 import com.anhquoc0304.pojo.User;
 import java.util.List;
+import java.util.Map;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 /**
@@ -23,4 +24,5 @@ public interface UserService extends UserDetailsService {
     boolean deleteUser(User user);
     List<User> getPatientByAppointmentToday();
     boolean authUser(String username, String password);
+    List<Object[]> getUserByUserRoleAndName(String userRole, String name);
 }

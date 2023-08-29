@@ -11,6 +11,7 @@ import com.anhquoc0304.repository.UserRepository;
 import com.anhquoc0304.service.UserService;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -96,5 +97,13 @@ public class UserServiceImpl implements UserService {
     public boolean authUser(String username, String password) {
         return this.userRepo.authUser(username, password);
     }
+
+    @Override
+    public List<Object[]> getUserByUserRoleAndName(String userRole, String name) {
+        return this.userRepo.getUserByUserRoleAndName(userRole, name);
+//throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    
 
 }

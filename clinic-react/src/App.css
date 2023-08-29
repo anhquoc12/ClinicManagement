@@ -37,6 +37,10 @@
   }
 }
 
+Modal.body > form {
+  width: 100% !important;
+}
+
 .content {
   width: 50%;
   margin: auto;
@@ -45,4 +49,8 @@
 table {
   width: 85% !important;
   margin:auto !important;
+}
+
+.wid-30 > td {
+  width: 16.66%;
 }

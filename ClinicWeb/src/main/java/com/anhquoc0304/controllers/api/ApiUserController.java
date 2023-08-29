@@ -61,6 +61,14 @@ public class ApiUserController {
     public void deleteNurse(@PathVariable(value = "id") int id) {
         this.userService.deleteUser(this.userService.getUserById(id));
     }
+    
+    @RequestMapping(value = "/api/admin/nurse/{id}", method = RequestMethod.DELETE)
+    @CrossOrigin(origins = {"http://localhost:3000/"})
+    public ResponseEntity<String> deleteNurseAPI(@PathVariable(value = "id") int id) {
+        if(this.userService.deleteUser(this.userService.getUserById(id)))
+            return new ResponseEntity<>("DELETE NURSE SUCCESS", HttpStatus.ACCEPTED);
+        return new ResponseEntity<>("DELETE NURSE FAILED", HttpStatus.BAD_REQUEST);
+    }
 
     @RequestMapping(value = "/admin/doctor/{id}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -242,20 +250,35 @@ public class ApiUserController {
     @CrossOrigin(origins = {"http://localhost:3000/"})
     @RequestMapping(value = "/api/admin/users/patients/", produces = {MediaType.APPLICATION_JSON_VALUE}) 
     public ResponseEntity<List<Object[]>> getPatients(@RequestParam Map<String, String> params) {
+        String name = params.get("name");
+        if (name != null && !name.isEmpty()) {
+            return new ResponseEntity<>(this.userService
+                    .getUserByUserRoleAndName(User.PATIENT, name), HttpStatus.OK);
+        } 
         return new ResponseEntity<>(this.userService.getUserByUserRole(User.PATIENT),
         HttpStatus.OK);
     }
     
     @RequestMapping(value = "/api/admin/users/nurses/", produces = {MediaType.APPLICATION_JSON_VALUE})
     @CrossOrigin(origins = {"http://localhost:3000/"})
-    public ResponseEntity<List<Object[]>> getNurses() {
+    public ResponseEntity<List<Object[]>> getNurses(@RequestParam Map<String, String> params) {
+        String name = params.get("name");
+        if (name != null && !name.isEmpty()) {
+            return new ResponseEntity<>(this.userService
+                    .getUserByUserRoleAndName(User.NURSE, name), HttpStatus.OK);
+        }
         return new ResponseEntity<>(this.userService.getUserByUserRole(User.NURSE),
         HttpStatus.OK);
     }
     
     @RequestMapping(value = "/api/admin/users/doctors/", produces = {MediaType.APPLICATION_JSON_VALUE})
     @CrossOrigin(origins = {"http://localhost:3000/"})
-    public ResponseEntity<List<Object[]>> getDoctors() {
+    public ResponseEntity<List<Object[]>> getDoctors(@RequestParam Map<String, String> params) {
+        String name = params.get("name");
+        if (name != null && !name.isEmpty()) {
+            return new ResponseEntity<>(this.userService
+                    .getUserByUserRoleAndName(User.DOCTOR, name), HttpStatus.OK);
+        }
         return new ResponseEntity<>(this.userService.getUserByUserRole(User.DOCTOR),
         HttpStatus.OK);
     }
@@ -266,5 +289,12 @@ public class ApiUserController {
     public ResponseEntity<User> currentUser(Principal user) {
         User u = this.userService.getCurrentUser(user.getName());
         return new ResponseEntity<>(u, HttpStatus.OK);
+    }
+    
+    @CrossOrigin(origins = {"http://localhost:3000/"})
+    @RequestMapping(value = "/api/user/{id}/", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<User> getUserById(@PathVariable(value = "id") int id) {
+        return new ResponseEntity<>(this.userService.getUserById(id),
+        HttpStatus.OK);
     }
 }

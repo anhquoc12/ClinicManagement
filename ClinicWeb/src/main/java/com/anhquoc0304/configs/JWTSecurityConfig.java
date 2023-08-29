@@ -63,7 +63,7 @@ public class JWTSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-//        http.csrf().ignoringRequestMatchers(new AntPathRequestMatcher("/api/**"));
+        http.csrf().ignoringRequestMatchers(new AntPathRequestMatcher("/api/**"));
         http.cors();
         http.authorizeHttpRequests()
                 .antMatchers("/api/login/").permitAll()

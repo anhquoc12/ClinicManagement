@@ -23,9 +23,8 @@
                             <div class="login-header">
                                 <h3 class="text text-info">
                                     <c:if test="${!isDoctor and user.id == null}">Add Nurse</c:if>
-                                    <c:if test="${!isDoctor and user.id != null}">Update Nurse</c:if>
                                     <c:if test="${isDoctor and user.id == null}">Add Doctor</c:if>
-                                    <c:if test="${isDoctor and user.id != null}">Update Doctor</c:if>
+                                    <c:if test="${user.id != null}">Update Employees</c:if>
                                     </h3>
                                 </div>
 
@@ -86,46 +85,43 @@
                                                         <option value="${s.id}">${s.name}</option>
                                                     </c:otherwise>
                                                 </c:choose>
-                                        </c:forEach>
-                                    </select>
-                                    <label class="focus-label">Khoa Làm Việc</label>
-                                </div>
-                            </c:if>
-                            <c:if test="${user.id == null}">
+                                            </c:forEach>
+                                        </select>
+                                        <label class="focus-label">Khoa Làm Việc</label>
+                                    </div>
+                                </c:if>
                                 <div class="form-group form-focus mb-3 dis-none" id="file-avatar">
                                     <form:input defaultValue="test" required="Please select a file" path="file" class="form-control form-control-lg" id="formFileLg" type="file" />
 
                                     <div class="small text-muted mt-2">Upload Avatar của bạn</div>
 
                                 </div>
-                            </c:if>
-                            <c:if test="${user.id != null}">
-                                <form:hidden path="avatar" />
-                            </c:if>
-                            <button class="btn btn-primary btn-block btn-lg login-btn mt-5" type="submit">
-                                <c:choose>
-                                    <c:when test="${user.id == null}">
-                                        <c:if test="${!isDoctor}">Add Nurse</c:if>
-                                        <c:if test="${isDoctor}">Add Doctor</c:if>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <c:if test="${!isDoctor}">Update Nurse</c:if>
-                                        <c:if test="${isDoctor}">Update Doctor</c:if>
-                                        <!--update-->
-                                    </c:otherwise>
-                                </c:choose>
-                            </button>
-                        </form:form>
-                        <!-- /Register Form -->
+                                <c:if test="${user.id != null}">
+                                    <form:hidden path="avatar" />
+                                </c:if>
+                                <button class="btn btn-primary btn-block btn-lg login-btn mt-5" type="submit">
+                                    <c:choose>
+                                        <c:when test="${user.id == null}">
+                                            <c:if test="${!isDoctor}">Add Nurse</c:if>
+                                            <c:if test="${isDoctor}">Add Doctor</c:if>
+                                        </c:when>
+                                        <c:otherwise>
+                                            Update Employees
+                                            <!--update-->
+                                        </c:otherwise>
+                                    </c:choose>
+                                </button>
+                            </form:form>
+                            <!-- /Register Form -->
 
+                        </div>
                     </div>
                 </div>
+                <!-- /Account Content -->
+
             </div>
-            <!-- /Account Content -->
-
         </div>
-    </div>
 
-</div>
+    </div>
 
 </div>

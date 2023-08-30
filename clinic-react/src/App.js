@@ -13,6 +13,8 @@ import Patients from './component/Patients';
 import cookie from "react-cookies";
 import Nurses from './component/Nurses';
 import AddNurse from './component/AddNurse';
+import Doctor from './component/Doctor';
+import AddDoctor from './component/AddDoctor';
 
 export const MyUserContext = createContext();
 
@@ -32,6 +34,8 @@ function App() {
             <Route path='/admin/users/patients' element={<Patients />} />
             <Route path='/admin/users/nurses' element={<Nurses />} />
             <Route path='/admin/users/nurse' element={<AddNurse />} />
+            <Route path='/admin/users/doctors' element={<Doctor />} />
+            <Route path='/admin/users/doctor' element={<AddDoctor />} />
           </Routes>
         </BrowserRouter>
       </MyUserContext.Provider>

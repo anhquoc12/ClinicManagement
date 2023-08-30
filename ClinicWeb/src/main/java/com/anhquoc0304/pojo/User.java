@@ -122,6 +122,7 @@ public class User implements Serializable {
     private Set<Invoice> invoiceSet;
 
     @Transient
+    @JsonIgnore
     private MultipartFile file;
 
     public User() {

@@ -62,12 +62,20 @@ public class ApiUserController {
         this.userService.deleteUser(this.userService.getUserById(id));
     }
     
-    @RequestMapping(value = "/api/admin/nurse/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/api/admin/nurse/{id}/", method = RequestMethod.DELETE)
     @CrossOrigin(origins = {"http://localhost:3000/"})
     public ResponseEntity<String> deleteNurseAPI(@PathVariable(value = "id") int id) {
         if(this.userService.deleteUser(this.userService.getUserById(id)))
             return new ResponseEntity<>("DELETE NURSE SUCCESS", HttpStatus.ACCEPTED);
         return new ResponseEntity<>("DELETE NURSE FAILED", HttpStatus.BAD_REQUEST);
+    }
+    
+    @RequestMapping(value = "/api/admin/doctor/{id}/", method = RequestMethod.DELETE)
+    @CrossOrigin(origins = {"http://localhost:3000/"})
+    public ResponseEntity<String> deleteDoctorAPI(@PathVariable(value = "id") int id) {
+        if(this.userService.deleteUser(this.userService.getUserById(id)))
+            return new ResponseEntity<>("DELETE DOCTOR SUCCESS", HttpStatus.ACCEPTED);
+        return new ResponseEntity<>("DELETE DOCTOR FAILED", HttpStatus.BAD_REQUEST);
     }
 
     @RequestMapping(value = "/admin/doctor/{id}", method = RequestMethod.DELETE)
@@ -146,7 +154,7 @@ public class ApiUserController {
         return new ResponseEntity<>("ADD USER FAILED!!!", HttpStatus.BAD_REQUEST);
     }
     
-    @RequestMapping(value = "/api/admin/users/nurse/{id}", 
+    @RequestMapping(value = "/api/admin/users/nurse/{id}/", 
             method = RequestMethod.POST,
             consumes = {MediaType.MULTIPART_FORM_DATA_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE})
@@ -171,7 +179,7 @@ public class ApiUserController {
             }
         }
         if (this.userService.addOrUpdateUser(u))
-            return new ResponseEntity<>(u, HttpStatus.GONE);
+            return new ResponseEntity<>(u, HttpStatus.ACCEPTED);
         return new ResponseEntity<>("UPDATE USER FAILED!!!", HttpStatus.BAD_REQUEST);
     }
     
@@ -211,7 +219,7 @@ public class ApiUserController {
         return new ResponseEntity<>("ADD USER FAILED!!!", HttpStatus.BAD_REQUEST);
     }
     
-    @RequestMapping(value = "/api/admin/users/doctor/{id}", 
+    @RequestMapping(value = "/api/admin/users/doctor/{id}/", 
             method = RequestMethod.POST,
             consumes = {MediaType.MULTIPART_FORM_DATA_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE})
@@ -241,7 +249,7 @@ public class ApiUserController {
         if (this.userService.addOrUpdateUser(u)) {
             d.setUserId(this.userService.getUserById(u.getId()));
             this.doctorService.addOrUpdateDoctor(d);
-            return new ResponseEntity<>(u, HttpStatus.GONE);
+            return new ResponseEntity<>(u, HttpStatus.ACCEPTED);
         }
             
         return new ResponseEntity<>("UPDATE USER FAILED!!!", HttpStatus.BAD_REQUEST);
@@ -295,6 +303,13 @@ public class ApiUserController {
     @RequestMapping(value = "/api/user/{id}/", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<User> getUserById(@PathVariable(value = "id") int id) {
         return new ResponseEntity<>(this.userService.getUserById(id),
+        HttpStatus.OK);
+    }
+    
+    @CrossOrigin(origins = {"http://localhost:3000/"})
+    @RequestMapping(value = "/api/user/doctor/{id}/", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<Doctor> getDoctorById(@PathVariable(value = "id") int id) {
+        return new ResponseEntity<>(this.doctorService.getDoctorById(id),
         HttpStatus.OK);
     }
 }

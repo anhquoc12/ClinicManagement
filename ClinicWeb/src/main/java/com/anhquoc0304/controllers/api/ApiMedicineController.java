@@ -91,16 +91,17 @@ public class ApiMedicineController {
             @PathVariable(value = "id") int id) {
         Medicine m = this.medicineService.getMedicineById(id);
         m.setName(medicine.get("name"));
-        m.setUnitInStock(Integer.parseInt(medicine.get("stock")));
-        m.setUnitPrice(BigDecimal.valueOf(Long.parseLong(medicine.get("price"))));
-        m.setCategoryId(this.CategoryService.getCategoryByid(Integer.parseInt(medicine.get("category"))));
-        m.setUnitMedicineId(this.unitMedicineService.getUnitById(Integer.parseInt(medicine.get("unit"))));
+        m.setUnitInStock(Integer.parseInt(medicine.get("unitInStock")));
+        m.setUnitPrice(BigDecimal.valueOf(Long.parseLong(medicine.get("unitPrice"))));
+        m.setCategoryId(this.CategoryService.getCategoryByid(Integer.parseInt(medicine.get("categoryId"))));
+        m.setUnitMedicineId(this.unitMedicineService.getUnitById(Integer.parseInt(medicine.get("unitMedicineId"))));
         if (this.medicineService.addOrUpdateMedicine(m))
             return new ResponseEntity<>(m, HttpStatus.CREATED);
         return new ResponseEntity<>("UPDATE MEDICINE FAILED!!!", HttpStatus.BAD_REQUEST);
     }
     
     @RequestMapping(value = "/api/admin/medicine/{id}/", method = RequestMethod.DELETE)
+    @CrossOrigin
     public ResponseEntity<String> deleteMedicine(@PathVariable(value = "id") int id) {
         if (this.medicineService.deleteMedicine(this.medicineService.getMedicineById(id)))
             return new ResponseEntity<>("DELETE MEDICINE SUCCESS", HttpStatus.ACCEPTED);
@@ -131,13 +132,13 @@ public class ApiMedicineController {
         return new ResponseEntity<>("ADD FAILED!!!", HttpStatus.BAD_REQUEST);
     }
     
-    @RequestMapping("/api/admin/medicine/categories")
+    @RequestMapping("/api/admin/medicine/categories/")
     @CrossOrigin
     public ResponseEntity<List<Category>> categories() {
         return new ResponseEntity<>(this.CategoryService.getCategories(), HttpStatus.OK);
     }
     
-    @RequestMapping("/api/admin/medicine/unit-medicines")
+    @RequestMapping("/api/admin/medicine/unit-medicines/")
     @CrossOrigin
     public ResponseEntity<List<UnitMedicine>> unitMedicines() {
         return new ResponseEntity<>(this.unitMedicineService.getUnits(),
@@ -164,5 +165,12 @@ public class ApiMedicineController {
             return new ResponseEntity<>("DELETE UNIT MEDICINE SUCCESS", HttpStatus.ACCEPTED);
         return new ResponseEntity<>("DELETE UNIT MEDICINE FAILED!!!", 
         HttpStatus.BAD_REQUEST);
+    }
+    
+    @CrossOrigin
+    @RequestMapping(value = "/api/admin/medicine/{id}/", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<Medicine> getMedicineById(@PathVariable(value = "id") int id) {
+        Medicine m = this.medicineService.getMedicineById(id);
+        return new ResponseEntity<>(m, HttpStatus.OK);
     }
 }

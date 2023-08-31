@@ -33,7 +33,6 @@ const AddDoctor = () => {
                     formData.append("address", address)
                     formData.append('specialId', special)
                     res = await authAPI().post(endpoints['addDoctor'], formData)
-                    console.log(res.data)
                     setComplete(true)
                 } catch (ex) {
                     console.log(ex)

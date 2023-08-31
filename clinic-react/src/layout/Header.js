@@ -1,14 +1,15 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import MyUserReduce from '../reducers/MyUserReduce';
 import { Button, NavDropdown } from 'react-bootstrap';
 import { MyUserContext } from '../App';
 
 const Header = () => {
     const [user, state] = useContext(MyUserContext)
+    const [exit, setExit] = useState(false)
     const logout = () => {
         state({
             'Type': 'logout'
@@ -22,13 +23,21 @@ const Header = () => {
                 <Nav className="me-auto">
                     {/* <Nav.Link href="#home">Trang Chủ</Nav.Link> */}
                     <Link to='/' className='nav-item nav-link'>Trang chủ</Link>
-                    {user !== null && user.userRole === 'ADMIN'?
+                    {user !== null && user.userRole === 'ADMIN'?<>
                     <NavDropdown title="User" id="basic-nav-dropdown">
                         <Link className='dropdown-item' to='/admin/users/patients'>Bệnh Nhân</Link>
                         
                         <Link className='dropdown-item' to='/admin/users/doctors'>Bác Sỹ</Link>
                         <Link className='dropdown-item' to='/admin/users/nurses'>Y Tá</Link>
-                    </NavDropdown>:<span></span>}
+                    </NavDropdown>
+                    <NavDropdown title="Thuốc" id="basic-nav-dropdown">
+                    <Link className='dropdown-item' to='/admin/medicine/list'>Thuốc</Link>
+                    
+                    <Link className='dropdown-item' to='/admin/users/doctors'>Đơn Vị thuốc</Link>
+                    <Link className='dropdown-item' to='/admin/users/nurses'>Loại Thuốc</Link>
+                </NavDropdown></>:<span></span>
+                    }
+                    
                 </Nav>
                 <Navbar.Toggle />
                 <Navbar.Collapse className="justify-content-end">

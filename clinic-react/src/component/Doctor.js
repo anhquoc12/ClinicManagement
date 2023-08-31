@@ -38,7 +38,6 @@ const Doctor = () => {
         let special = await Apis.get(endpoints['doctor'](userId))
         for (let field in doctor)
             change(evt, field, data[field])
-        // change(evt, 'specialId', (special.data["specializationId"]["id"]).toString())
         setShow(true)
     };
 
@@ -62,7 +61,6 @@ const Doctor = () => {
         try {
             setLoading(true)
             let form = new FormData();
-            console.log(endpoints['updateNurse'](id))
             
             for (let field in doctor)
                 {

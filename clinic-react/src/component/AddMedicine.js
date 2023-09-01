@@ -7,7 +7,6 @@ import { Navigate } from "react-router-dom"
 const AddMedicine = () => {
     const [categories, setCategories] = useState(null)
     const [units, setUnits] = useState(null)
-    // const [success, setSuccess] = useState(false)
     const [loading, setLoading] = useState(false)
     const [complete, setComplete] = useState(false)
     const [medicine, setMedicine] = useState({
@@ -37,7 +36,7 @@ const AddMedicine = () => {
                 alert("Thêm thành công")
                 setComplete(true)
             } catch (ex) {
-                alert("Có lỗi xảy ra 123")
+                alert("Có lỗi xảy ra")
             } finally {
                 setLoading(false)
             }

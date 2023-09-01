@@ -100,8 +100,8 @@ public class ApiMedicineController {
         return new ResponseEntity<>("UPDATE MEDICINE FAILED!!!", HttpStatus.BAD_REQUEST);
     }
     
-    @RequestMapping(value = "/api/admin/medicine/{id}/", method = RequestMethod.DELETE)
-    @CrossOrigin
+    @RequestMapping(value = "/api/admin/medicines/{id}/", method = RequestMethod.DELETE)
+    @CrossOrigin(origins = {"http://localhost:3000/"})
     public ResponseEntity<String> deleteMedicine(@PathVariable(value = "id") int id) {
         if (this.medicineService.deleteMedicine(this.medicineService.getMedicineById(id)))
             return new ResponseEntity<>("DELETE MEDICINE SUCCESS", HttpStatus.ACCEPTED);

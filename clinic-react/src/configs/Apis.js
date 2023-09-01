@@ -22,8 +22,12 @@ export const endpoints = {
     'addDoctor': `${SERVER_CONTEXT}/api/admin/users/doctor/`,
     'medicines': `${SERVER_CONTEXT}/api/admin/medicines/`,
     'categories': `${SERVER_CONTEXT}/api/admin/medicine/categories/`,
-    'deleteMedicine': (medicineId) => `${SERVER_CONTEXT}/api/admin/medicine/${medicineId}/`,
+    'deleteCategory': (categoryId) => `${SERVER_CONTEXT}/api/admin/medicine/category/${categoryId}/`,
+    'addCategory': `${SERVER_CONTEXT}/api/admin/medicine/category/`,
+    'deleteMedicine': (medicineId) => `${SERVER_CONTEXT}/api/admin/medicines/${medicineId}/`,
     'unitMedicines': `${SERVER_CONTEXT}/api/admin/medicine/unit-medicines/`,
+    'addUnitMedicine': `${SERVER_CONTEXT}/api/admin/medicine/unit-medicine/`,
+    "deleteUnitMedicine": (unitMedicineId) => `${SERVER_CONTEXT}/api/admin/medicine/unit-medicine/${unitMedicineId}/`,
     'addMedicine': `${SERVER_CONTEXT}/api/admin/medicine/`,
     'updateMedicine': (id) => `${SERVER_CONTEXT}/api/admin/medicine/${id}/`,
     'medicine': (id) => `${SERVER_CONTEXT}/api/admin/medicine/${id}/`

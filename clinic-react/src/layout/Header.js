@@ -33,8 +33,8 @@ const Header = () => {
                     <NavDropdown title="Thuốc" id="basic-nav-dropdown">
                     <Link className='dropdown-item' to='/admin/medicine/list'>Thuốc</Link>
                     
-                    <Link className='dropdown-item' to='/admin/users/doctors'>Đơn Vị thuốc</Link>
-                    <Link className='dropdown-item' to='/admin/users/nurses'>Loại Thuốc</Link>
+                    <Link className='dropdown-item' to='/admin/medicine/units'>Đơn Vị thuốc</Link>
+                    <Link className='dropdown-item' to='/admin/medicine/categories'>Loại Thuốc</Link>
                 </NavDropdown></>:<span></span>
                     }
                     

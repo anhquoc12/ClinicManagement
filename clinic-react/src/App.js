@@ -17,6 +17,8 @@ import Doctor from './component/Doctor';
 import AddDoctor from './component/AddDoctor';
 import Medicines from './component/Medicines';
 import AddMedicine from './component/AddMedicine';
+import Category from './component/Category';
+import UnitMedicine from './component/UnitMedicine';
 
 export const MyUserContext = createContext();
 
@@ -40,6 +42,8 @@ function App() {
             <Route path='/admin/users/doctor' element={<AddDoctor />} />
             <Route path='/admin/medicine/list' element={<Medicines />} />
             <Route path='/admin/medicine/add-medicine' element={<AddMedicine />} />
+            <Route path='/admin/medicine/categories' element={<Category />} />
+            <Route path='/admin/medicine/units' element={<UnitMedicine />} />
           </Routes>
         </BrowserRouter>
       </MyUserContext.Provider>

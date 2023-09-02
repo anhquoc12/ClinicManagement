@@ -312,4 +312,11 @@ public class ApiUserController {
         return new ResponseEntity<>(this.doctorService.getDoctorById(id),
         HttpStatus.OK);
     }
+    
+    @CrossOrigin
+    @RequestMapping(value = "/api/users/employees/", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<List<User>> getEmployees() {
+        return new ResponseEntity<>(this.userService.getEmployee(),
+        HttpStatus.OK);
+    }
 }

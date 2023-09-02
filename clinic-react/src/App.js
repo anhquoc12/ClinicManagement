@@ -19,6 +19,10 @@ import Medicines from './component/Medicines';
 import AddMedicine from './component/AddMedicine';
 import Category from './component/Category';
 import UnitMedicine from './component/UnitMedicine';
+import Schedule from './component/Schedule';
+import AddSchedule from './component/AddSchedule';
+import Specialization from './component/Specialization';
+import Room from './component/Room';
 
 export const MyUserContext = createContext();
 
@@ -44,6 +48,10 @@ function App() {
             <Route path='/admin/medicine/add-medicine' element={<AddMedicine />} />
             <Route path='/admin/medicine/categories' element={<Category />} />
             <Route path='/admin/medicine/units' element={<UnitMedicine />} />
+            <Route path='/schedule/view' element={<Schedule />} />
+            <Route path='/schedule/add' element={<AddSchedule />} />
+            <Route path='/admin/specialization' element={<Specialization />} />
+            <Route path='/admin/room' element={<Room />} />
           </Routes>
         </BrowserRouter>
       </MyUserContext.Provider>

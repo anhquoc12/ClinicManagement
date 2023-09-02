@@ -88,6 +88,7 @@ public class JWTSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/nurse/**").hasAnyAuthority(User.NURSE)
                 .antMatchers("/api/list-appointment/**").hasAuthority(User.PATIENT)
                 .antMatchers("/api/appointment/").hasAuthority(User.PATIENT)
+                .antMatchers("/api/schedule/**").hasAnyAuthority(User.ADMIN, User.DOCTOR, User.NURSE)
                 .antMatchers("/api/users/patient/").permitAll()
                 .and()
                 .addFilterBefore(jWTAuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class)

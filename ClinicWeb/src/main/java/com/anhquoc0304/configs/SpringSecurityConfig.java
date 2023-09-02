@@ -91,6 +91,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/appointment/**").hasAuthority(User.PATIENT)
                 .antMatchers("/infoUser/**").hasAnyAuthority(
                 User.ADMIN, User.DOCTOR, User.NURSE, User.PATIENT)
+                .antMatchers("/schedule/**").hasAnyAuthority(
+                User.ADMIN, User.DOCTOR, User.NURSE)
                 .antMatchers("/listAppointment/**")
                 .hasAnyAuthority(User.PATIENT)
                 .antMatchers("/nurse/**")

@@ -30,7 +30,17 @@ export const endpoints = {
     "deleteUnitMedicine": (unitMedicineId) => `${SERVER_CONTEXT}/api/admin/medicine/unit-medicine/${unitMedicineId}/`,
     'addMedicine': `${SERVER_CONTEXT}/api/admin/medicine/`,
     'updateMedicine': (id) => `${SERVER_CONTEXT}/api/admin/medicine/${id}/`,
-    'medicine': (id) => `${SERVER_CONTEXT}/api/admin/medicine/${id}/`
+    'medicine': (id) => `${SERVER_CONTEXT}/api/admin/medicine/${id}/`,
+    'schedule': `${SERVER_CONTEXT}/api/schedule/viewSchedule/`,
+    'scheduleSearch': `${SERVER_CONTEXT}/api/schedule/viewSchedule/search/`,
+    'employees': `${SERVER_CONTEXT}/api/users/employees/`,
+    'rooms': `${SERVER_CONTEXT}/api/admin/room/`,
+    'addRoom': `${SERVER_CONTEXT}/api/admin/room/add/`,
+    'deleteRoom': (id) => `${SERVER_CONTEXT}/api/admin/room/${id}/`,
+    'addSchedule': `${SERVER_CONTEXT}/api/admin/schedule/`,
+    'specializations': `${SERVER_CONTEXT}/api/admin/specialization/`,
+    'addSpecialization': `${SERVER_CONTEXT}/api/admin/specialization/add/`,
+    'deleteSpecialization': (id) => `${SERVER_CONTEXT}/api/admin/specialization/${id}/`
 }
 export const authAPI = () => {
     return axios.create({

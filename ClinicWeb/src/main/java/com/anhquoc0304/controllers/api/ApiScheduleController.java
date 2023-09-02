@@ -64,7 +64,7 @@ public class ApiScheduleController {
         return new ResponseEntity<>(this.roomService.getRooms(), HttpStatus.OK);
     }
     
-    @RequestMapping(value = "/api/admin/room/", method = RequestMethod.POST,
+    @RequestMapping(value = "/api/admin/room/add/", method = RequestMethod.POST,
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @CrossOrigin
     public ResponseEntity<Object> addRoom(@RequestParam(value = "name") String name) {
@@ -91,7 +91,7 @@ public class ApiScheduleController {
         HttpStatus.OK);
     }
     
-    @RequestMapping(value = "/api/admin/specialization/", method = RequestMethod.POST,
+    @RequestMapping(value = "/api/admin/specialization/add/", method = RequestMethod.POST,
             produces = {MediaType.APPLICATION_JSON_VALUE})
     @CrossOrigin
     public ResponseEntity<Object> addSpecialization(@RequestParam(value = "name") String name) {

@@ -56,7 +56,7 @@ public class AppointmentRepositoryImpl implements AppointmentRepository{
     @Override
     public List<Appointment> getAppointmentByStatus(String status) {
         Session s = this.factory.getObject().getCurrentSession();
-        Query q = s.createQuery("FROM Appointment a WHERE a.appointmentStatus =: status AND a.appointmentDate > CURRENT_DATE ORDER BY a.createdDate ASC");
+        Query q = s.createQuery("FROM Appointment a WHERE a.appointmentStatus =: status AND a.appointmentDate >= CURRENT_DATE ORDER BY a.createdDate ASC");
         q.setParameter("status", status);
         return q.getResultList();
     }
@@ -101,7 +101,7 @@ public class AppointmentRepositoryImpl implements AppointmentRepository{
         Session s = this.factory.getObject().getCurrentSession();
         Query q = s.createQuery("FROM Appointment a WHERE a.id=:key");
         q.setParameter("key", id);
-        return (Appointment) q.getResultList().get(0);
+        return (Appointment) (q.getResultList().size() > 0 ? q.getResultList().get(0): null);
     }
 
     @Override

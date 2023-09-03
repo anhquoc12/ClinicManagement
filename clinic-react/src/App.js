@@ -23,6 +23,11 @@ import Schedule from './component/Schedule';
 import AddSchedule from './component/AddSchedule';
 import Specialization from './component/Specialization';
 import Room from './component/Room';
+import RegisterAppointment from './component/RegisterAppointment';
+import ListAppointment from './component/ListAppointment';
+import UnConfirmed from './component/UnConfirmed';
+import TodayAppointment from './component/TodayAppointment';
+import History from './component/History';
 
 export const MyUserContext = createContext();
 
@@ -52,6 +57,11 @@ function App() {
             <Route path='/schedule/add' element={<AddSchedule />} />
             <Route path='/admin/specialization' element={<Specialization />} />
             <Route path='/admin/room' element={<Room />} />
+            <Route path='/appointment' element={<RegisterAppointment />} />
+            <Route path='/list-appointment' element={<ListAppointment />} />
+            <Route path='/nurse/un-confirmed' element={<UnConfirmed />} />
+            <Route path='/nurse/list-today' element={<TodayAppointment />} />
+            <Route path='/doctor/history/list' element={<History />} />
           </Routes>
         </BrowserRouter>
       </MyUserContext.Provider>

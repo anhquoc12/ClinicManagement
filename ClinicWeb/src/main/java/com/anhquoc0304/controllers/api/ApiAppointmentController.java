@@ -125,14 +125,14 @@ public class ApiAppointmentController {
             else
                 return new ResponseEntity<>("ADD APPOINTMENT FAILED!!!", HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>("ENOUGH APPOINMENT DATE", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>("ENOUGH APPOINMENT DATE", HttpStatus.OK);
     }
     
     @CrossOrigin(origins = {"http://localhost:3000/"})
     @RequestMapping(value = "/api/nurse/list-unconfirm/", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<List<Appointment>> listUnConfirmed() {
         return new ResponseEntity<>(
-                this.appointSevice.getAppointmentByStatus(Appointment.CONFIRMED), 
+                this.appointSevice.getAppointmentByStatus(Appointment.WAITTING), 
         HttpStatus.OK);
     }
     
@@ -192,7 +192,7 @@ public class ApiAppointmentController {
         return new ResponseEntity<>(this.appointSevice.getAppointmentToday(), HttpStatus.OK);
     }
     
-    @RequestMapping(value = "/api/nurse/today-appointment/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/api/nurse/today-appointment/{id}/", method = RequestMethod.PUT)
     @CrossOrigin(origins = {"http://localhost:3000/"})
     public ResponseEntity<String> presentAppointmentAPI(@PathVariable(value = "id") int id) {
         Appointment a = this.appointSevice.getAppointmentById(id);

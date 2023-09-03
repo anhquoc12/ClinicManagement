@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react"
 import { Button, Col, Form, Row, Table } from "react-bootstrap"
-import { authAPI, endpoints } from "../configs/Apis"
+// import { authAPI, endpoints } from "../configs/Apis"
 import Loading from "../layout/Loading"
+import { authAPI, endpoints } from "../configs/Apis"
 
 const UnitMedicine = () => {
     const [units, setUnits] = useState(null)

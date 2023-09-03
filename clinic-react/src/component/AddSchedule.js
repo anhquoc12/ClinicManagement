@@ -16,14 +16,8 @@ const AddSchedule = () => {
 
     const addSchedule = async (evt) => {
         evt.preventDefault()
-        // console.log(employees[0]['id'])
-        // if (schedule['user'] === null)
-        //     setSchedule({ ...schedule, 'user': 1 })
-        // if (schedule['room'] === null)
-        //     setSchedule({ ...schedule, 'room': 1 })
         let form = new FormData()
         for (let field in schedule)
-            // console.log(`${field} --- ${schedule[field]} --- ${typeof (schedule[field])}`)
             form.append(field, schedule[field])
         try {
             let res = await authAPI().post(endpoints['addSchedule'], form)

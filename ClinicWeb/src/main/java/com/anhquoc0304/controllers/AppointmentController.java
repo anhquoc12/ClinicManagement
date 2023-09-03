@@ -104,7 +104,12 @@ public class AppointmentController {
     
     @RequestMapping("/nurse/todayAppointment")
     public String listToday(Model model) {
-        model.addAttribute("date", this.appoimentService.getAppointmentById(33).getAppointmentDate());
+        if (this.appoimentService.getAppointmentToday() == null) {
+            model.addAttribute("none", "Không có lịch khám hôm nay");
+            model.addAttribute("nurse", true);
+            return "listAppointment";
+        }
+//        model.addAttribute("date", this.appoimentService.getAppointmentById(33).getAppointmentDate());
         model.addAttribute("today", true);
         model.addAttribute("list", this.appoimentService.getAppointmentToday());
         return "listAppointment";

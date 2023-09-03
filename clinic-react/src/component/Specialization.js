@@ -71,7 +71,7 @@ const Specialization = () => {
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Tên Loại Thuốc</th>
+                        <th>Tên Khoa</th>
                         <th></th>
                     </tr>
                 </thead>

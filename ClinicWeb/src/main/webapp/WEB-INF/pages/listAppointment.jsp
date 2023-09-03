@@ -13,8 +13,19 @@
     <h1 class="text-center text-success" style="margin: 24px;">Lịch Sử đăng ký</h1>
 </security:authorize>
 <security:authorize access="hasAnyAuthority('NURSE')">
+    <c:if test="${today == true}">
     <h1 class="text-center text-success" style="margin: 24px;">Lịch Khám Hôm Nay</h1>
+    </c:if>
+    <c:if test="${today != true}">
+    <h1 class="text-center text-success" style="margin: 24px;">Cần được xác nhận</h1>
+    </c:if>
 </security:authorize>
+    <security:authorize access="hasAuthority('NURSE')">
+    <c:if test="${none == null and today == true}">
+        <div class="alert alert-warning">Hôm nay không có lịch khám</div>
+    </c:if>
+    </security:authorize>
+    <c:if test="${none != null or nurse != true}">
 <table class="table table-borderless">
     <thead>
         <tr>
@@ -93,5 +104,6 @@
         </c:forEach>
     </tbody>
 </table>
+    </c:if>
 <c:url value="/js/appointment.js" var="cancle" />
 <script src="${cancle}"></script>

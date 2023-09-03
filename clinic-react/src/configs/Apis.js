@@ -38,9 +38,18 @@ export const endpoints = {
     'addRoom': `${SERVER_CONTEXT}/api/admin/room/add/`,
     'deleteRoom': (id) => `${SERVER_CONTEXT}/api/admin/room/${id}/`,
     'addSchedule': `${SERVER_CONTEXT}/api/admin/schedule/`,
-    'specializations': `${SERVER_CONTEXT}/api/admin/specialization/`,
+    'specializations': `${SERVER_CONTEXT}/api/specialization/`,
     'addSpecialization': `${SERVER_CONTEXT}/api/admin/specialization/add/`,
-    'deleteSpecialization': (id) => `${SERVER_CONTEXT}/api/admin/specialization/${id}/`
+    'deleteSpecialization': (id) => `${SERVER_CONTEXT}/api/admin/specialization/${id}/`,
+    'addAppointment': `${SERVER_CONTEXT}/api/appointment/`,
+    'listAppointment': `${SERVER_CONTEXT}/api/list-appointment/`,
+    'cancle': (id) => `${SERVER_CONTEXT}/api/list-appointment/${id}/`,
+    'listConfirmed': `${SERVER_CONTEXT}/api/nurse/list-unconfirm/`,
+    'confirmed': (id) => `${SERVER_CONTEXT}/api/nurse/confirm/${id}/`,
+    'today': `${SERVER_CONTEXT}/api/nurse/today-appointment/`,
+    'present': (id) => `${SERVER_CONTEXT}/api/nurse/today-appointment/${id}/`,
+    'history': `${SERVER_CONTEXT}/api/doctor/history/`,
+    'historySearch': `${SERVER_CONTEXT}/api/doctor/history/search/`
 }
 export const authAPI = () => {
     return axios.create({

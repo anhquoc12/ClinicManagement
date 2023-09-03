@@ -1,10 +1,12 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { Alert, Button, Col, Form, Row, Table } from "react-bootstrap"
 import Loading from "../layout/Loading"
 import { authAPI, endpoints } from "../configs/Apis"
 import { Link, useNavigate, useSearchParams } from "react-router-dom"
+import { MyUserContext } from "../App"
 
 const Schedule = () => {
+    const [user, state] = useContext(MyUserContext)
     const [schedule, setSchedule] = useState(null)
     const [q] = useSearchParams()
     const nav = useNavigate()
@@ -32,7 +34,9 @@ const Schedule = () => {
         
 
     return (<>
-        <Link className="btn btn-success" to='/schedule/add' style={{ margin: 5 }}>Thêm Lịch Trực</Link>
+    {user !== null && user.userRole === 'ADMIN'?<Link className="btn btn-success" to='/schedule/add' style={{ margin: 5 }}>Thêm Lịch Trực</Link>:
+    <><h1 className="mt-5"></h1></>}
+        
         <Form onSubmit={search}>
             <Form.Group as={Row} className="mb-3" controlId="formPlaintextEmail">
                 <Col sm="2"></Col>

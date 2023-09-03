@@ -84,7 +84,7 @@ public class ApiScheduleController {
         return new ResponseEntity<>("DELETE ROOM FAILED!!!", HttpStatus.BAD_REQUEST);
     }
     
-    @RequestMapping(value = "/api/admin/specialization/", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @RequestMapping(value = "/api/specialization/", produces = {MediaType.APPLICATION_JSON_VALUE})
     @CrossOrigin
     public ResponseEntity<List<Specialization>> specializations() {
         return new ResponseEntity<>(this.specializationService.getSpecials(),

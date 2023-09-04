@@ -20,7 +20,7 @@ export const endpoints = {
     'updateDoctor': (doctor) => `${SERVER_CONTEXT}/api/admin/users/doctor/${doctor}/`,
     'deleteDoctor': (userId) => `${SERVER_CONTEXT}/api/admin/doctor/${userId}/`,
     'addDoctor': `${SERVER_CONTEXT}/api/admin/users/doctor/`,
-    'medicines': `${SERVER_CONTEXT}/api/admin/medicines/`,
+    'medicines': `${SERVER_CONTEXT}/api/employees/medicines/`,
     'categories': `${SERVER_CONTEXT}/api/admin/medicine/categories/`,
     'deleteCategory': (categoryId) => `${SERVER_CONTEXT}/api/admin/medicine/category/${categoryId}/`,
     'addCategory': `${SERVER_CONTEXT}/api/admin/medicine/category/`,
@@ -49,7 +49,11 @@ export const endpoints = {
     'today': `${SERVER_CONTEXT}/api/nurse/today-appointment/`,
     'present': (id) => `${SERVER_CONTEXT}/api/nurse/today-appointment/${id}/`,
     'history': `${SERVER_CONTEXT}/api/doctor/history/`,
-    'historySearch': `${SERVER_CONTEXT}/api/doctor/history/search/`
+    'historySearch': `${SERVER_CONTEXT}/api/doctor/history/search/`,
+    'detailHistory': (id) => `${SERVER_CONTEXT}/api/doctor/history/${id}/`,
+    'detailPrescription': (medicalId) => `${SERVER_CONTEXT}/api/doctor/history/prescription/${medicalId}/`,
+    'listPatientsToday': `${SERVER_CONTEXT}/api/doctor/medical/patient/`,
+    'medical': `${SERVER_CONTEXT}/api/doctor/medical/`
 }
 export const authAPI = () => {
     return axios.create({

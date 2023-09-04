@@ -28,6 +28,10 @@ import ListAppointment from './component/ListAppointment';
 import UnConfirmed from './component/UnConfirmed';
 import TodayAppointment from './component/TodayAppointment';
 import History from './component/History';
+import MedicalRecord from './component/MedicalRecord';
+import Footer from './layout/Footer';
+import Medical from './component/Medical';
+import Prescription from './component/Prescription';
 
 export const MyUserContext = createContext();
 
@@ -62,7 +66,11 @@ function App() {
             <Route path='/nurse/un-confirmed' element={<UnConfirmed />} />
             <Route path='/nurse/list-today' element={<TodayAppointment />} />
             <Route path='/doctor/history/list' element={<History />} />
+            <Route path='/doctor/history/:medicalId' element={<MedicalRecord />} />
+            <Route path='/doctor/medical' element={<Medical />} />
+            <Route path='/doctor/medical/prescription/:medicalId' element={<Prescription />} />
           </Routes>
+          <Footer />
         </BrowserRouter>
       </MyUserContext.Provider>
     </>

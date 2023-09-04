@@ -72,7 +72,7 @@ const Header = () => {
                         {user !== null && user.userRole === 'DOCTOR' ?
                         <>
                             <NavDropdown title="Khám Bệnh" id="basic-nav-dropdown">
-                                <Link className='dropdown-item' to='/nurse/list-today'>Phiếu Khám</Link>
+                                <Link className='dropdown-item' to='/doctor/medical'>Phiếu Khám</Link>
 
                                 <Link className='dropdown-item' to='/doctor/history/list'>Lịch sử Khám</Link>
                             </NavDropdown>

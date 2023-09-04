@@ -71,7 +71,8 @@ public class JWTSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/doctor/**").hasAuthority(User.DOCTOR)
                 .antMatchers("/api/schedule/**").hasAnyAuthority(User.ADMIN, User.DOCTOR, User.NURSE)
                 .antMatchers("/api/list-appointment/").hasAuthority(User.PATIENT)
-                .antMatchers("/api/appointment/").hasAuthority(User.PATIENT);
+                .antMatchers("/api/appointment/").hasAuthority(User.PATIENT)
+                .antMatchers("/api/employees/**").hasAnyAuthority(User.ADMIN, User.DOCTOR, User.NURSE);
 
         http.antMatcher("/api/**").httpBasic()
                 .authenticationEntryPoint(restAuthenticationEntryPoint())
@@ -85,6 +86,7 @@ public class JWTSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/appointment/").hasAuthority(User.PATIENT)
                 .antMatchers("/api/schedule/**").hasAnyAuthority(User.ADMIN, User.DOCTOR, User.NURSE)
                 .antMatchers("/api/users/patient/").permitAll()
+                .antMatchers("/api/employees/**").hasAnyAuthority(User.ADMIN, User.DOCTOR, User.NURSE)
                 .and()
                 .addFilterBefore(jWTAuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling().accessDeniedHandler(customAccessDeniedHandlers());

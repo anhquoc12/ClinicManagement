@@ -57,6 +57,7 @@ const History = () => {
             <tbody>
                 {
                     listHistory.map(h => (
+                        // {let url = `/doctor/history/${h.id}`;},
                         <tr>
                             <td>
                                 <div className="d-flex align-items-center">
@@ -82,7 +83,7 @@ const History = () => {
                                 </div>
                             </td>
                             <td>
-                                <Link to='' className="btn btn-sm btn-rounded text-danger">Xem chi tiết bệnh án</Link>
+                                <Link to={`/doctor/history/${h.id}`} className="btn btn-sm btn-rounded text-danger">Xem chi tiết bệnh án</Link>
                             </td>
                         </tr>
                     ))

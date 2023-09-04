@@ -123,7 +123,7 @@ public class ApiMedicalRecordController {
     public ResponseEntity<MedicalRecord> detailHistory(@PathVariable(value = "id") int id) {
         return new ResponseEntity<>(this.medicalService.getMedicalRecordById(id),
         HttpStatus.OK);
-    }
+    } 
     
     @RequestMapping(value = "/api/doctor/history/prescription/{id}/",
             produces = {MediaType.APPLICATION_JSON_VALUE})

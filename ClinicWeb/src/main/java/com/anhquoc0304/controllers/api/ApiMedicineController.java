@@ -57,7 +57,7 @@ public class ApiMedicineController {
         this.CategoryService.deleteCategory(this.CategoryService.getCategoryByid(id));
     }
     
-    @RequestMapping("/api/admin/medicines/")
+    @RequestMapping("/api/employees/medicines/")
     @CrossOrigin
     public ResponseEntity<List<Medicine>> listMedicines(@RequestParam Map<String, String> params) {
         String name = params.get("name");

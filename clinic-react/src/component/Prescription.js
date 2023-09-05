@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { Button, Col, Form, Row } from "react-bootstrap"
 import { authAPI, endpoints } from "../configs/Apis"
 import Loading from "../layout/Loading"
-import { useParams } from "react-router-dom"
+import { Navigate, useParams } from "react-router-dom"
 
 const Prescription = () => {
     const [medicines, setMedicine] = useState(null)
@@ -18,6 +18,7 @@ const Prescription = () => {
     // })
     const [prescription, setPrescription] = useState([])
     const [hiddenAddButtons, setHiddenAddButtons] = useState([]);
+    const [complete, setComplete] = useState(false)
     const handleAddToPrescriptionT = (medicine, dosage, frequency, duration, total) => {
         const newItem = {
             medicine: medicine.id,
@@ -50,11 +51,145 @@ const Prescription = () => {
         setHiddenAddButtons(updatedHiddenAddButtons)
     };
 
-    const addPrescription = async (item) => {
-        console.log(item)
-    }
+    // async function exportPDF(object, data) {
+    //     return new Promise((resolve, reject) => {
+    //         try {
+    //             var json = data
+    //             var tableBody = []
+    //             var advice = object.advice === 'none' ? "" : object.advice
+    //             tableBody.push([{ text: "Tên thuốc", bold: true },
+    //             { text: "Liều Lượng", bold: true },
+    //             { text: "Tần suất", bold: true },
+    //             { text: "Thời gian dùng thuốc", bold: true },
+    //             { text: "Số Lượng", bold: true }])
+    //             tableBody.push([{
+    //                 canvas: [
+    //                     {
+    //                         type: 'line',
+    //                         x1: 0, y1: 0,
+    //                         x2: 450, y2: 0,
+    //                         lineWidth: 1, // Độ dày của đường
+    //                     }
+    //                 ]
+    //             }, {}, {}, {}, {}])
+    
+    //             json.forEach(data => {
+    //                 tableBody.push([data.name, data.dosage, data.frequency, data.duration, data.totalUnit + ' ' + data.unit])
+    //             })
+    //             var a = "test"
+    //             var docDefinition = {
+    //                 content: [
+    //                     {
+    //                         text: 'DR ' + object.doctorName,
+    //                         margin: [0, 0, 0, 8],
+    //                         color: '#64BACD',
+    //                         bold: true
+    //                     },
+    //                     {
+    //                         text: 'Address: ' + object.doctorAddress,
+    //                         margin: [0, 0, 0, 8],
+    //                         bold: true,
+    //                         fontSize: 16
+    //                     },
+    //                     {
+    //                         text: 'SDT: ' + object.doctorPhone,
+    //                         margin: [0, 0, 0, 8],
+    //                         bold: true,
+    //                         fontSize: 16
+    //                     },
+    //                     {
+    //                         canvas: [
+    //                             {
+    //                                 type: 'line',
+    //                                 x1: 0, y1: 0,
+    //                                 x2: 450, y2: 0,
+    //                                 lineWidth: 1 // Độ dày của đường
+    //                             }
+    //                         ]
+    //                     },
+    //                     {
+    //                         columns: [
+    //                             {
+    //                                 text: 'Patient: ' + object.patientName,
+    //                                 alignment: 'left'
+    //                             },
+    //                             {
+    //                                 text: 'Date: ' + dateFormat(new Date()),
+    //                                 alignment: 'right'
+    //                             }
+    //                         ],
+    //                         margin: [0, 16, 0, 0]
+    //                     },
+    //                     {
+    //                         text: 'Address: ' + object.patientAddress,
+    //                         margin: [0, 8, 0, 8],
+    //                         fontSize: 12
+    //                     },
+    //                     {
+    //                         text: 'SDT: ' + object.patientPhone,
+    //                         margin: [0, 0, 0, 8],
+    //                         fontSize: 12
+    //                     },
+    //                     {
+    //                         canvas: [
+    //                             {
+    //                                 type: 'line',
+    //                                 x1: 2, y1: 0,
+    //                                 x2: 450, y2: 0,
+    //                                 lineWidth: 1 // Độ dày của đường
+    //                             }
+    //                         ]
+    //                     },
+    //                     {
+    //                         table: {
+    //                             widths: [98, 66, 98, 80, 60],
+    //                             body: tableBody
+    //                         },
+    //                         width: 500,
+    //                         layout: {
+    //                             hLineWidth: (i, node) => {
+    //                                 return 0; // Bỏ đường kẻ ngang
+    //                             },
+    //                             vLineWidth: (i, node) => {
+    //                                 return 0; // Bỏ đường kẻ dọc
+    //                             }
+    //                         }
+    //                     },
+    
+    //                     {
+    //                         canvas: [
+    //                             {
+    //                                 type: 'line',
+    //                                 x1: 0, y1: 0,
+    //                                 x2: 450, y2: 0,
+    //                                 lineWidth: 1 // Độ dày của đường
+    //                             }
+    //                         ]
+    //                     },
+    //                     {
+    //                         text: "*Advice: " + advice,
+    //                         fontSize: 16,
+    //                         bold: true,
+    //                         margin: [8, 16, 0, 0]
+    //                     },
+    //                     {
+    //                         text: "DR " + object.doctorName,
+    //                         fontSize: 16,
+    //                         bold: true,
+    //                         alignment: 'right',
+    //                         margin: [0, 200, 0, 0]
+    //                     }
+    
+    //                 ], padding: [16, 16, 16, 16], alignment: 'center', pageWidth: 500, autoSize: true
+    //             };
+    
+    //             pdfMake.createPdf(docDefinition).download(`${object.file}-${formatDate(new Date())}.pdf`)
+    //             resolve()
+    //         } catch (ex) { reject(new Error(ex.message)) }
+    //     })
+    // }
 
-    const processTable = () => {
+    const processTable = async () => {
 
         const json = [];
         let shouldAlert = false; // Biến cờ để kiểm tra xem đã hiển thị alert chưa
@@ -79,9 +214,19 @@ const Prescription = () => {
         if (shouldAlert) {
             alert('Vui lòng nhập đầy đủ');
         }
-
-        console.log(json)
-    };
+        else {
+            console.log(json)
+            try {
+                let res = await authAPI().post(endpoints['addPrescription'](medicalId), 
+                json)
+                console.log(res.data)
+                
+            } catch(ex) {
+                console.log(ex)
+            }
+        }
+        setComplete(true)
+    }
 
     useEffect(() => {
         console.log('test1')
@@ -97,6 +242,9 @@ const Prescription = () => {
 
     if (medicines === null)
         return <Loading />
+
+        if(complete)
+        return <Navigate to='/doctor/medical' />
 
     return (<>
         <Form className="mt-5">

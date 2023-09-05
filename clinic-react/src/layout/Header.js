@@ -65,7 +65,7 @@ const Header = () => {
                             <Navbar.Collapse id="basic-navbar-nav">
                                 <Nav className="me-auto">
                                     <Link to='/schedule/view' className='nav-item nav-link'>Lịch Trực</Link>
-                                    <Link to='/list-appointment' className='nav-item nav-link'>Thanh Toán</Link>
+                                    <Link to='/nurse/invoices' className='nav-item nav-link'>Thanh Toán</Link>
                                 </Nav>
                             </Navbar.Collapse>
                         </> : <span></span>}

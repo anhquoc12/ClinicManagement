@@ -16,7 +16,6 @@
         <p>${invoice.medicalRecordId.patientId.phone}</p>
         <p>${invoice.medicalRecordId.patientId.email}</p>
     </div>
-</header>
 <article>
     <h1>Recipient</h1>
     <table class="meta">

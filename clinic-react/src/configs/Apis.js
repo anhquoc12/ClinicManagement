@@ -53,18 +53,25 @@ export const endpoints = {
     'detailHistory': (id) => `${SERVER_CONTEXT}/api/doctor/history/${id}/`,
     'detailPrescription': (medicalId) => `${SERVER_CONTEXT}/api/doctor/history/prescription/${medicalId}/`,
     'listPatientsToday': `${SERVER_CONTEXT}/api/doctor/medical/patient/`,
-    'medical': `${SERVER_CONTEXT}/api/doctor/medical/`
+    'medical': `${SERVER_CONTEXT}/api/doctor/medical/`,
+    'addPrescription': (medicalId) => `${SERVER_CONTEXT}/api/doctor/medical/prescription/${medicalId}/`,
+    'invoices': `${SERVER_CONTEXT}/api/nurse/invoices/`,
+    'detailInvoice': (invoiceId) => `${SERVER_CONTEXT}/api/nurse/invoices/${invoiceId}/`,
+    'prescriptionsByInvoiceId': (invoiceId) => `${SERVER_CONTEXT}/api/nurse/invoices/prescription/${invoiceId}/`,
+    'totalFeeByInvoiceId': (invoiceId) => `${SERVER_CONTEXT}/api/nurse/invoices/fee/${invoiceId}/`,
+    'payment': (invoiceId) => `${SERVER_CONTEXT}/api/nurse/invoices/payment/${invoiceId}/`
 }
 export const authAPI = () => {
     return axios.create({
         baseURL: SERVER,
         headers: {
             'Authorization': cookie.load('token'),
-            'Content-Type': 'multipart/form-data'
+            'Content-Type': 'application/json'
+            // 'Content-Type': 'multipart/form-data'
         }
     })
 }
 
 export default axios.create({
-    baseURL: SERVER
+    baseURL: SERVER,
 })

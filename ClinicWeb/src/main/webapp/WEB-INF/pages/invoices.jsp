@@ -47,7 +47,7 @@
                 </c:if>
                 <c:if test="${i[3].toString() == 'ACCEPTED'}">
                     <tr class="table-success">
-                        <td style="border: none !important;">#INV-${i[0]}-<span><format:formatDate pattern="dd-MM-yyyy" value="${i[2]}"/></span></td>
+                        <td style="border: none !important;">${i[0]}-<span><format:formatDate pattern="dd-MM-yyyy" value="${i[2]}"/></span></td>
                         <td style="border: none !important;">${i[1]}</td>
                         <td style="border: none !important;">${i[2]}</td>
                         <td style="border: none !important;"><format:formatNumber pattern="#,##0" value="${i[4]}" /> VNĐ</td>

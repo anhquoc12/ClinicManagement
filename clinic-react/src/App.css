@@ -276,3 +276,14 @@ input[type="date"] {
 table tr td, th {
   border: 1px solid graytext !important;
 }
+
+.content--payment {
+  margin-top: 24px !important;
+  margin: auto;
+  width: 80%;
+}
+
+tr:last-child {
+  border-bottom: none !important;
+}
+

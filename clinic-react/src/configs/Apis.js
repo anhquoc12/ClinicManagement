@@ -59,15 +59,24 @@ export const endpoints = {
     'detailInvoice': (invoiceId) => `${SERVER_CONTEXT}/api/nurse/invoices/${invoiceId}/`,
     'prescriptionsByInvoiceId': (invoiceId) => `${SERVER_CONTEXT}/api/nurse/invoices/prescription/${invoiceId}/`,
     'totalFeeByInvoiceId': (invoiceId) => `${SERVER_CONTEXT}/api/nurse/invoices/fee/${invoiceId}/`,
-    'payment': (invoiceId) => `${SERVER_CONTEXT}/api/nurse/invoices/payment/${invoiceId}/`
+    'payment': (invoiceId) => `${SERVER_CONTEXT}/api/nurse/invoices/payment/${invoiceId}/`,
+    'countPatient': `${SERVER_CONTEXT}/api/admin/stats/count-patients/`,
+    'totalRevenue': `${SERVER_CONTEXT}/api/admin/stats/total-revenues/`,
+    'countMedical': `${SERVER_CONTEXT}/api/admin/stats/count-medical/`,
+    'amountPatient': `${SERVER_CONTEXT}/api/admin/stats/amount-patient/`,
+    'medicineStat': (type) => `${SERVER_CONTEXT}/api/admin/stats/medicine-stats/${type}/`,
+    'statRevenue': `${SERVER_CONTEXT}/api/admin/stats/stat-revenues/`
 }
-export const authAPI = () => {
+export const authAPI = (type) => {
+    let t = 'multipart/form-data'
+    if(type === 'json') {
+        t = 'application/json'
+    }
     return axios.create({
         baseURL: SERVER,
         headers: {
             'Authorization': cookie.load('token'),
-            'Content-Type': 'application/json'
-            // 'Content-Type': 'multipart/form-data'
+            'Content-Type': t
         }
     })
 }

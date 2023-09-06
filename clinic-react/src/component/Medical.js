@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Button, Form } from "react-bootstrap"
+import { Alert, Button, Form } from "react-bootstrap"
 import { authAPI, endpoints } from "../configs/Apis"
 import Loading from "../layout/Loading"
 import { Navigate } from "react-router-dom"
@@ -15,15 +15,17 @@ const Medical = () => {
     })
     const [patient, setPatient] = useState(null)
     const [id, setId] = useState(null)
-    const [loading, setLoading] = useState(false)
     const [complete, setComplete] = useState(false)
 
     const addMedical = async (evt) => {
-        setLoading(true)
         evt.preventDefault()
         let form = new FormData()
         for (let field in medical)
-            form.append(field, medical[field])
+            {
+                form.append(field, medical[field])
+                console.log(`${field}: ${medical[field]}`)
+            }
+        console.log(form)
         try {
             let res = await authAPI().post(endpoints['medical'], form)
             alert('Thêm thành công')
@@ -31,8 +33,6 @@ const Medical = () => {
             setComplete(true)
         } catch (ex) {
             alert('có lỗi xảy ra')
-        } finally {
-            setLoading(false)
         }
     }
 
@@ -53,6 +53,7 @@ const Medical = () => {
     return (
         <>
             <h1 className="text-center text-success mt-5">Phiếu khám bệnh</h1>
+            {patient.length === 0?<Alert variant="warning">Không có bệnh nhân</Alert>:<>
             <Form onSubmit={addMedical} className="content" style={{ width: '40%', margin: 'auto' }}>
                 <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                     <Form.Label>Tên bệnh nhân</Form.Label>
@@ -84,10 +85,10 @@ const Medical = () => {
                     <Form.Label>Ghi chú</Form.Label>
                     <Form.Control type="text" placeholder="Ghi chú" onChange={e => setMedical({ ...medical, 'note': e.target.value })} />
                 </Form.Group>
-                {Loading && <Loading />}
-                <Button type="submit" variant="outline-primary" style={{ padding: 8 }}>Toa thuốc</Button>{' '}
+                <Button type="submit" variant="outline-primary" style={{ padding: 8 }}>Toa thuốc</Button>
             </Form>
             <h1 className="mt-5"></h1>
+                   </> }
         </>
     )
 }

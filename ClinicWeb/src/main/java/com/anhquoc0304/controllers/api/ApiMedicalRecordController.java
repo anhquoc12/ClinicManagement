@@ -175,9 +175,11 @@ public class ApiMedicalRecordController {
                 p.setMedicineId(this.medicineService.getMedicineById(node.get(i).get("medicineId").asInt()));
                 prescriptions.add(p);
             }
-            if (this.prescriptionService.saveToDatabasePrescription(prescriptions))
+            if (this.prescriptionService.saveToDatabasePrescription(prescriptions)) {
                 return new ResponseEntity<>("SUCCESS", HttpStatus.CREATED);
+            }
         } catch (IOException e) {
+            System.out.println("err");
             e.printStackTrace();
             return ResponseEntity.badRequest().body("Error");
         }

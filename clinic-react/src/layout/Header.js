@@ -43,6 +43,8 @@ const Header = () => {
                             <Link className='dropdown-item' to='/admin/room'>Phòng trực</Link>
                             <Link className='dropdown-item' to='/admin/specialization'>Chuyên Khoa</Link>
                         </NavDropdown>
+                        
+                        <Link to='/admin/stats' className='nav-item nav-link'>Thống kê - báo cáo</Link>
                     </> : <span></span>
                     }
                     {/* <Nav.Link href="#home">Trang Chủ</Nav.Link> */}

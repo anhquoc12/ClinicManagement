@@ -34,6 +34,7 @@ import Medical from './component/Medical';
 import Prescription from './component/Prescription';
 import Invoices from './component/Invoices';
 import DetailInvoice from './component/DetailInvoice';
+import Stat from './component/Stat';
 
 export const MyUserContext = createContext();
 
@@ -73,6 +74,7 @@ function App() {
             <Route path='/doctor/medical/prescription/:medicalId' element={<Prescription />} />
             <Route path='/nurse/invoices' element={<Invoices />} />
             <Route path='/nurse/invoices/:invoiceId' element={<DetailInvoice />} />
+            <Route path='/admin/stats' element={<Stat />} />
           </Routes>
           <Footer />
         </BrowserRouter>

@@ -16,7 +16,7 @@ export const endpoints = {
     'updateNurse': (nurse) => `${SERVER_CONTEXT}/api/admin/users/nurse/${nurse}/`,
     'doctors':`${SERVER_CONTEXT}/api/admin/users/doctors/`,
     'doctor':(doctorId) => `${SERVER_CONTEXT}/api/user/doctor/${doctorId}/`,
-    'special': `${SERVER_CONTEXT}/api/admin/specialization/`,
+    'special': `${SERVER_CONTEXT}/api/specialization/`,
     'updateDoctor': (doctor) => `${SERVER_CONTEXT}/api/admin/users/doctor/${doctor}/`,
     'deleteDoctor': (userId) => `${SERVER_CONTEXT}/api/admin/doctor/${userId}/`,
     'addDoctor': `${SERVER_CONTEXT}/api/admin/users/doctor/`,
@@ -65,7 +65,7 @@ export const endpoints = {
     'countMedical': `${SERVER_CONTEXT}/api/admin/stats/count-medical/`,
     'amountPatient': `${SERVER_CONTEXT}/api/admin/stats/amount-patient/`,
     'medicineStat': (type) => `${SERVER_CONTEXT}/api/admin/stats/medicine-stats/${type}/`,
-    'statRevenue': `${SERVER_CONTEXT}/api/admin/stats/stat-revenues/`
+    'statRevenue': `${SERVER_CONTEXT}/api/admin/stats/stat-revenue/`
 }
 export const authAPI = (type) => {
     let t = 'multipart/form-data'

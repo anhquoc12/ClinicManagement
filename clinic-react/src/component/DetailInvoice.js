@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-// import '../static/css/payment.css'
+import '../static/css/payment.css'
 import { Navigate, useParams } from 'react-router-dom'
 import { authAPI, endpoints } from '../configs/Apis'
 import Loading from '../layout/Loading'

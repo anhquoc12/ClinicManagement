@@ -77,7 +77,7 @@ public class ApiStatController {
     public ResponseEntity<List<Object[]>> statAmountPatient(@RequestParam(value = "date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date date,
             @RequestParam(value = "typeStat") int type) {
         LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        return new ResponseEntity<>(this.statService.statRevenue(localDate, type),
+        return new ResponseEntity<>(this.statService.statAmountPatient(localDate, type),
         HttpStatus.OK);
     }
 }

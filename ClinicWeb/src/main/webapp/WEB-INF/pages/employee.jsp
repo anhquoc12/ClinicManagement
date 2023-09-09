@@ -17,7 +17,7 @@
                 <div class="account-content">
                     <div class="row align-items-center justify-content-center">
                         <div class="col-md-7 col-lg-6 login-left">
-                            <img src="https://res.cloudinary.com/dvevyvqyt/image/upload/v1691080126/lrh4log4j28q3lgl5oxf.jpg" class="img-fluid" alt="Login Banner">	
+                            <img src="<c:url value="/img/doctor.jpg" />" width="100%" height="100%" class="img-fluid" alt="Login Banner">	
                         </div>
                         <div class="col-md-12 col-lg-6 login-right">
                             <div class="login-header">
@@ -40,11 +40,13 @@
                                     <label class="focus-label">Họ Và Tên</label>
                                     <form:errors path="fullName" element="h6" cssClass="text-danger" />
                                 </div>
+                                <c:if test="${user.id == null}">
                                 <div class="form-group form-focus mb-3">
                                     <form:input path="username" type="text" class="form-control floating" />
                                     <label class="focus-label">Tên đăng nhập:</label>
                                     <form:errors path="username" element="h6" cssClass="text-danger" />
                                 </div>
+                                </c:if>
                                 <c:if test="${user.id == null}">
                                     <div class="form-group form-focus mb-3">
                                         <form:input path="password" type="password" class="form-control floating" />

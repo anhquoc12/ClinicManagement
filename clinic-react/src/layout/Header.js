@@ -9,7 +9,6 @@ import { MyUserContext } from '../App';
 
 const Header = () => {
     const [user, state] = useContext(MyUserContext)
-    const [exit, setExit] = useState(false)
     const logout = () => {
         state({
             'Type': 'logout'
@@ -22,7 +21,6 @@ const Header = () => {
                 <Navbar.Brand href="#home">Clinic Website</Navbar.Brand>
 
                 <Nav className="me-auto">
-                    {/* <Nav.Link href="#home">Trang Chủ</Nav.Link> */}
                     <Link to='/' className='nav-item nav-link'>Trang chủ</Link>
                     {user !== null && user.userRole === 'ADMIN' ? <>
                         <NavDropdown title="User" id="basic-nav-dropdown">

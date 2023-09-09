@@ -28,6 +28,7 @@ const Login = () => {
                 })
 
             } catch (ex) {
+                alert('Có Lỗi xảy ra!!! Kiểm tra lại username và password')
                 console.log(ex)
             }
         }
